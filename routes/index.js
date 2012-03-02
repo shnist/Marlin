@@ -1,8 +1,12 @@
-
 /*
  * GET home page.
  */
 
 exports.index = function(req, res){
-  res.render('index', { title: 'Express' })
+	statisticsProvider.allStatisticss(function (error, docs) {
+		response.render('index', { locals: {
+			projects: docs
+			}
+		});
+	});
 };
