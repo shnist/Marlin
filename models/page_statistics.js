@@ -109,7 +109,7 @@ var pageStatistics = new Schema({
 			}
 		}	
 	},
-	revisions : {
+	revision : {
 		commitMessage: String,
 		committer: String,
 		noOfCommits: Number,

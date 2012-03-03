@@ -57,10 +57,25 @@ ProjectProvider.prototype.gatherStatistics = function (parameters, callback) {
 			});
 		}
 	}, function (error, results) {
-		if (error !== undefined){
-			console.log(results);
-		} else {
+		if (error){
 			console.log(error);
+		} else {
+			/**
+			 * New report generated here
+			 */
+			ProjectProvider.prototype.generateNewReport(results, function (error, document) {
+					/**
+					 * Report inserted here
+					 */
+					if (error !== null){
+						// if insertion successful, callback is fired with success message
+						ProjectProvider.prototype.insertReport(document, function (error, response) {
+							callback(response);						
+						});
+					} else {
+						callback(error, null);
+					}
+			});
 		}
 	});	
 }
@@ -141,7 +156,7 @@ ProjectProvider.prototype.phantom = function (params, callback) {
 			return page.open(url, function(status) {
 				if (status === 'success'){
 					// page loading time
-					pageLoadingTime = Date.now() - timeBeforePageRequest;
+					var pageLoadingTime = {'pageLoadingTime' : Date.now() - timeBeforePageRequest};
 					
 					callback(null, pageLoadingTime);
 					
@@ -169,7 +184,75 @@ ProjectProvider.prototype.phantom = function (params, callback) {
  * for the database
  */
 
-ProjectProvider.prototype.generateReportObject = function (callback) {
+ProjectProvider.prototype.generateNewReport = function (object, callback) {
+	// bare bones object from which we build ontop
+	var document = {
+		'http' : {
+			'general' : {},
+			'rules' : {}
+		},
+		'revision' : {},
+		'javascript' : {}
+	};
+	/**
+	 * HTTP
+	 * Building the http object of the report
+	 */
+	// adding id and score
+	document.http.score = object.http.score;
+	
+	// loops through all the rules
+	var ruleResults = object.http.formattedResults.ruleResults;
+	for (rule in ruleResults){
+		// adding a new rule to the results document.http
+		document.http.rules[rule] = {};
+		for (property in ruleResults[rule]){
+			switch (property){
+				case 'localizedRuleName' :
+					document.http.rules[rule].name = ruleResults[rule][property];
+					break;
+				case 'ruleScore' :
+					document.http.rules[rule].score = ruleResults[rule][property];
+					break;
+				case 'ruleImpact' :
+					document.http.rules[rule].impact = ruleResults[rule][property];
+					break;
+			}
+		}
+	}
+	
+	// loop through the page statistics - filtering out unwanted values
+	for (stat in object.http.pageStats){
+		switch (stat) {
+			case 'numberResources':
+				document.http.general[stat] = object.http.pageStats[stat];
+				break;
+			case 'htmlResponseBytes':
+				document.http.general[stat] = object.http.pageStats[stat];
+				break;
+			case 'cssResponseBytes':
+				document.http.general[stat] = object.http.pageStats[stat];
+				break;
+			case 'imageResponseBytes':
+				document.http.general[stat] = object.http.pageStats[stat];
+				break;
+			case 'javascriptResponseBytes':
+				document.http.general[stat] = object.http.pageStats[stat];
+				break;
+			case 'numberJsResources':
+				document.http.general[stat] = object.http.pageStats[stat];
+				break;
+			case 'numberCssResources':
+				document.http.general[stat] = object.http.pageStats[stat];
+				break;
+		}
+	}
+
+	/**
+	 * Revision
+	 * Building the revision object of the report
+	 */
+	console.log(object.revision);
 	
 }
 
