@@ -5,10 +5,13 @@
 /**
  * Module dependencies.
  */
-var StatisticsProvider = require('../providers/statistics_provider').StatisticsProvider;
+var StatisticsProvider = require('../providers/statistics_provider').StatisticsProvider,
+	ProjectProvider = require('../providers/project_provider').ProjectProvider;
 
 // make a new instance of the Statistics provider
-var statisticsProvider = new StatisticsProvider();
+var statisticsProvider = new StatisticsProvider(),
+// make a new instance of the Project Provider
+  projectProvider = new ProjectProvider();
 
 exports.index = function(request, response){
 	statisticsProvider.allProjectNames(function (error, docs) {
@@ -43,9 +46,8 @@ exports.newReport = function (request, response) {
    * repository: name of repository
    */
   // request.query gets the values of the query string
-  console.log(request.query);
   var parameters = request.query;
-  statisticsProvider.gatherStatistics(parameters, function (error, docs){
-	console.log(docs);  
+  projectProvider.gatherStatistics(parameters, function (error, docs){
+	//console.log(docs);  
   });
 }
