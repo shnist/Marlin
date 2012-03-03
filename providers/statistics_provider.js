@@ -3,6 +3,7 @@
  */
 
 var mongoose = require('mongoose');
+var Report = require('../models/page_statistics');	
 
 // database connection parameters
 var host = 'localhost',
@@ -39,8 +40,54 @@ StatisticsProvider.prototype.allProjectNames = function (callback) {
  */
 
 StatisticsProvider.prototype.findStatistics = function (name, callback) {
-	var project = name;
-	callback();
+	/**
+	 * Defaults:
+	 * 	Date - From current to one week previously
+	 */
+	var project = name,
+		dateFrom = '',
+		dateTo = ''
+	
+	Report.find({}, function (error, reports) {
+		callback(null, reports);
+		
+	});
+}
+
+/**
+ * Gather Statistics
+ * Gathers all statistics for instance of report
+ */
+
+StatisticsProvider.prototype.gatherStatistics = function (parameters, callback) {
+	console.log(parameters);
+}
+
+/**
+ * Each API query to gather data is split into modules
+ * allowing us to swap in and out different apis
+ */
+
+/**
+ * Github API
+ */
+StatisticsProvider.prototype.gatherStatistics.git = function () {
+	
+	
+}
+
+/**
+ * Page Speed API
+ */
+StatisticsProvider.prototype.gatherStatistics.pageSpeed = function () {
+	
+}
+
+/**
+ * Phantomjs API
+ */
+StatisticsProvider.prototype.gatherStatistics.phantom = function () {
+	
 }
 
 

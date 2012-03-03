@@ -19,8 +19,8 @@ var pageStatistics = new Schema({
 			cssResponseBytes: String,
 			imageResponseBytes: String,
 			javascriptResponseBytes: String,
-			numberJsResources: Number,
-			numberCssResources: Number
+			noJsResources: Number,
+			noCssResources: Number
 		},
 		rules: {
 			AvoidBadRequests: {

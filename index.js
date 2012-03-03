@@ -56,6 +56,12 @@ marlin.post('/', function (request, response) {
  */
 marlin.get('/projects/:name', routes.project);
 
+/**
+ * New Report Page Router
+ * Handles the creation of a new report
+ */
+marlin.get('/newreport', routes.newReport);
+
 
 // listen on port 3000
 marlin.listen(3000);

@@ -24,6 +24,7 @@ exports.project = function(request, response){
 	var project = request.param('name');
 
 	statisticsProvider.findStatistics(project, function (error, docs) {
+	  console.log(docs);
 	  response.render('project', {locals: {
 		title : 'Marlin: Statistics for ' + project,
 		statistics: docs
@@ -31,3 +32,20 @@ exports.project = function(request, response){
 	  }});
 	});
 };
+
+exports.newReport = function (request, response) {
+  /**
+   * The parameters that are sent through:
+   * project: The project name 
+   * url: url of project to test
+   * gitUser: git user name
+   * gitPass: git password
+   * repository: name of repository
+   */
+  // request.query gets the values of the query string
+  console.log(request.query);
+  var parameters = request.query;
+  statisticsProvider.gatherStatistics(parameters, function (error, docs){
+	console.log(docs);  
+  });
+}
