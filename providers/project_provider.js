@@ -6,6 +6,7 @@ var mongoose = require('mongoose');
 var Report = require('../models/page_statistics');
 var request = require('request');
 var phantom = require('phantom');
+var async = require('async');
 
 // database connection parameters
 var host = 'localhost',
@@ -38,26 +39,30 @@ ProjectProvider.prototype.gatherStatistics = function (parameters, callback) {
 		javaScriptInfo = {},
 		report = {};
 		
-	//async.parallel({
-	//	git : this.git(revisionParams, callback),
-	//	pageSpeed : this.pageSpeed(pageSpeedParams, callback),
-	//	phantom : this.phantom(phantomParams, callback)
-	//}, function (error, results) {
-	//	console.log(results);
-	//});
-	
-	this.git(revisionParams, function(error, revisionReport){
-		// build repository information for the report
-		//console.log(revisionReport);
-	});
-	
-	this.pageSpeed(pageSpeedParams, function(error, httpReport){
-		//console.log(httpReport);
-	});
+	async.parallel({
+		revision : function (callback) {
+			ProjectProvider.prototype.git(revisionParams, function(error, revisionReport) {
+				callback(error, revisionReport);
+			});
+		},
+		http : function (callback) {
+			ProjectProvider.prototype.pageSpeed(pageSpeedParams, function(error, httpReport){
+				callback(error, httpReport);
+			});
 
-	this.phantom(phantomParams, function(error, phantomReport){
-		console.log(phantomReport);
-	});		
+		},
+		javascript : function (callback) {
+			ProjectProvider.prototype.phantom(phantomParams, function (error, phantomReport) {
+				callback(error, phantomReport);
+			});
+		}
+	}, function (error, results) {
+		if (error !== undefined){
+			console.log(results);
+		} else {
+			console.log(error);
+		}
+	});	
 }
 
 /**
@@ -156,6 +161,16 @@ ProjectProvider.prototype.phantom = function (params, callback) {
 			});
 		});
 	});
+}
+
+/**
+ * Generate New Report Object
+ * Takes the JSON of API returns and remakes it into a report
+ * for the database
+ */
+
+ProjectProvider.prototype.generateReportObject = function (callback) {
+	
 }
 
 /**
