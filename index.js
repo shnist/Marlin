@@ -5,7 +5,7 @@ var express = require('express'),
 	routes = require('./routes'),
 // create server 
 	marlin = module.exports = express.createServer();
-
+	
 // CONFIGURATION
 marlin.configure(function () {
 	marlin.set('views', __dirname + '/views');
@@ -55,11 +55,7 @@ marlin.post('/', function (request, response) {
  * Statistics Page Router
  * Shows stastics for the chosen Statistics
  */
-marlin.get('/statistics/:name', function (request, response) {
-	statisticsProvider.findStatistics(function () {
-		response.send(docs);
-	});
-});
+marlin.get('/projects/:name', routes.project);
 
 
 // listen on port 3000

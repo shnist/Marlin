@@ -26,11 +26,9 @@ StatisticsProvider.prototype.allStatistics = function (callback) {
  */
 
 StatisticsProvider.prototype.findStatistics = function (name, callback) {
+	var project = name;
 	callback();
-
 }
-
-
 
 
 // exports the Statistics provider so it can be accessed elsewhere
