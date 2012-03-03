@@ -22,12 +22,12 @@ exports.index = function(request, response){
 
 exports.project = function(request, response){
 	var project = request.param('name');
-	statisticsProvider.findStatistics(function (error, docs) {
-		console.log(docs);
-		//response.render('project', { locals: {
-		//	title : 'Marlin: Website Performance Tracker',
-		//	projects: docs
-		//	}
-		//});
+
+	statisticsProvider.findStatistics(project, function (error, docs) {
+	  response.render('project', {locals: {
+		title : 'Marlin: Statistics for ' + project,
+		statistics: docs
+
+	  }});
 	});
 };

@@ -1,0 +1,21 @@
+div#header
+	// logo
+	img(src='images/logo_white.png', alt='Marlin Logo', id='logo')
+	// form for selecting the different projects
+	form(method='post', id='project-selection')
+		fieldset
+			// the each for the different projects needs to go here
+			select(name='projects')
+		
+		input(type='submit', name='project-type', value='Select Project')
+div#page
+	div#content
+		h1 project.name
+		// export data form
+		form(method='post', id='export')
+			fieldset
+				input(type='submit', name='export-project', value='Export all data')
+		// github information
+		
+
+include includes/scripts
