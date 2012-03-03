@@ -15,7 +15,7 @@ StatisticsProvider.prototype.dummyData = [
  * Extracts the names of all Statisticss for the home page
  */
 
-StatisticsProvider.prototype.allStatisticss = function (callback) {
+StatisticsProvider.prototype.allStatistics = function (callback) {
 	callback(null, this.dummyData);
 }
 
