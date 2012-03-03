@@ -1,4 +1,17 @@
 /**
+ * Module Dependencies
+ */
+
+var mongoose = require('mongoose');
+
+// database connection parameters
+var host = 'localhost',
+	port = 27017;
+	
+// creating a connection
+mongoose.connect(host,'reports',port);
+
+/**
  * 	Statistics Provider
  * 	Responsible for querying the database 
  */
@@ -15,7 +28,7 @@ StatisticsProvider.prototype.dummyData = [
  * Extracts the names of all Statisticss for the home page
  */
 
-StatisticsProvider.prototype.allStatistics = function (callback) {
+StatisticsProvider.prototype.allProjectNames = function (callback) {
 	callback(null, this.dummyData);
 }
 

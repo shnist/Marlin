@@ -11,7 +11,7 @@ var StatisticsProvider = require('../providers/statistics_provider').StatisticsP
 var statisticsProvider = new StatisticsProvider();
 
 exports.index = function(request, response){
-	statisticsProvider.allStatistics(function (error, docs) {
+	statisticsProvider.allProjectNames(function (error, docs) {
 		response.render('index', { locals: {
 			title : 'Marlin: Website Performance Tracker',
 			projects: docs

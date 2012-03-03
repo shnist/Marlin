@@ -47,7 +47,6 @@ marlin.get('/', routes.index);
 
 marlin.post('/', function (request, response) {
 	var project = request.param('projects');
-	
 	response.redirect('/projects/' + project);
 });
 
