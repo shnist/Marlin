@@ -5,6 +5,7 @@
 var mongoose = require('mongoose');
 var Report = require('../models/page_statistics');
 var request = require('request');
+var phantom = require('phantom');
 
 // database connection parameters
 var host = 'localhost',
@@ -51,11 +52,11 @@ ProjectProvider.prototype.gatherStatistics = function (parameters, callback) {
 	});
 	
 	this.pageSpeed(pageSpeedParams, function(error, httpReport){
-		console.log(httpReport);
+		//console.log(httpReport);
 	});
 
 	this.phantom(phantomParams, function(error, phantomReport){
-		//console.log(phantomReport);
+		console.log(phantomReport);
 	});		
 }
 
@@ -127,10 +128,34 @@ ProjectProvider.prototype.pageSpeed = function (params, callback) {
  * Phantomjs API
  */
 ProjectProvider.prototype.phantom = function (params, callback) {
-	callback(null, 'phantom');
+	var timeBeforePageRequest = Date.now(),
+		url = params.url;
 	
-	
-	
+	phantom.create(function(ph) {
+		return ph.createPage(function(page) {
+			return page.open(url, function(status) {
+				if (status === 'success'){
+					// page loading time
+					pageLoadingTime = Date.now() - timeBeforePageRequest;
+					
+					callback(null, pageLoadingTime);
+					
+					// values for page evaluate are returned in a callback
+					//return page.evaluate((function() {
+					//	return document.title;
+					//}), function(result) {
+					//	console.log('Page title is ' + result);
+					//	return ph.exit();
+					//});
+					
+					return ph.exit();
+				} else {
+					callback('failed to load: ' + url, null);
+					return ph.exit();
+				}
+			});
+		});
+	});
 }
 
 /**
