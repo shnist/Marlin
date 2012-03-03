@@ -54,13 +54,28 @@ StatisticsProvider.prototype.findStatistics = function (name, callback) {
 	});
 }
 
+
 /**
  * Gather Statistics
  * Gathers all statistics for instance of report
  */
 
 StatisticsProvider.prototype.gatherStatistics = function (parameters, callback) {
-	console.log(parameters);
+	var revisionParams = {'user': parameters['gitUser'], 'password': parameters['gitPass'], 'repository': parameters['repository']},
+		pageSpeedParams = {'url': parameters['url']},
+		phantomParams = {'url': parameters['url']};
+			
+	this.git(revisionParams, function(error, revisionReport){
+		//console.log(revisionReport);
+	});
+	
+	this.pageSpeed(pageSpeedParams, function(error, httpReport){
+		//console.log(httpReport);
+	});
+
+	this.phantom(phantomParams, function(error, phantomReport){
+		//console.log(phantomReport);
+	});		
 }
 
 /**
@@ -71,7 +86,10 @@ StatisticsProvider.prototype.gatherStatistics = function (parameters, callback) 
 /**
  * Github API
  */
-StatisticsProvider.prototype.gatherStatistics.git = function () {
+StatisticsProvider.prototype.git = function (params, callback) {
+	var user = params.user,
+		password = params.password,
+		repository = params.repository;
 	
 	
 }
@@ -79,15 +97,16 @@ StatisticsProvider.prototype.gatherStatistics.git = function () {
 /**
  * Page Speed API
  */
-StatisticsProvider.prototype.gatherStatistics.pageSpeed = function () {
-	
+StatisticsProvider.prototype.pageSpeed = function (params, callback) {
+	var key = '';
+	callback(null, 'pagespeed');
 }
 
 /**
  * Phantomjs API
  */
-StatisticsProvider.prototype.gatherStatistics.phantom = function () {
-	
+StatisticsProvider.prototype.phantom = function (params, callback) {
+	callback(null, 'phantom');
 }
 
 
