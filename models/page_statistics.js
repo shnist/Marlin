@@ -110,12 +110,13 @@ var pageStatistics = new Schema({
 		}	
 	},
 	revisions : {
-		
-		
+		commitMessage: String,
+		committer: String,
+		noOfCommits: Number,
+		timeOfLastCommit: Date
 	},
 	javascript : {
-		
-		
+		pageLoadingTime: Number
 	},
 	name: String,
 	date: Date

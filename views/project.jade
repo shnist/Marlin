@@ -10,12 +10,98 @@ div#header
 		input(type='submit', name='project-type', value='Select Project')
 div#page
 	div#content
-		h1 project.name
+		h1 // PROJECT NAME
 		// export data form
 		form(method='post', id='export')
 			fieldset
+			// FOR EACH FOR PROJECT NAMES TO GO HERE
 				input(type='submit', name='export-project', value='Export all data')
 		// github information
-		
+		div#commit-context.latest-information
+			h2 Commit Information
+			ul
+				li
+					em.highlight Last Commit:
+					// COMMIT MESSAGE TO GO HERE
+				li
+					em.highlight Last Committer:
+					// COMMITTER HERE
+				li
+					em.highlight Number of commits:
+					// NO OF COMMITS
+				li
+					em.highlight Time of Last Commit:
+					// TIME OF LAST COMMIT
+		// javascript performance
+		div#javascript-performance.lastest-information
+			h2 Latest JavaScript Performance
+			ul
+				li
+					em.highlight Page Load Time:
+					// PAGE LOAD TIME
+		// tabs
+		div#tabs
+			ul.tab-navigation
+				li
+					// first tab, worst peforming graph
+					a(href='#tab-one') Worst Performing HTTP Rules
+				li
+					// best performing http rules
+					a(href='#tab-two') Best Performing HTTP Rules
+				li
+					// js rules tab
+					a(href='#tab-three') JavaScript Performance
+					
+		div#tab-one.tab-page
+			h2 Worst Performing HTTP Rules
+				a(href='#tabs', class='no-js') Go to navigation
+			div#http-chart.graph
+				table
+					caption A table to show the worst performing HTTP rules
+					thead
+						tr
+							//  EACH FOR RULES TO GO HERE (th)
+							th Time
+							th Avoid CSS Import
+							th Put Css In The Document Head
+							th Avoid Bad Requests
+							th Avoid Excess Serialization
+							th Avoid Long Running Scripts
+							th Defer Parsing JavaScript
+							th Make Landing Page Redirects Cacheable
+					tbody
+						//  EACH FOR DATE RANGE (tr)
+						tr
+							// EACH FOR RULES TO GO HERE (td)
+							td.time 15/01/2012 14:58:08
+							// IF VALUE = 100
+							td.full-mark 100
+							td 90
+							td 50
+							td 95
+							td 90
+							td 80
+							// IF VALUE < 40
+							td.danger-mark 30
+			// form for selecting different rules
+			form(method='post', class='rule-options')
+				fieldset(class='date collapsible')
+					h3.first Change the data range
+						span.arrow
+					ul
+						li
+							label(for='http-date-from') From:
+							input(type='text', name='http-date-from', id='http-date-from', class='has-date-picker date-from', value='02/01/2012')
+						li
+							label(for='http-date-to') To:
+							input(type='text', name='http-date-to', id='http-date-to', class='has-date-picker date-to', value='02/12/2012')
+				fieldset.collapsible
+					h3.last Update the rules shown
+						span.arrow
+					ul
+						li
+							input(type='checkbox', name='rules[]', value='avoid-bad-requests', id='rule-one')
+							label(for='rule-one')
+
 
 include includes/scripts
