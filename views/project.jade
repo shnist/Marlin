@@ -58,43 +58,28 @@ div#page
 			h2 Worst Performing HTTP Rules
 				a(href='#tabs', class='no-js') Go to navigation
 			div#http-chart.graph
+				p The worst performing rules:
 				ul
-					-each report in statistics
-						-each rule in report.http.rules
-							if rule.score < 30
-								li= rule.name
-								li(class='error')= rule.score
+					-each rule in statistics.worstPerforming
+						li= rule.name + ': '
+							em(class='error')= rule.score
 								
-				
-			
-			
 				table
 					caption A table to show the worst performing HTTP rules
 					thead
 						tr
-							//  EACH FOR RULES TO GO HERE (th)
-							th Time
-							th Avoid CSS Import
-							th Put Css In The Document Head
-							th Avoid Bad Requests
-							th Avoid Excess Serialization
-							th Avoid Long Running Scripts
-							th Defer Parsing JavaScript
-							th Make Landing Page Redirects Cacheable
+							th Time of Commit
+							-each rule in statistics.worstPerforming
+								th= rule.name
+							
 					tbody
-						//  EACH FOR DATE RANGE (tr)
-						tr
-							// EACH FOR RULES TO GO HERE (td)
-							td.time 15/01/2012 14:58:08
-							// IF VALUE = 100
-							td.full-mark 100
-							td 90
-							td 50
-							td 95
-							td 90
-							td 80
-							// IF VALUE < 40
-							td.danger-mark 30
+						-each report in statistics
+							tr
+								td= new Date(report.date).toLocaleDateString() + '&nbsp;' + new Date(report.date).toLocaleTimeString()
+								-each rule in statistics.worstPerforming
+									td= rule.score
+								
+								
 			// form for selecting different rules
 			form(method='post', class='rule-options')
 				fieldset(class='date collapsible')
@@ -111,9 +96,11 @@ div#page
 					h3.last Update the rules shown
 						span.arrow
 					ul
-						li
-							input(type='checkbox', name='rules[]', value='avoid-bad-requests', id='rule-one')
-							label(for='rule-one')
+						-each report in statistics
+							li= report.http
+								
+								//input(type='checkbox', name='rules[]', value='avoid-bad-requests', id='rule-one')
+								//label(for='rule-one')
 
 
 include includes/scripts
