@@ -77,6 +77,12 @@ StatisticsProvider.prototype.findStatistics = function (search, callback) {
 		.where('date').gt(search.dateFrom)
 	.run(function (err, docs){
 		if(!err){
+			var i = 0;
+			for (i;  i < docs.length; i = i + 1){
+				
+			}
+			
+			
 			callback(null, docs);
 		} else {
 			callback(err, null);
