@@ -4,6 +4,8 @@
 /**
  * Contents
  * 	Common Elements
+ *	Common Classes
+ *	Structure
  * 	Project Selection
  * 	Custom Selector
  */
@@ -16,17 +18,7 @@ html {
 body {
   background: #eee;
   font-family: arial, verdana, sans-serif;
-}
-#page {
-  margin: 0 auto;
-  background: #fff;
-  border-radius: 0 0 5px 5px;
-  -webkit-border-radius: 0 0 5px 5px;
-  -moz-border-radius: 0 0 5px 5px;
-  box-shadow: 0 0 5px #888;
-  -moz-box-shadow: 0 0 5px #888;
-  -webkit-box-shadow: 0 0 5px #888;
-  position: relative;
+  font-family: 'Lusitana', arial, verdana, sans-serif;
 }
 form {
   padding: 5px;
@@ -46,12 +38,17 @@ fieldset {
 legend {
   display: none;
 }
-.highlight {
-  font-weight: bold;
-  font-style: normal;
-}
 h1 {
   border-bottom: 3px solid;
+}
+h1 {
+  margin: 5px 0 10px 0;
+  padding: 0 0 10px 0;
+  border-bottom: 3px solid #999;
+}
+h2 a {
+  font-size: 14px;
+  margin: 0 0 0 20px;
 }
 input[type="submit"] {
   border-radius: 3px;
@@ -73,6 +70,37 @@ input[type="submit"] {
   width: 120px;
   height: 40px;
 }
+/* Common Classes */
+.highlight {
+  font-weight: bold;
+  font-style: normal;
+}
+.error {
+  font-size: 14px;
+  color: #c42620;
+}
+.hidden {
+  display: none;
+}
+/* Structure */
+#page {
+  width: 960px;
+  padding: 0;
+  color: #2f2f2f;
+  margin: 0 auto;
+  background: #fff;
+  border-radius: 0 0 5px 5px;
+  -webkit-border-radius: 0 0 5px 5px;
+  -moz-border-radius: 0 0 5px 5px;
+  box-shadow: 0 0 5px #888;
+  -moz-box-shadow: 0 0 5px #888;
+  -webkit-box-shadow: 0 0 5px #888;
+  position: relative;
+}
+#content {
+  padding: 15px;
+  position: relative;
+}
 /* Header */
 #header {
   padding: 15px;
@@ -90,11 +118,25 @@ input[type="submit"] {
 }
 /* Project Selection */
 #project-selection {
+  display: inline-block;
+  vertical-align: top;
+  margin: 0 0 0 305px;
+}
+.home #project-selection {
   display: block;
   margin: 30px auto 0 auto;
 }
+#project-selection fieldset {
+  display: inline-block;
+  vertical-align: top;
+}
 #project-selection input[type=submit] {
   margin: 0 0 0 8px;
+}
+#project-selection select {
+  width: 200px;
+  height: 40px;
+  background: #fff;
 }
 /* Custom Selector */
 .fwselect {
@@ -298,4 +340,272 @@ input[type="submit"] {
   border-radius: 2px;
   -webkit-border-radius: 2px;
   -moz-border-radius: 2px;
+}
+/* Rule List Form */
+.rule-options {
+  border-top: 2px dotted;
+  border-bottom: 3px solid;
+}
+.rule-options input[type=submit] {
+  margin: 10px 0 0 120px;
+}
+.rule-options h3 {
+  padding: 10px;
+  color: #fff;
+  margin: 0;
+  background: #1c3660;
+  border-bottom: 1px solid;
+}
+.rule-options .collapsible h3 {
+  background: #1c3660;
+}
+.rule-options .collapsible h3 span {
+  display: block;
+  background: url("../images/arrow_down.png") no-repeat;
+  width: 20px;
+  height: 12px;
+  float: right;
+  margin: 8px 0 0 0;
+}
+.rule-options h3.first {
+  border-radius: 3px 0 0 0;
+  -webkit-border-radius: 3px 0 0 0;
+  -moz-border-radius: 3px 0 0 0;
+}
+.rule-options h3.last {
+  border-radius: 0 0 0 3px;
+  -webkit-border-radius: 0 0 0 3px;
+  -moz-border-radius: 0 0 0 3px;
+}
+.rule-options .collapsible h3:hover {
+  cursor: pointer;
+}
+.rule-options .collapsible.active h3 {
+  background: #00274c;
+}
+.rule-options .collapsible.active h3 span {
+  background: url("../images/arrow_up.png") no-repeat;
+}
+.rule-options .hidden {
+  display: none;
+}
+.rule-options ul {
+  display: inline-block;
+  vertical-align: top;
+  padding: 15px 15px 15px 20px;
+  border-left: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
+  box-shadow: 0 0 5px #ccc;
+  -moz-box-shadow: 0 0 5px #ccc;
+  -webkit-box-shadow: 0 0 5px #ccc;
+}
+.rule-options input.error {
+  border: 2px solid #c42620;
+  box-shadow: 0 0 5px #c42620;
+  -moz-box-shadow: 0 0 5px #c42620;
+  -webkit-box-shadow: 0 0 5px #c42620;
+}
+.rule-options li {
+  display: inline-block;
+  vertical-align: top;
+  width: 300px;
+  font-size: 12px;
+  padding: 2px 0 2px 0;
+}
+.rule-options label {
+  width: 100px;
+  margin: 0 0 0 5px;
+}
+.rule-options input {
+  margin: 0;
+}
+/* Context and Latest JavaScript performance */
+.latest-information {
+  display: inline-block;
+  vertical-align: top;
+  width: 465px;
+  height: 165px;
+  border-bottom: 3px solid #444;
+  padding: 0 0 25px 0;
+}
+#javascript-performance {
+  margin: 0 0 0 -4px;
+}
+.graph {
+  display: inline-block;
+  width: 500px;
+  vertical-align: top;
+}
+.rule-options {
+  width: 350px;
+  display: inline-block;
+  position: relative;
+  border-top: none;
+  border-bottom: none;
+  padding: 0;
+  margin: 45px 0 0 64px;
+}
+.date label {
+  width: 50px;
+  display: inline-block;
+}
+/* Footer */
+#footer {
+  padding: 10px;
+  background: #1c3660;
+  color: #fff;
+  text-align: center;
+}
+/* JQuery UI Styles */
+.ui-tabs-hide {
+  display: none;
+}
+.ui-tabs-panel {
+  min-height: 400px;
+  box-shadow: 0 0 5px #ccc;
+  -moz-box-shadow: 0 0 5px #ccc;
+  -webkit-box-shadow: 0 0 5px #ccc;
+}
+/* Tabs */
+.tab-navigation {
+  margin: 15px 0 0 0;
+  letter-spacing: -4px;
+}
+.tab-navigation li {
+  display: inline-block;
+  padding: 0;
+  letter-spacing: 0;
+  margin: 0 0 0 3px;
+}
+.tab-navigation li:first-child {
+  margin: 0;
+}
+.tab-navigation a {
+  padding: 10px;
+  display: block;
+  color: #fff;
+  text-decoration: none;
+  background: #3574b2;
+  border-radius: 3px 3px 0 0;
+  -webkit-border-radius: 3px 3px 0 0;
+  -moz-border-radius: 3px 3px 0 0;
+}
+.tab-navigation a:hover {
+  background: #26537f;
+}
+.tab-navigation .ui-state-active a {
+  background: #00274c;
+  color: #eee;
+}
+.tab-page {
+  border: 1px solid #ddd;
+  padding: 10px 0 10px 10px;
+}
+/* 9.0 JQuery UI date picker */
+.ui-datepicker {
+  border: 1px solid #ddd;
+  background: #fff;
+}
+.ui-datepicker-header {
+  padding: 10px;
+  color: #fff;
+  background: #1c3660;
+}
+.ui-datepicker-title {
+  text-align: center;
+}
+.ui-datepicker-next,
+.ui-datepicker-prev {
+  float: left;
+}
+.ui-datepicker-next:hover,
+.ui-datepicker-prev:hover {
+  cursor: pointer;
+}
+.ui-datepicker-next span,
+.ui-datepicker-prev span {
+  text-indent: -9999px;
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+}
+.ui-datepicker-next span {
+  background: url("../images/arrow_right.png") no-repeat;
+}
+.ui-datepicker-prev span {
+  background: url("../images/arrow_left.png") no-repeat;
+}
+.ui-datepicker-next {
+  float: right;
+}
+.ui-datepicker-calendar {
+  border-collapse: collapse;
+  width: 300px;
+}
+.ui-datepicker-calendar tr {
+  height: 30px;
+}
+.ui-datepicker-calendar td {
+  border: 1px solid #ccc;
+  text-align: center;
+}
+.ui-datepicker-calendar a {
+  display: block;
+  color: #013897;
+}
+.ui-datepicker-calendar td:hover {
+  background: linear-gradient(top, #ff8b17, 0%, #fd6b00, 100%);
+}
+.ui-datepicker-calendar .ui-datepicker-unselectable:hover {
+  background: #fff;
+}
+.ui-datepicker-calendar td:hover a {
+  color: #fff;
+}
+/* 10.0 Data table */
+/*
+* Styles to do with js fallback tables
+*/
+.graph table {
+  border-collapse: collapse;
+  width: 500px;
+  font-size: 12px;
+  margin: 45px 0 0 0;
+}
+.graph caption {
+  padding: 5px;
+}
+.graph td,
+.graph th {
+  border: 1px solid #ccc;
+  padding: 2px;
+}
+.graph th {
+  background: #3574b2;
+  color: #fff;
+}
+.graph td {
+  text-align: center;
+}
+.graph .time {
+  font-weight: bold;
+}
+.graph .full-mark {
+  background: #8aac2a;
+  color: #fff;
+}
+.graph .danger-mark {
+  background: #c42620;
+  color: #fff;
+}
+/* Export form */
+#export {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  padding: 0;
+  margin: 0;
+}
+#export input {
+  margin: 0;
 }
