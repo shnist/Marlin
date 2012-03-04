@@ -67,17 +67,22 @@ ProjectProvider.prototype.gatherStatistics = function (parameters, callback) {
 			 * New report generated here
 			 */
 			ProjectProvider.prototype.generateNewReport(results, function (error, document) {
-					/**
-					 * Report inserted here
-					 */
-					if (error !== null){
-						// if insertion successful, callback is fired with success message
-						ProjectProvider.prototype.insertReport(document, function (error, response) {
-							callback(response);						
-						});
-					} else {
-						callback(error, null);
-					}
+				/**
+				 * Report inserted here
+				 */
+			
+				if (error){
+					callback(error, null);
+				} else {
+					// if insertion successful, callback is fired with success message
+					ProjectProvider.prototype.insertReport(document, function (error, response) {
+						if (!error){
+							callback(null, response);
+						} else {
+							callback(error, null);
+						}			
+					});
+				}
 			});
 		}
 	});	
@@ -326,8 +331,17 @@ ProjectProvider.prototype.generateJavascript = function (document, object, callb
  * Inserts a new report of statistics
  */
 
-ProjectProvider.prototype.insertReport = function (callback) {
+ProjectProvider.prototype.insertReport = function (report, callback) {
+	// creates an instance of the model, which we can then push data to:
+	var instance = new Report(report);
 	
+	instance.save(function (error) {
+		if (!error) {
+			callback(null, report);
+		} else {
+			callback(error, null);
+		}
+	});
 }
 
 // exports the Project provider so it can be accessed elsewhere
