@@ -25,7 +25,8 @@ StatisticsProvider = function () {};
  */
 
 StatisticsProvider.prototype.allProjectNames = function (callback) {
-	Report.find({}, ['name'], {'group': 'name'}, function (err, docs) {
+	// sort orders the names so they can be reduced
+	Report.find({}, ['name'], {sort: {name: 1}}, function (err, docs) {
 		if (!err){
 			var i = 0,
 				names = [];
@@ -55,15 +56,18 @@ StatisticsProvider.prototype.allProjectNames = function (callback) {
 StatisticsProvider.prototype.findStatistics = function (name, callback) {
 	/**
 	 * Defaults:
-	 * 	Date - From current to one week previously
+	 * 	Date - From current time to the day before
 	 */
-	var project = name,
-		dateFrom = '',
-		dateTo = ''
-	
-	Report.find({}, function (error, reports) {
-		callback(null, reports);
-		
+	// 86 400 000 = a day
+	var dateFrom = (new Date().getTime() - 86400000),
+		dateTo = new Date().getTime();
+
+	Report.find({name:name}).where('date').lte(dateTo).where('date').gt(dateFrom).run(function (err, docs){
+		if(!err){
+			console.log(docs);
+		} else {
+			console.log(err);
+		}
 	});
 }
 

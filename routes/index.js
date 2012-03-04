@@ -27,7 +27,6 @@ exports.project = function(request, response){
 	var project = request.param('name');
 
 	statisticsProvider.findStatistics(project, function (error, docs) {
-	  console.log(docs);
 	  response.render('project', {locals: {
 		title : 'Marlin: Statistics for ' + project,
 		statistics: docs
