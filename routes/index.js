@@ -48,6 +48,10 @@ exports.newReport = function (request, response) {
   // request.query gets the values of the query string
   var parameters = request.query;
   projectProvider.gatherStatistics(parameters, function (error, docs){
-	//console.log(docs);  
+	if(!error){
+	  response.send('The following report was successfully inserted into the database: ' + JSON.stringify(docs));
+	} else {
+	  response.send('There as an error with inserting the report: ' + error);
+	}
   });
 }

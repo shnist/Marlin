@@ -58,7 +58,7 @@ ProjectProvider.prototype.gatherStatistics = function (parameters, callback) {
 		}
 	}, function (error, results) {
 		if (error){
-			console.log(error);
+			callback(error, null);
 		} else {
 			// add the name of the project to the results
 			results.name = parameters['project'];
@@ -224,7 +224,7 @@ ProjectProvider.prototype.generateNewReport = function (object, callback) {
 		}
 	}, function (error, results) {
 		if (error){
-			console.log(error);
+			callback(error, null);
 		} else {
 			document.http = results.generateHttp;
 			document.revision = results.generateRevision;
