@@ -60,6 +60,9 @@ ProjectProvider.prototype.gatherStatistics = function (parameters, callback) {
 		if (error){
 			console.log(error);
 		} else {
+			// add the name of the project to the results
+			results.name = parameters['project'];
+			
 			/**
 			 * New report generated here
 			 */
@@ -194,10 +197,52 @@ ProjectProvider.prototype.generateNewReport = function (object, callback) {
 		'revision' : {},
 		'javascript' : {}
 	};
-	/**
-	 * HTTP
-	 * Building the http object of the report
-	 */
+	
+	document.date = Date.now();
+	document.name = object.name;
+	
+	async.parallel({
+		generateRevision : function (callback) {
+			ProjectProvider.prototype.generateRevision(document, object, function(error, revisionReport) {
+				callback(error, revisionReport);
+			});
+		},
+		generateHttp : function (callback) {
+			ProjectProvider.prototype.generateHttp(document, object, function(error, httpReport){
+				callback(error, httpReport);
+			});
+		},
+		generateJavascript : function (callback) {
+			ProjectProvider.prototype.generateJavascript(document, object, function (error, phantomReport) {
+				callback(error, phantomReport);
+			});
+		}
+	}, function (error, results) {
+		if (error){
+			console.log(error);
+		} else {
+			document.http = results.generateHttp;
+			document.revision = results.generateRevision;
+			document.javascript = results.generateJavascript;
+			
+			// send the generated report back 
+			callback(null, document);
+		}
+	});	
+}
+
+/**
+ * Generate report modules
+ * Modules responsible for creating different parts of the report
+ * Can be swapped in and out as required
+ */
+
+/**
+ * HTTP
+ * Building the http object of the report
+ */
+ProjectProvider.prototype.generateHttp = function (document, object, callback) {
+
 	// adding id and score
 	document.http.score = object.http.score;
 	
@@ -247,14 +292,34 @@ ProjectProvider.prototype.generateNewReport = function (object, callback) {
 				break;
 		}
 	}
-
-	/**
-	 * Revision
-	 * Building the revision object of the report
-	 */
-	console.log(object.revision);
 	
+	callback(null, document.http);
 }
+
+/**
+ * Revision
+ * Building the revision object of the report
+ */
+
+ProjectProvider.prototype.generateRevision = function (document, object, callback) {
+	document.revision.commitMessage = object.revision.message;
+	document.revision.committer = object.revision.committer.name;
+	document.revision.timeOfCommit = object.revision.committer.date;
+	
+	callback(null, document.revision);
+}
+
+/**
+ * JavaScript
+ * Building the JavaScript object of the report
+ */
+
+ProjectProvider.prototype.generateJavascript = function (document, object, callback) {
+	document.javascript.pageLoadingTime = object.javascript.pageLoadingTime;
+	
+	callback(null, document.javascript);
+}
+	
 
 /**
  * Insert New Report

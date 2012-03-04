@@ -112,8 +112,7 @@ var pageStatistics = new Schema({
 	revision : {
 		commitMessage: String,
 		committer: String,
-		noOfCommits: Number,
-		timeOfLastCommit: Date
+		timeOfCommit: Date
 	},
 	javascript : {
 		pageLoadingTime: Number
