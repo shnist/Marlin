@@ -27,7 +27,6 @@ StatisticsProvider = function () {};
 StatisticsProvider.prototype.allProjectNames = function (callback) {
 	Report.find({}, ['name'], {'group': 'name'}, function (err, docs) {
 		if (!err){
-			console.log(docs);
 			var i = 0,
 				names = [];
 			// reduce the returned set so we only get one of each

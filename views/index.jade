@@ -5,8 +5,8 @@ div#header
 		form( method='post', id='project-selection')
 			select(name='projects')
 				- each project in projects
-					option(value=project.project)!= project.project
+					option(value=project)!= project
 			input(type='submit', name='project-type', value='Show Project')
 	- else
-		p Marlin is not looking at any projects at the moment.
+		p Marlin is not monitoring at any projects at the moment.
 include includes/scripts

@@ -83,6 +83,9 @@ input[type="submit"] {
   -webkit-box-shadow: 0 0 30px #999;
   margin: 300px 0 0 0;
 }
+#header p {
+  color: #fff;
+}
 /* Project Selection */
 #project-selection {
   display: block;
