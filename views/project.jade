@@ -97,10 +97,10 @@ div#page
 						span.arrow
 					ul
 						-each report in statistics
-							li= report.http
-								
-								//input(type='checkbox', name='rules[]', value='avoid-bad-requests', id='rule-one')
-								//label(for='rule-one')
+							-each rule in report.http.rules
+								li
+									input(type='checkbox', name='rules[]', value=rule.id, id=rule.id + 'Worst')
+									label(for=rule.id + 'Worst')= rule.name
 
 
-include includes/scripts
+//include includes/scripts
