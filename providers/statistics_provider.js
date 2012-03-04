@@ -25,7 +25,26 @@ StatisticsProvider = function () {};
  */
 
 StatisticsProvider.prototype.allProjectNames = function (callback) {
-	callback(null, this.dummyData);
+	Report.find({}, ['name'], {'group': 'name'}, function (err, docs) {
+		if (!err){
+			console.log(docs);
+			var i = 0,
+				names = [];
+			// reduce the returned set so we only get one of each
+			for (i; i < docs.length; i = i + 1){
+				if (i === 0){
+					names.push(docs[i].name);
+				} else {
+					if (names[names.length - 1] !== docs[i].name){
+						names.push(docs[i].name);
+					}
+				}
+			}
+			callback(null, names);
+		} else {
+			callback(err, null);
+		}
+	});
 }
 
 
