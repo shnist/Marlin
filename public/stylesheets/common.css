@@ -67,7 +67,6 @@ input[type="submit"] {
   display: inline-block;
   margin: 0;
   vertical-align: top;
-  width: 120px;
   height: 40px;
 }
 /* Common Classes */

@@ -57,13 +57,12 @@ div#page
 		div#tab-one.tab-page
 			h2 Worst Performing HTTP Rules
 				a(href='#tabs', class='no-js') Go to navigation
-			div#http-chart.graph
-				p The worst performing rules:
-				ul
-					-each rule in statistics.worstPerforming
-						li= rule.name + ': '
-							em(class='error')= rule.score
-								
+			p The worst performing rules:
+			ul
+				-each rule in statistics.worstPerforming
+					li= rule.name + ': '
+						em(class='error')= rule.score
+			div#http-chart.graph								
 				table
 					caption A table to show the worst performing HTTP rules
 					thead
@@ -71,15 +70,13 @@ div#page
 							th Time of Commit
 							-each rule in statistics.worstPerforming
 								th= rule.name
-							
 					tbody
 						-each report in statistics
 							tr
 								td= new Date(report.date).toLocaleDateString() + '&nbsp;' + new Date(report.date).toLocaleTimeString()
 								-each rule in statistics.worstPerforming
 									td= rule.score
-								
-								
+
 			// form for selecting different rules
 			form(method='post', class='rule-options')
 				fieldset(class='date collapsible')
@@ -101,6 +98,52 @@ div#page
 								li
 									input(type='checkbox', name='rules[]', value=rule.id, id=rule.id + 'Worst')
 									label(for=rule.id + 'Worst')= rule.name
-
-
+				input(type="submit", name="worst-http", value="Update Worst Performing")
+		div#tab-two.tab-page
+			// http best performance graph
+			h2 Best Performing HTTP rules
+				a(href='#tabs', class='no-js') Go to navigation
+			p The best performing rules:
+			ul
+				-each rule in statistics.bestPerforming
+					li= rule.name + ': '
+						em= rule.score
+			div#best-http-chart.graph
+				table
+					caption A table to show the best performing HTTP rules
+					thead
+						tr
+							th Time of Commit
+							-each rule, i in statistics.bestPerforming
+								-if (i <= 4)
+									th= rule.name
+					tbody
+						-each report in statistics
+							tr
+								td= new Date(report.date).toLocaleDateString() + '&nbsp;' + new Date(report.date).toLocaleTimeString()
+								-each rule, i in statistics.bestPerforming
+									-if (i <=  4)
+										td= rule.score
+			// form for selecting different rules
+			form(method='post', class='rule-options')
+				fieldset(class='date collapsible')
+					h3.first Change the data range
+						span.arrow
+					ul
+						li
+							label(for='http-date-from') From:
+							input(type='text', name='http-date-from', id='http-date-from', class='has-date-picker date-from', value='02/01/2012')
+						li
+							label(for='http-date-to') To:
+							input(type='text', name='http-date-to', id='http-date-to', class='has-date-picker date-to', value='02/12/2012')
+				fieldset.collapsible
+					h3.last Update the rules shown
+						span.arrow
+					ul
+						-each report in statistics
+							-each rule in report.http.rules
+								li
+									input(type='checkbox', name='rules[]', value=rule.id, id=rule.id + 'Best')
+									label(for=rule.id + 'Best')= rule.name
+				input(type="submit", name="best-http", value="Update Best Performing")
 //include includes/scripts
