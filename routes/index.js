@@ -24,13 +24,19 @@ exports.index = function(request, response){
 };
 
 exports.project = function(request, response){
-	var project = request.param('name');
+	var searchTerms = {
+	  project : request.param('name'),
+	  dateFrom : request.param('date-from'),
+	  dateTo: request.param('date-to')
+	};
 
-	statisticsProvider.findStatistics(project, function (error, docs) {
+	statisticsProvider.findStatistics(searchTerms, function (error, docs) {	  
+	  var project = docs[0].name;
+
 	  response.render('project', {locals: {
 		title : 'Marlin: Statistics for ' + project,
 		statistics: docs
-
+	
 	  }});
 	});
 };

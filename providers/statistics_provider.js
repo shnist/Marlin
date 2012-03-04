@@ -53,20 +53,30 @@ StatisticsProvider.prototype.allProjectNames = function (callback) {
  * Extracts all data from the chosen Statistics 
  */
 
-StatisticsProvider.prototype.findStatistics = function (name, callback) {
+StatisticsProvider.prototype.findStatistics = function (search, callback) {
 	/**
 	 * Defaults:
 	 * 	Date - From current time to the day before
+	 * 	86 400 000 = a day
 	 */
-	// 86 400 000 = a day
-	var dateFrom = (new Date().getTime() - 86400000),
-		dateTo = new Date().getTime();
-
-	Report.find({name:name}).where('date').lte(dateTo).where('date').gt(dateFrom).run(function (err, docs){
+	if (search.dateFrom === undefined){
+		search.dateFrom = (new Date().getTime() - 86400000);
+	}
+	if (search.dateTo === undefined){
+		search.dateTo = new Date().getTime()
+	}
+	/**
+	 * Data Selection
+	 * Chosing which items in the document to return
+	 */
+	// TO DO 
+	
+	
+	Report.find({name: search.project}, []).where('date').lte(search.dateTo).where('date').gt(search.dateFrom).run(function (err, docs){
 		if(!err){
-			console.log(docs);
+			callback(null, docs);
 		} else {
-			console.log(err);
+			callback(err, null);
 		}
 	});
 }
