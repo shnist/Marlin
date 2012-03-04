@@ -72,7 +72,10 @@ StatisticsProvider.prototype.findStatistics = function (search, callback) {
 	// TO DO 
 	
 	
-	Report.find({name: search.project}, []).where('date').lte(search.dateTo).where('date').gt(search.dateFrom).run(function (err, docs){
+	Report.find({name: search.project}, [])
+		.where('date').lte(search.dateTo)
+		.where('date').gt(search.dateFrom)
+	.run(function (err, docs){
 		if(!err){
 			callback(null, docs);
 		} else {

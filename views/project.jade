@@ -56,6 +56,13 @@ div#page
 			h2 Worst Performing HTTP Rules
 				a(href='#tabs', class='no-js') Go to navigation
 			div#http-chart.graph
+				ul
+					-each report in statistics
+						-each rule in report.http.rules
+							li= rule
+				
+			
+			
 				table
 					caption A table to show the worst performing HTTP rules
 					thead

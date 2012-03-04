@@ -22,92 +22,92 @@ var pageStatistics = new Schema({
 			noJsResources: Number,
 			noCssResources: Number
 		},
-		rules: {
-			AvoidBadRequests: {
-				localizedRuleName: String, ruleScore : Number, ruleImpact: String
+		rules: [
+			{
+				name: String, score : Number, impact: String, id: String
 			},
-			AvoidCssImport: {
-				localizedRuleName: String, ruleScore : Number, ruleImpact: String
+			{
+				name: String, score : Number, impact: String, id: String
 			},
-			AvoidExcessSerialization: {
-				localizedRuleName: String, ruleScore : Number, ruleImpact: String
+			{
+				name: String, score : Number, impact: String, id: String
 			},
-			AvoidLongRunningScripts: {
-				localizedRuleName: String, ruleScore : Number, ruleImpact: String
+			{
+				name: String, score : Number, impact: String, id: String
 			},
-			DeferParsingJavaScript: {
-				localizedRuleName: String, ruleScore : Number, ruleImpact: String
+			{
+				name: String, score : Number, impact: String, id: String
 			},
-			EliminateUnnecessaryReflows: {
-				localizedRuleName: String, ruleScore : Number, ruleImpact: String
+			{
+				name: String, score : Number, impact: String, id: String
 			},
-			EnableGzipCompression: {
-				localizedRuleName: String, ruleScore : Number, ruleImpact: String
+			{
+				name: String, score : Number, impact: String, id: String
 			},
-			InlineSmallCss: {
-				localizedRuleName: String, ruleScore : Number, ruleImpact: String
+			{
+				name: String, score : Number, impact: String, id: String
 			},
-			InlineSmallJavaScript: {
-				localizedRuleName: String, ruleScore : Number, ruleImpact: String
+			{
+				name: String, score : Number, impact: String, id: String
 			},
-			LeverageBrowserCaching: {
-				localizedRuleName: String, ruleScore : Number, ruleImpact: String
+			{
+				name: String, score : Number, impact: String, id: String
 			},
-			MakeLandingPageRedirectsCacheable: {
-				localizedRuleName: String, ruleScore : Number, ruleImpact: String
+			{
+				name: String, score : Number, impact: String, id: String
 			},
-			MinifyCss: {
-				localizedRuleName: String, ruleScore : Number, ruleImpact: String
+			{
+				name: String, score : Number, impact: String, id: String
 			},
-			MinifyHTML: {
-				localizedRuleName: String, ruleScore : Number, ruleImpact: String
+			{
+				name: String, score : Number, impact: String, id: String
 			},
-			MinifyJavaScript: {
-				localizedRuleName: String, ruleScore : Number, ruleImpact: String
+			{
+				name: String, score : Number, impact: String, id: String
 			},
-			MinimizeRedirects: {
-				localizedRuleName: String, ruleScore : Number, ruleImpact: String
+			{
+				name: String, score : Number, impact: String, id: String
 			},
-			MinimizeRequestSize: {
-				localizedRuleName: String, ruleScore : Number, ruleImpact: String
+			{
+				name: String, score : Number, impact: String, id: String
 			},
-			OptimizeImages: {
-				localizedRuleName: String, ruleScore : Number, ruleImpact: String
+			{
+				name: String, score : Number, impact: String, id: String
 			},
-			OptimizeTheOrderOfStylesAndScripts: {
-				localizedRuleName: String, ruleScore : Number, ruleImpact: String
+			{
+				name: String, score : Number, impact: String, id: String
 			},
-			PreferAsyncResources: {
-				localizedRuleName: String, ruleScore : Number, ruleImpact: String
+			{
+				name: String, score : Number, impact: String, id: String
 			},
-			PutCssInTheDocumentHead: {
-				localizedRuleName: String, ruleScore : Number, ruleImpact: String
+			{
+				name: String, score : Number, impact: String, id: String
 			},
-			RemoveQueryStringsFromStaticResources: {
-				localizedRuleName: String, ruleScore : Number, ruleImpact: String
+			{
+				name: String, score : Number, impact: String, id: String
 			},
-			ServeResourcesFromAConsistentUrl: {
-				localizedRuleName: String, ruleScore : Number, ruleImpact: String
+			{
+				name: String, score : Number, impact: String, id: String
 			},
-			ServeScaledImages: {
-				localizedRuleName: String, ruleScore : Number, ruleImpact: String
+			{
+				name: String, score : Number, impact: String, id: String
 			},
-			SpecifyACacheValidator: {
-				localizedRuleName: String, ruleScore : Number, ruleImpact: String
+			{
+				name: String, score : Number, impact: String, id: String
 			},
-			SpecifyAVaryAcceptEncodingHeader: {
-				localizedRuleName: String, ruleScore : Number, ruleImpact: String
+			{
+				name: String, score : Number, impact: String, id: String
 			},
-			SpecifyCharsetEarly: {
-				localizedRuleName: String, ruleScore : Number, ruleImpact: String
+			{
+				name: String, score : Number, impact: String, id: String
 			},
-			SpecifyImageDimensions: {
-				localizedRuleName: String, ruleScore : Number, ruleImpact: String
+			{
+				name: String, score : Number, impact: String, id: String
 			},
-			SpriteImages: {
-				localizedRuleName: String, ruleScore : Number, ruleImpact: String
+			{
+				name: String, score : Number, impact: String, id: String
 			}
-		}	
+		]
 	},
 	revision : {
 		commitMessage: String,

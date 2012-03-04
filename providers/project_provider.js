@@ -197,7 +197,7 @@ ProjectProvider.prototype.generateNewReport = function (object, callback) {
 	var document = {
 		'http' : {
 			'general' : {},
-			'rules' : {}
+			'rules' : []
 		},
 		'revision' : {},
 		'javascript' : {}
@@ -255,20 +255,22 @@ ProjectProvider.prototype.generateHttp = function (document, object, callback) {
 	var ruleResults = object.http.formattedResults.ruleResults;
 	for (rule in ruleResults){
 		// adding a new rule to the results document.http
-		document.http.rules[rule] = {};
+		var ruleData = {};
 		for (property in ruleResults[rule]){
 			switch (property){
 				case 'localizedRuleName' :
-					document.http.rules[rule].name = ruleResults[rule][property];
+					ruleData.name = ruleResults[rule][property];
 					break;
 				case 'ruleScore' :
-					document.http.rules[rule].score = ruleResults[rule][property];
+					ruleData.score = ruleResults[rule][property];
 					break;
 				case 'ruleImpact' :
-					document.http.rules[rule].impact = ruleResults[rule][property];
+					ruleData.impact = ruleResults[rule][property];
 					break;
 			}
+			ruleData.id = rule;
 		}
+		document.http.rules.push(ruleData);
 	}
 	
 	// loop through the page statistics - filtering out unwanted values
