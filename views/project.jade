@@ -41,170 +41,72 @@ div#page
 					li
 						em.highlight Page Load Time:&nbsp;
 						=statistics[0].javascript[0].value + 'ms'
-		// tabs
-		div#tabs
-			ul.tab-navigation
-				li
-					// first tab, worst peforming graph
-					a(href='#tab-one') Worst Performing HTTP Rules
-				li
-					// best performing http rules
-					a(href='#tab-two') Best Performing HTTP Rules
-				li
-					// js rules tab
-					a(href='#tab-three') JavaScript Performance
-					
-		div#tab-one.tab-page
-			h2 Worst Performing HTTP Rules
-				a(href='#tabs', class='no-js') Go to navigation
-			p The worst performing rules:
-			ul
-				-each rule in statistics.worstPerforming
-					li= rule.name + ': '
-						em(class='error')= rule.score
-			div#http-chart.graph								
-				table
-					caption A table to show the worst performing HTTP rules
-					thead
+		//navigation
+		ul.tab-navigation
+			li
+				// first tab, worst peforming graph
+				a(href='/projects/ + name + ') Worst Performing HTTP Rules
+			li
+				// best performing http rules
+				a(href='/projects/' + name + '/best') Best Performing HTTP Rules
+			li
+				// js rules tab
+				a(href='/projects/' + name + '/javascript') JavaScript Performance
+				
+		h2 Worst Performing HTTP Rules
+			a(href='#tabs', class='no-js') Go to navigation
+		p The worst performing rules:
+		ul
+			-each rule in statistics.worstPerforming
+				li= rule.name + ': '
+					em(class='error')= rule.score
+		div#http-chart.graph								
+			table
+				caption A table to show the worst performing HTTP rules
+				thead
+					tr
+						th Time of Commit
+						-each rule in statistics.worstPerforming
+							th= rule.name
+				tbody
+					-each report in statistics
 						tr
-							th Time of Commit
+							td= new Date(report.date).toLocaleDateString() + '&nbsp;' + new Date(report.date).toLocaleTimeString()
 							-each rule in statistics.worstPerforming
-								th= rule.name
-					tbody
-						-each report in statistics
-							tr
-								td= new Date(report.date).toLocaleDateString() + '&nbsp;' + new Date(report.date).toLocaleTimeString()
-								-each rule in statistics.worstPerforming
-									td= rule.score
+								td= rule.score
 
-			// form for selecting different rules
-			form(method='post', class='rule-options')
-				fieldset(class='date collapsible')
-					h3.first Change the data range
-						span.arrow
-					ul
-						li
-							label(for='http-date-from') From:
-							input(type='text', name='http-date-from', id='http-date-from', class='has-date-picker date-from', value='02/01/2012')
-						li
-							label(for='http-date-to') To:
-							input(type='text', name='http-date-to', id='http-date-to', class='has-date-picker date-to', value='02/12/2012')
-				fieldset.collapsible
-					h3.last Update the rules shown
-						span.arrow
-					ul
-						-var checked=false
-						-each rule in statistics[0].http.rules
-							-each name in statistics.worstPerforming
-									-if (name.id == rule.id)	
-										-checked=true
-									-else
-										-checked=false
-							li
-								-if (checked === false)
-									input(type='checkbox', name='rules[]', value=rule.id, id=rule.id + 'Worst')
-									label(for=rule.id + 'Worst')= rule.name
+		// form for selecting different rules
+		form(method='post', class='rule-options')
+			fieldset(class='date collapsible')
+				h3.first Change the data range
+					span.arrow
+				ul
+					li
+						label(for='http-date-from') From:
+						input(type='text', name='http-date-from', id='http-date-from', class='has-date-picker date-from', value='02/01/2012')
+					li
+						label(for='http-date-to') To:
+						input(type='text', name='http-date-to', id='http-date-to', class='has-date-picker date-to', value='02/12/2012')
+			fieldset.collapsible
+				h3.last Update the rules shown
+					span.arrow
+				ul
+					-var checked=false
+					-each rule in statistics[0].http.rules
+						-each name in statistics.worstPerforming
+								-if (name.id == rule.id)	
+									-checked=true
 								-else
-									input(type='checkbox', name='rules[]', value=rule.id, id=rule.id + 'Worst', checked='checked')
-									label(for=rule.id + 'Worst')= rule.name
-							
-				input(type="submit", name="worst-http", value="Update Worst Performing")
-		div#tab-two.tab-page
-			// http best performance graph
-			h2 Best Performing HTTP rules
-				a(href='#tabs', class='no-js') Go to navigation
-			p The best performing rules:
-			ul
-				-each rule in statistics.bestPerforming
-					li= rule.name + ': '
-						em= rule.score
-			div#best-http-chart.graph
-				table
-					caption A table to show the best performing HTTP rules
-					thead
-						tr
-							th Time of Commit
-							-var selected = []
-							-each rule, i in statistics.bestPerforming
-								-if ((i + 1) <= 4)
-									-selected.push(rule.name)
-									th= rule.name
-					tbody
-						-each report in statistics
-							tr
-								td= new Date(report.date).toLocaleDateString() + '&nbsp;' + new Date(report.date).toLocaleTimeString()
-								-each rule, i in statistics.bestPerforming
-									-if ((i + 1) <=  4)
-										td= rule.score
-			// form for selecting different rules
-			form(method='post', class='rule-options')
-				fieldset(class='date collapsible')
-					h3.first Change the data range
-						span.arrow
-					ul
+									-checked=false
 						li
-							label(for='http-date-from') From:
-							input(type='text', name='http-date-from', id='http-date-from', class='has-date-picker date-from', value='02/01/2012')
-						li
-							label(for='http-date-to') To:
-							input(type='text', name='http-date-to', id='http-date-to', class='has-date-picker date-to', value='02/12/2012')
-				fieldset.collapsible
-					h3.last Update the rules shown
-						span.arrow
-					ul
-						-each rule, i in statistics[0].http.rules
-							-var checkedBest=false
-								-each name in statistics.bestPerforming
-									-if (name.id === rule.id && i <= 4)	
-										-checkedBest=true			
-								li
-									-if (checkedBest === false)
-										input(type='checkbox', name='rules[]', value=rule.id, id=rule.id + 'Best')
-										label(for=rule.id + 'Best')= rule.name
-									-else
-										input(type='checkbox', name='rules[]', value=rule.id, id=rule.id + 'Best', checked='checked')
-										label(for=rule.id + 'Best')= rule.name						
-				input(type="submit", name="best-http", value="Update Best Performing")
-		// tab three - javascript performance
-		div#tab-three.tab-page
-			// javascript performance
-			h2 JavaScript Performance
-				a(href='#tabs', class='no-js') Go to navigation
-			div#javascript-chart.graph
-				table
-					caption A table to show JavaScript Performance
-					thead
-						tr
-							th Time of Commit
-							-each measurement in statistics[0].javascript
-								th= measurement.name
-					tbody
-						-each report in statistics
-							tr
-								td= new Date(report.date).toLocaleDateString() + '&nbsp;' + new Date(report.date).toLocaleTimeString()
-								-each javascript in report.javascript
-									td=javascript.value
-			// form for selecting different rules
-			form(method='post', class='rule-options')
-				fieldset(class='date collapsible')
-					h3.first Change the data range
-						span.arrow
-					ul
-						li
-							label(for='js-date-from') From:
-							input(type='text', name='js-date-from', id='js-date-from', class='has-date-picker date-from', value='02/01/2012')
-						li
-							label(for='js-date-to') To:
-							input(type='text', name='js-date-to', id='js-date-to', class='has-date-picker date-to', value='02/12/2012')
-				fieldset.collapsible
-					h3.last Update the rules shown
-						span.arrow
-					ul
-						-each javascript in statistics[0].javascript
-							li
-								input(type='checkbox', name='rules[]', value=javascript.id, id=javascript.id + 'Js')
-								label(for=javascript.id + 'Js')= javascript.name
-				input(type="submit", name="javascript-graph", value="Update Graph")
+							-if (checked === false)
+								input(type='checkbox', name='rules[]', value=rule.id, id=rule.id + 'Worst')
+								label(for=rule.id + 'Worst')= rule.name
+							-else
+								input(type='checkbox', name='rules[]', value=rule.id, id=rule.id + 'Worst', checked='checked')
+								label(for=rule.id + 'Worst')= rule.name
+						
+			input(type="submit", name="worst-http", value="Update Worst Performing")
 div#footer
 	p Marlin &copy; 2012
 //scripts

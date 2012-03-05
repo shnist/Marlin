@@ -28,6 +28,7 @@ exports.index = function(request, response){
 * Project Worst
 * This is the first page that users come to
 * With JavaScript turned on this is the only page
+* Shows bottom half of http rules
 * @function allProjectNames - gets a list of monitored projects
 * @function findAllStatistics - get all statistics for the chosen project
 */
@@ -61,13 +62,23 @@ exports.projectWorst = function(request, response){
 };
 
 /**
- * Query Project
- * allProjectNames = retrieves a list of all products
- * findStatistics = find statistics based on the user's query
+ * Project Best
+ * Shows the top half of http rules
+ * @function allProjectNames = retrieves a list of all projects
+ * @function findStatistics = find statistics based on the user's query
  */
-exports.queryProject = function (request, response) {
-	console.log(request.body);
+exports.projectBest = function (request, response) {
+	console.log(request);
 	
+}
+
+/**
+ * Project JavaScript
+ * Show JavaScript performance statistics
+ * @function allProjectNames = retrieves a list of projects
+ */
+exports.projectJavaScript = function (request, response){
+	console.log(request);
 }
 
 
