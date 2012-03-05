@@ -47,6 +47,10 @@ marlin.get('/', routes.index);
 
 marlin.post('/', function (request, response) {
 	var project = request.param('projects');
+	/**
+	 * First page is the "worst page"
+	 * When JavaScript is turned on this is the only page
+	 */
 	response.redirect('/projects/' + project);
 });
 
@@ -54,17 +58,38 @@ marlin.post('/', function (request, response) {
  * Statistics Page Router
  * Shows stastics for the chosen Statistics
  */
-/**
- * GET
+/** 
+ * GET - "worst", fetches the worst performing statistics 
  * When the user goes to project directly from url or from home page
  */
-marlin.get('/projects/:name', routes.startProject);
+marlin.get('/projects/:name', routes.projectWorst);
 /**
- * POST
+ * GET - best, fetches the best performing statistics
  * When the user submits a form on the project page
  */
-marlin.post('/projects/:name', function(request, response){
-	console.log(request.body);
+marlin.get('/projects/:name/best', routes.projectBest);
+/**
+ * GET - javascript - fetches statistics for javascript performance
+ */
+marlin.get('/projects/:name/javascript', routes.projectJavaScript);
+
+/**
+ * POST - best - fetches statistics on the worst performing page
+ */
+marlin.post('/projects/:name', function (request, response) {
+	console.log(request);
+});
+/**
+ * POST - best - fetches statistics on the best performing page
+ */
+marlin.post('/projects/:name/best', function (request, response) {
+	console.log(request);
+});
+/**
+ * POST - javascript - fetches statistics on the javascript page
+*/
+marlin.post('/projects/:name/javascript', function (request, response) {
+	console.log(request);
 });
 
 

@@ -25,11 +25,13 @@ exports.index = function(request, response){
 };
 
 /**
-* Project Route
-* allProjectNames - gets a list of monitored projects
-* findStatistics - get statistics for the chosen project
+* Project Worst
+* This is the first page that users come to
+* With JavaScript turned on this is the only page
+* @function allProjectNames - gets a list of monitored projects
+* @function findAllStatistics - get all statistics for the chosen project
 */
-exports.startProject = function(request, response){
+exports.projectWorst = function(request, response){
 	var project = request.param('name');
 	
 	async.parallel({
@@ -57,6 +59,20 @@ exports.startProject = function(request, response){
 		}
 	});	
 };
+
+/**
+ * Query Project
+ * allProjectNames = retrieves a list of all products
+ * findStatistics = find statistics based on the user's query
+ */
+exports.queryProject = function (request, response) {
+	console.log(request.body);
+	
+}
+
+
+
+
 
 exports.newReport = function (request, response) {
 	/**
