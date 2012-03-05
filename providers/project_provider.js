@@ -164,7 +164,12 @@ ProjectProvider.prototype.phantom = function (params, callback) {
 			return page.open(url, function(status) {
 				if (status === 'success'){
 					// page loading time
-					var pageLoadingTime = {'pageLoadingTime' : Date.now() - timeBeforePageRequest};
+					var pageLoadingTime = {'pageLoadingTime' :
+												{
+													'value': Date.now() - timeBeforePageRequest,
+													'name' : 'Page Loading Time'
+												}
+											};
 					
 					callback(null, pageLoadingTime);
 					
@@ -323,11 +328,14 @@ ProjectProvider.prototype.generateRevision = function (document, object, callbac
 
 ProjectProvider.prototype.generateJavascript = function (document, object, callback) {
 	var javaScriptMeasurementsArray = [];
+	
 	for (property in object.javascript){
-		javaScriptMeasurementsArray.push({'name': property, 'value': object.javascript[property]});	
+		javaScriptMeasurementsArray.push({'name': object.javascript[property].name,
+										 'value': object.javascript[property].value,
+										 'id': property
+										 });	
 	}
 	document.javascript = javaScriptMeasurementsArray;
-	
 	callback(null, document.javascript);
 }
 	
