@@ -93,11 +93,10 @@ div#page
 					h3.last Update the rules shown
 						span.arrow
 					ul
-						-each report in statistics
-							-each rule in report.http.rules
-								li
-									input(type='checkbox', name='rules[]', value=rule.id, id=rule.id + 'Worst')
-									label(for=rule.id + 'Worst')= rule.name
+						-each rule in statistics[0].http.rules
+							li
+								input(type='checkbox', name='rules[]', value=rule.id, id=rule.id + 'Worst')
+								label(for=rule.id + 'Worst')= rule.name
 				input(type="submit", name="worst-http", value="Update Worst Performing")
 		div#tab-two.tab-page
 			// http best performance graph
@@ -140,11 +139,10 @@ div#page
 					h3.last Update the rules shown
 						span.arrow
 					ul
-						-each report in statistics
-							-each rule in report.http.rules
-								li
-									input(type='checkbox', name='rules[]', value=rule.id, id=rule.id + 'Best')
-									label(for=rule.id + 'Best')= rule.name
+						-each rule in statistics[0].http.rules
+							li
+								input(type='checkbox', name='rules[]', value=rule.id, id=rule.id + 'Best')
+								label(for=rule.id + 'Best')= rule.name
 				input(type="submit", name="best-http", value="Update Best Performing")
 		// tab three - javascript performance
 		div#tab-three.tab-page
@@ -165,5 +163,26 @@ div#page
 								td= new Date(report.date).toLocaleDateString() + '&nbsp;' + new Date(report.date).toLocaleTimeString()
 								-each javascript in report.javascript
 									td=javascript.value
+			// form for selecting different rules
+			form(method='post', class='rule-options')
+				fieldset(class='date collapsible')
+					h3.first Change the data range
+						span.arrow
+					ul
+						li
+							label(for='js-date-from') From:
+							input(type='text', name='js-date-from', id='js-date-from', class='has-date-picker date-from', value='02/01/2012')
+						li
+							label(for='js-date-to') To:
+							input(type='text', name='js-date-to', id='js-date-to', class='has-date-picker date-to', value='02/12/2012')
+				fieldset.collapsible
+					h3.last Update the rules shown
+						span.arrow
+					ul
+						-each javascript in statistics[0].javascript
+							li
+								input(type='checkbox', name='rules[]', value=javascript.id, id=javascript.id + 'Js')
+								label(for=javascript.id + 'Js')= javascript.name
+				input(type="submit", name="javascript-graph", value="Update Graph")
 								
 //include includes/scripts
