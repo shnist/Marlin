@@ -114,9 +114,11 @@ var pageStatistics = new Schema({
 		committer: String,
 		timeOfCommit: Date
 	},
-	javascript : {
-		pageLoadingTime: Number
-	},
+	javascript : [
+		{
+			name: String, value: Number	
+		}	
+	],
 	name: String,
 	date: Date
 });

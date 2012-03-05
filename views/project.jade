@@ -126,11 +126,6 @@ div#page
 										td= rule.score
 			// form for selecting different rules
 			form(method='post', class='rule-options')
-				fieldset(class='date collapsible')
-					h3.first Change the data range
-						span.arrow
-					ul
-						li
 							label(for='http-date-from') From:
 							input(type='text', name='http-date-from', id='http-date-from', class='has-date-picker date-from', value='02/01/2012')
 						li
@@ -146,4 +141,24 @@ div#page
 									input(type='checkbox', name='rules[]', value=rule.id, id=rule.id + 'Best')
 									label(for=rule.id + 'Best')= rule.name
 				input(type="submit", name="best-http", value="Update Best Performing")
+		// tab three - javascript performance
+		div#tab-three.tab-page
+			// javascript performance
+			h2 JavaScript Performance
+				a(href='#tabs', class='no-js') Go to navigation
+			div#javascript-chart.graph
+				table
+					caption A table to show JavaScript Performance
+					thead
+						tr
+							th Time of Commit
+							-each rules in statistics[0].javascript
+								th= rules
+					tbody
+						-each report in statistics
+							tr
+								td= new Date(report.date).toLocaleDateString() + '&nbsp;' + new Date(report.date).toLocaleTimeString()
+								-each rule, i in statistics.bestPerforming
+									-if (i <=  4)
+										td= rule.score
 //include includes/scripts
