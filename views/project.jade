@@ -126,6 +126,11 @@ div#page
 										td= rule.score
 			// form for selecting different rules
 			form(method='post', class='rule-options')
+				fieldset(class='date collapsible')
+					h3.first Change the data range
+						span.arrow
+					ul
+						li
 							label(for='http-date-from') From:
 							input(type='text', name='http-date-from', id='http-date-from', class='has-date-picker date-from', value='02/01/2012')
 						li
@@ -152,8 +157,8 @@ div#page
 					thead
 						tr
 							th Time of Commit
-							-each rules in statistics[0].javascript
-								th= rules
+							-each measurement in statistics[0].javascript
+								th= measurement.name
 					tbody
 						-each report in statistics
 							tr

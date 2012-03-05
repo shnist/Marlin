@@ -116,7 +116,7 @@ var pageStatistics = new Schema({
 	},
 	javascript : [
 		{
-			name: String, value: Number	
+			name: String, value: Number, id: String
 		}	
 	],
 	name: String,

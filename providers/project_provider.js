@@ -328,8 +328,6 @@ ProjectProvider.prototype.generateJavascript = function (document, object, callb
 	}
 	document.javascript = javaScriptMeasurementsArray;
 	
-	console.log(document.javascript);
-	
 	callback(null, document.javascript);
 }
 	
