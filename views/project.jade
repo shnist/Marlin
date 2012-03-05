@@ -163,7 +163,7 @@ div#page
 						-each report in statistics
 							tr
 								td= new Date(report.date).toLocaleDateString() + '&nbsp;' + new Date(report.date).toLocaleTimeString()
-								-each rule, i in statistics.bestPerforming
-									-if (i <=  4)
-										td= rule.score
+								-each javascript in report.javascript
+									td=javascript.value
+								
 //include includes/scripts

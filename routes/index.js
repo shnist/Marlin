@@ -49,7 +49,7 @@ exports.project = function(request, response){
 		}
 	}, function (error, results) {
 		if (error){
-			callback(error, null);
+			response.send(error);
 		} else {	
 			response.render('project', {locals: {
 				title : 'Marlin: Statistics for ' + results.statistics[0].name,

@@ -83,20 +83,25 @@ StatisticsProvider.prototype.findStatistics = function (search, callback) {
 			 * Selects all rules that are lower than 40 - worst performing
 			 * Selects all rules that are higher than 80 - best performing
 			 */
-			var i = 0, j = 0, worstPerforming = [], bestPerforming = [];
-			for (j; j < docs[0].http.rules.length; j = j + 1){
-				var score = docs[i].http.rules[j].score;
-				if (score < 40){
-					worstPerforming.push(docs[i].http.rules[j]);
-				} else if (score > 80){
-					bestPerforming.push(docs[i].http.rules[j]);
-				}
-			}		
-			
-			docs.worstPerforming = worstPerforming;
-			docs.bestPerforming = bestPerforming;
-			
-			callback(null, docs);
+			if (docs.length !== 0){
+				var i = 0, j = 0, worstPerforming = [], bestPerforming = [];
+				for (j; j < docs[0].http.rules.length; j = j + 1){
+					var score = docs[i].http.rules[j].score;
+					if (score < 40){
+						worstPerforming.push(docs[i].http.rules[j]);
+					} else if (score > 80){
+						bestPerforming.push(docs[i].http.rules[j]);
+					}
+				}		
+				
+				docs.worstPerforming = worstPerforming;
+				docs.bestPerforming = bestPerforming;
+				
+				callback(null, docs);	
+			} else {
+				callback('No results returned', null);
+			}
+
 		} else {
 			callback(err, null);
 		}
