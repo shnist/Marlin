@@ -30,10 +30,15 @@ exports.index = function(request, response){
 * With JavaScript turned on this is the only page
 * Shows bottom half of http rules
 * @function allProjectNames - gets a list of monitored projects
-* @function findAllStatistics - get all statistics for the chosen project
+* @function findStatistics - get all statistics for the chosen project
 */
 exports.projectWorst = function(request, response){
-	var project = request.param('name');
+	if (request.body.length === undefined){
+		var search = request.param('name');
+	} else {
+		// a POST has been executed 
+		// build search object with request.body parameters
+	}
 	
 	async.parallel({
 		projectNames : function (callback) {
@@ -42,21 +47,27 @@ exports.projectWorst = function(request, response){
 			});
 		},
 		statistics : function (callback) {
-			statisticsProvider.findAllStatistics(project, function (error, reports) {	  
+			statisticsProvider.findStatistics(search, function (error, reports) {	  
 				callback(error, reports)
 			});
 		}
 	}, function (error, results) {
 		if (error){
 			response.send(error);
-		} else {	
-			response.render('project', {locals: {
-				title : 'Marlin: Statistics for ' + results.statistics[0].name,
-				name: results.statistics[0].name,
-				projects: results.projectNames,
-				statistics: results.statistics		
-				}
-			});
+		} else {
+			console.log(results);
+			/**
+			 * Select the worst half of the http from the latest document
+			 */
+			
+			
+			//response.render('project', {locals: {
+			//	title : 'Marlin: Statistics for ' + results.statistics[0].name,
+			//	name: results.statistics[0].name,
+			//	projects: results.projectNames,
+			//	statistics: results.statistics		
+			//	}
+			//});
 		}
 	});	
 };

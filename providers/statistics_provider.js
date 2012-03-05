@@ -49,44 +49,37 @@ StatisticsProvider.prototype.allProjectNames = function (callback) {
 
 
 /**
- * Find All Statistics
+ * Find Statistics
  * Extracts all data from the chosen Statistics
- * This is for when the page first loads
+ * Defaults:
+ * 	DateTo: DATE = today
+ * 	DateFrom: DATE = yesterday
+ * 	ProjectName: STRING = name of project
  */
 
-StatisticsProvider.prototype.findAllStatistics = function (projectName, callback) {
-	/**
-	 * 	Dates - From current time to the day before
-	 * 	86 400 000 = a day
-	 */
-		var dateFrom = (new Date().getTime() - 86400000);
-		var dateTo = new Date().getTime();
+StatisticsProvider.prototype.findStatistics = function (parameters, callback) {
+	//86 400 000 = a day
+	var dateFrom = null,
+		dateTo = null,
+		projectName = '';
+		
+	if (typeof(parameters) !== 'object'){
+		// build default dates here,
+		// find is not filtered
+		dateFrom = (new Date().getTime() - 86400000);
+		dateTo = new Date().getTime();
+		projectName = parameters;
+	} else {
+		// get dates from post data
+		console.log('post request');
+	}
 		
 	Report.find({name: projectName})
 		.where('date').lte(dateTo)
 		.where('date').gt(dateFrom)
 	.run(function (err, docs){
 		if(!err){
-			/**
-			 * Filters the results of the rules
-			 * For the most recent document:
-			 * Selects all rules that are lower than 40 - worst performing
-			 * Selects all rules that are higher than 80 - best performing
-			 */
-			if (docs.length !== 0){
-				var i = 0, j = 0, worstPerforming = [], bestPerforming = [];
-				for (j; j < docs[0].http.rules.length; j = j + 1){
-					var score = docs[i].http.rules[j].score;
-					if (score < 40){
-						worstPerforming.push(docs[i].http.rules[j]);
-					} else if (score > 80){
-						bestPerforming.push(docs[i].http.rules[j]);
-					}
-				}		
-	
-				docs.worstPerforming = worstPerforming;
-				docs.bestPerforming = bestPerforming;
-				
+			if (docs.length !== 0){				
 				callback(null, docs);	
 			} else {
 				callback('No results returned', null);
