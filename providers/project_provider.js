@@ -322,7 +322,13 @@ ProjectProvider.prototype.generateRevision = function (document, object, callbac
  */
 
 ProjectProvider.prototype.generateJavascript = function (document, object, callback) {
-	document.javascript.pageLoadingTime = object.javascript.pageLoadingTime;
+	var javaScriptMeasurementsArray = [];
+	for (property in object.javascript){
+		javaScriptMeasurementsArray.push({'name': property, 'value': object.javascript[property]});	
+	}
+	document.javascript = javaScriptMeasurementsArray;
+	
+	console.log(document.javascript);
 	
 	callback(null, document.javascript);
 }
