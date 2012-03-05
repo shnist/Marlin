@@ -54,7 +54,19 @@ marlin.post('/', function (request, response) {
  * Statistics Page Router
  * Shows stastics for the chosen Statistics
  */
-marlin.get('/projects/:name', routes.project);
+/**
+ * GET
+ * When the user goes to project directly from url or from home page
+ */
+marlin.get('/projects/:name', routes.startProject);
+/**
+ * POST
+ * When the user submits a form on the project page
+ */
+marlin.post('/projects/:name', function(request, response){
+	console.log(request.body);
+});
+
 
 /**
  * New Report Page Router

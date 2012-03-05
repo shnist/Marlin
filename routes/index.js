@@ -29,12 +29,8 @@ exports.index = function(request, response){
 * allProjectNames - gets a list of monitored projects
 * findStatistics - get statistics for the chosen project
 */
-exports.project = function(request, response){
-	var searchTerms = {
-		project : request.param('name'),
-		dateFrom : request.param('date-from'),
-		dateTo: request.param('date-to')
-	};
+exports.startProject = function(request, response){
+	var project = request.param('name');
 	
 	async.parallel({
 		projectNames : function (callback) {
@@ -43,7 +39,7 @@ exports.project = function(request, response){
 			});
 		},
 		statistics : function (callback) {
-			statisticsProvider.findStatistics(searchTerms, function (error, reports) {	  
+			statisticsProvider.findAllStatistics(project, function (error, reports) {	  
 				callback(error, reports)
 			});
 		}

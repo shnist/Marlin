@@ -49,22 +49,18 @@ StatisticsProvider.prototype.allProjectNames = function (callback) {
 
 
 /**
- * Find Statistics
- * Extracts all data from the chosen Statistics 
+ * Find All Statistics
+ * Extracts all data from the chosen Statistics
+ * This is for when the page first loads
  */
 
-StatisticsProvider.prototype.findStatistics = function (search, callback) {
+StatisticsProvider.prototype.findAllStatistics = function (projectName, callback) {
 	/**
-	 * Defaults:
-	 * 	Date - From current time to the day before
+	 * 	Dates - From current time to the day before
 	 * 	86 400 000 = a day
 	 */
-	if (search.dateFrom === undefined){
-		search.dateFrom = (new Date().getTime() - 86400000);
-	}
-	if (search.dateTo === undefined){
-		search.dateTo = new Date().getTime()
-	}
+		var dateFrom = (new Date().getTime() - 86400000);
+		var dateTo = new Date().getTime();
 	/**
 	 * Data Selection
 	 * Chosing which items in the document to return
@@ -73,8 +69,8 @@ StatisticsProvider.prototype.findStatistics = function (search, callback) {
 	
 	
 	Report.find({name: search.project}, [])
-		.where('date').lte(search.dateTo)
-		.where('date').gt(search.dateFrom)
+		.where('date').lte(dateTo)
+		.where('date').gt(dateFrom)
 	.run(function (err, docs){
 		if(!err){
 			/**
@@ -93,7 +89,7 @@ StatisticsProvider.prototype.findStatistics = function (search, callback) {
 						bestPerforming.push(docs[i].http.rules[j]);
 					}
 				}		
-				
+	
 				docs.worstPerforming = worstPerforming;
 				docs.bestPerforming = bestPerforming;
 				
@@ -101,7 +97,6 @@ StatisticsProvider.prototype.findStatistics = function (search, callback) {
 			} else {
 				callback('No results returned', null);
 			}
-
 		} else {
 			callback(err, null);
 		}
