@@ -61,14 +61,8 @@ StatisticsProvider.prototype.findAllStatistics = function (projectName, callback
 	 */
 		var dateFrom = (new Date().getTime() - 86400000);
 		var dateTo = new Date().getTime();
-	/**
-	 * Data Selection
-	 * Chosing which items in the document to return
-	 */
-	// TO DO 
-	
-	
-	Report.find({name: search.project}, [])
+		
+	Report.find({name: projectName})
 		.where('date').lte(dateTo)
 		.where('date').gt(dateFrom)
 	.run(function (err, docs){
