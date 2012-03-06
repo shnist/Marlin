@@ -30,7 +30,7 @@ chart = {
 	 */
 	retrieveData: function (project, chartType, searchOptions) {
 		$.ajax({
-			url : project + '/ajax',
+			url : 'ajax',
 			data : searchOptions,
 			dataType: 'json',
 			type: 'post',
@@ -54,7 +54,7 @@ chart = {
 		//
 		//console.log(json);
 		//console.log(project);
-		//console.log(type);
+		console.log(type);
 		//
 		
 		// new data table
