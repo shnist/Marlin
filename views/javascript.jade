@@ -10,7 +10,7 @@ div#page
 		include includes/navigation
 		// javascript performance
 		h2 JavaScript Performance
-		div#javascript-chart.graph
+		div#chart-javascript.graph
 			table
 				caption A table to show JavaScript Performance
 				thead
@@ -49,3 +49,6 @@ div#page
 include includes/footer
 //scripts
 include includes/scripts
+script
+	google.load('visualization', '1.0', {'packages':['corechart']});
+	google.setOnLoadCallback(function(){chart.init()});

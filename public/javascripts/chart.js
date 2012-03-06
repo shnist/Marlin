@@ -17,32 +17,33 @@ chart = {
 			event.preventDefault();
 	
 			var project = $('input[name=project]', this).val(),
+				chartType = $('input[name=chart-type]', this).val(),
 				searchOptions = $(this).serialize();		
 			
 			// send off ajax request
-			chart.retrieveData(project, searchOptions);
+			chart.retrieveData(project, chartType, searchOptions);
 		});
 	},
 	/**
 	 * Retrieve Data
 	 * Sends AJAX request to retrieve data from server
 	 */
-	retrieveData: function (project, searchOptions) {
+	retrieveData: function (project, chartType, searchOptions) {
 		$.ajax({
 			url : project + '/ajax',
 			data : searchOptions,
 			dataType: 'json',
 			type: 'post',
 			success : function (data) {
-				console.log(data);
-				//chart.drawChart(data, project);
+				//console.log(data);
+				chart.drawChart(data, project, chartType);
 			},
 			error: function (object, stat, error) {
 				console.log(stat + ': ' + error);
 			}
 		});
 	},
-	drawChart : function (json, project){
+	drawChart : function (json, project, type){
 		/**
 		 * Dimensions default:
 		 * [600, 300]
@@ -50,53 +51,50 @@ chart = {
 		 * HTTP Best Performance
 		 * JavaScript Performance
 		 */
+		//
+		//console.log(json);
+		//console.log(project);
+		//console.log(type);
+		//
+		
 		// new data table
 		var data = new google.visualization.DataTable(),
-			i = 0, j, k = 0, key, keys = [];
+		i = 0, j = 0, k, title = '';
 		
-		// sets the number of columns and rows
-		for (key in json[0]){
-			keys.push(key);
-			switch (key){
-				case 'stylesheetsAtTop':
-					key = 'Put CSS in Document Head';
-					break;
-				case 'avoidCSSImport':
-					key = 'Avoid CSS Import';
-					break;
-				case 'loadTime':
-					key = 'Page Load Time';
-					break;
-				case 'avoidLongRunningScripts':
-					key = 'Avoid Long Running Scripts';
-					break;
-				case 'deferParsingJs':
-					key = 'Defer Parsing JavaScript';
-					break;				
-				default:
-					key = key;
-			}
-			if (key === 'timeStamp'){
-				data.addColumn('string', key);
+		for (i; i < (json.results[0].length + 1); i = i + 1){
+			// first column is timestamp
+			if(i === 0){
+				data.addColumn('string', 'Time Stamp');
 			} else {
-				data.addColumn('number', key);
+				data.addColumn('number', json.results[0][i-1].name);
 			}
 		}
 		
-		// the number of rows is calculated by the length of the JSON array
-		data.addRows(json.length);
+		// the number of rows is calculated by the length of the results
+		data.addRows(json.results.length);
 		
-		for (i; i < json.length; i = i + 1){
-			data.setValue(i, 0, json[i].timeStamp);
-			for (j = 1; j < data.B.length; j = j + 1){
-				data.setValue(i, j, json[i][keys[j]]);
+		for (j; j < json.results.length; j = j + 1){
+			data.setValue(j, 0, json.timeStamps[j]);
+			for (k = 1; k < data.B.length; k = k + 1){
+				data.setValue(j, k, json.results[j][k-1].score);
 			}
 		}
-		
-		var chart = new google.visualization.LineChart(document.getElementById(chartElement));
-		chart.draw(data, {chartArea: {top: 50, left: 30}, legend: {position: 'top'},width: dimensions[0], height: dimensions[1], title:title, vAxis:{maxValue: 100, minValue: 0}});
 
+		// setting the title
+		if (type === 'worst'){
+			title = 'HTTP Worst Performance';
+		} else if (type === 'best'){
+			title = 'HTTP Best Performance';
+		} else {
+			title = 'JavaScript Performance';
+		}
+
+		// remove tables
+		if ($('table', 'chart-' + type).hasClass('hidden') !== true){
+			$('table', 'chart-' + type).addClass('hidden');
+		}
 		
-	
+		var chart = new google.visualization.LineChart(document.getElementById('chart-' + type));
+		chart.draw(data, {chartArea: {top: 50, left: 30}, legend: {position: 'top'},width: 600, height: 300, title:title, vAxis:{maxValue: 100, minValue: 0}});
 	}
 };

@@ -10,7 +10,7 @@ div#page
 		include includes/navigation
 		// http best performance graph
 		h2 Best Performing HTTP rules
-		div#best-http-chart.graph
+		div#chart-best.graph
 			table
 				caption A table to show the best performing HTTP rules
 				thead
@@ -61,3 +61,6 @@ div#page
 include includes/footer
 //scripts
 include includes/scripts
+script
+	google.load('visualization', '1.0', {'packages':['corechart']});
+	google.setOnLoadCallback(function(){chart.init()});
