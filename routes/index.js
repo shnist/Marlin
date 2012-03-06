@@ -32,12 +32,11 @@ exports.index = function(request, response){
 * @function allProjectNames - gets a list of monitored projects
 * @function findStatistics - get all statistics for the chosen project
 */
-exports.projectWorst = function(request, response){
+exports.project = function(request, response){
 	if (request.body.length === undefined){
 		var search = request.param('name');
 	} else {
-		// a POST has been executed 
-		// build search object with request.body parameters
+		console.log(request.body);
 	}
 	
 	async.parallel({
@@ -103,14 +102,6 @@ exports.projectWorst = function(request, response){
 					}
 				});
 			}
-			
-			//response.render('project', {locals: {
-			//	title : 'Marlin: Statistics for ' + results.statistics[0].name,
-			//	name: results.statistics[0].name,
-			//	projects: results.projectNames,
-			//	statistics: results.statistics		
-			//	}
-			//});
 		}
 	});	
 };

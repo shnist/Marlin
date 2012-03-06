@@ -62,36 +62,34 @@ marlin.post('/', function (request, response) {
  * GET - "worst", fetches the worst performing statistics 
  * When the user goes to project directly from url or from home page
  */
-marlin.get('/projects/:name', routes.projectWorst);
+marlin.get('/projects/:name', routes.project);
 /**
  * GET - best, fetches the best performing statistics
  * When the user submits a form on the project page
  */
-//marlin.get('/projects/:name/best', routes.projectBest);
-marlin.get('/projects/:name/best', routes.projectWorst);
+marlin.get('/projects/:name/best', routes.project);
 /**
  * GET - javascript - fetches statistics for javascript performance
  */
-//marlin.get('/projects/:name/javascript', routes.projectJavaScript);
-marlin.get('/projects/:name/javascript', routes.projectWorst);
+marlin.get('/projects/:name/javascript', routes.project);
 
 /**
  * POST - best - fetches statistics on the worst performing page
  */
 marlin.post('/projects/:name', function (request, response) {
-	console.log(request);
+	console.log(request.body);
 });
 /**
  * POST - best - fetches statistics on the best performing page
  */
 marlin.post('/projects/:name/best', function (request, response) {
-	console.log(request);
+	console.log(request.body);
 });
 /**
  * POST - javascript - fetches statistics on the javascript page
 */
 marlin.post('/projects/:name/javascript', function (request, response) {
-	console.log(request);
+	console.log(request.body);
 });
 
 
