@@ -24,7 +24,7 @@ common = {
 	tabs : function () {
 		// hide the links inside the h2
 		$('a', '.tab-page h2').addClass('hidden');
-		$('input[type=submit]', '.rule-options').addClass('hidden');
+		//$('input[type=submit]', '.rule-options').addClass('hidden');
 		$('#tabs').tabs();
 	},
 	/* function that implements the custom select */
