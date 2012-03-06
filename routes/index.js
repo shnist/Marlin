@@ -59,14 +59,13 @@ exports.projectWorst = function(request, response){
 			 * Select the worst half of the http from the latest document
 			 */
 			var i = 0, j = 0, k = 0,
-				http = results.statistics[0].http.rules,
+				http = results.statistics,
 				javascript = [],
 				rules = [],
 				selectedRules = [];
 			
 			rules = statisticsProvider.filterRules(http, request.url);
 			rules = statisticsProvider.filterStatistics(rules, results.statistics);
-			// created selected rules
 			
 			// checks to see which url the request came from
 			if (request.url.match('/best')){

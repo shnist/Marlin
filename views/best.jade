@@ -50,7 +50,7 @@ div#page
 				h3.last Update the rules shown
 					span.arrow
 				ul
-					-each rule, i in statistics[0].http.rules
+					-each rule, i in stastics
 						-var checkedBest=false
 							-each name in statistics.bestPerforming
 								-if (name.id === rule.id && i <= 4)	

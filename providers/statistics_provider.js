@@ -94,18 +94,21 @@ StatisticsProvider.prototype.findStatistics = function (parameters, callback) {
  * Filter Rules
  * Returns a subset of the rules to be shown on the page
  */
-StatisticsProvider.prototype.filterRules = function (http, url) {
+StatisticsProvider.prototype.filterRules = function (stats, url) {
 	var rules = [], i = 0;
 	if (url.match('/best')){
 		
 	} else if (url.match('/javascript')){
 		
 	} else {
+		for (var j = 0; j < stats.length; j = j + 1){
+			stats[j].http.rules.sort(function (a,b){return a.score-b.score})
+		}
 		// sort the array in numerical order asc
-		http.sort(function (a,b){return a.score-b.score});
+		//http.sort(function (a,b){return a.score-b.score});
 	}
-	for (i; i < (http.length / 2); i = i + 1){
-		rules.push(http[i].id);
+	for (i; i < (stats[0].http.rules.length / 2); i = i + 1){
+		rules.push(stats[0].http.rules[i].id);
 	}
 	return rules;
 }
