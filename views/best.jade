@@ -52,6 +52,10 @@ div#page
 				h3.last Update the rules shown
 					span.arrow
 				ul
+					li.hidden
+						input(type='text', name='chart-type', value='worst', readonly='readonly')
+					li.hidden
+						input(type='text', name='project', value=name, readonly='readonly')
 					-each rule in statistics[0]
 						li
 							input(type='checkbox', name='rules[]', value=rule.id, id=rule.id)
