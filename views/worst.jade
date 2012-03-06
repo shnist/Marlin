@@ -24,9 +24,9 @@ div#page
 					-for(var i = 0; i < statistics.length; i = i + 1)
 						tr
 							td= new Date(reports[i].date).toLocaleDateString() + '&nbsp;' + new Date(reports[i].date).toLocaleTimeString()
-							-for (var j = 0; j < statistics[i].length; j = j + 1)
+							-each rule, j in statistics[i]
 								-if ((j + 1) <=  4)
-								td= statistics[i][j].name
+									td= rule.score
 									//-if ((i + 1) <=  4)
 										//td= rule.score
 
