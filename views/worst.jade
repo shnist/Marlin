@@ -22,7 +22,7 @@ div#page
 							-var chosen = []
 							-each rule, i in statistics[0]
 								-if ((i + 1) <= 4)
-									-chosen.push(rule.name)
+									-chosen.push(rule)
 									th= rule.name
 				tbody
 					-for(var i = 0; i < statistics.length; i = i + 1)
@@ -51,12 +51,21 @@ div#page
 				h3.last Update the rules shown
 					span.arrow
 				ul
+					li.hidden
+						input(type='text', name='chart-type', value='worst', readonly='readonly')
 					-each rule in statistics[0]
 						li
 							input(type='checkbox', name='rules[]', value=rule.id, id=rule.id)
 							label(for=rule.id)= rule.name
 			input(type="submit", name="submit", value="Update Worst Performing")
-	//footer
-	include includes/footer
-	//scripts
-	include includes/scripts
+//footer
+include includes/footer
+//scripts
+include includes/scripts
+script
+	var options = {
+		name : 'HTTP Worst Performance',
+		dimensions : [600, 300]
+	}
+	google.load('visualization', '1.0', {'packages':['corechart']});
+	google.setOnLoadCallback(function(){chart.init(options)});

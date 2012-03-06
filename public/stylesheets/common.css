@@ -88,9 +88,6 @@ input[type="submit"] {
   color: #2f2f2f;
   margin: 0 auto;
   background: #fff;
-  border-radius: 0 0 5px 5px;
-  -webkit-border-radius: 0 0 5px 5px;
-  -moz-border-radius: 0 0 5px 5px;
   box-shadow: 0 0 5px #888;
   -moz-box-shadow: 0 0 5px #888;
   -webkit-box-shadow: 0 0 5px #888;
