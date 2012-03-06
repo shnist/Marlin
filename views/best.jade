@@ -16,18 +16,26 @@ div#page
 				thead
 					tr
 						th Time of Commit
-						-var selected = []
-						-each rule, i in statistics[0]
-							-if ((i + 1) <= 4)
-								-selected.push(rule.name)
+						-if (selected !== null)
+							-each rule, i in selected[0]
 								th= rule.name
+						-else 
+							-var chosen = []
+							-each rule, i in statistics[0]
+								-if ((i + 1) <= 4)
+									-chosen.push(rule.name)
+									th= rule.name
 				tbody
 					-for(var i = 0; i < statistics.length; i = i + 1)
 						tr
 							td= new Date(reports[i].date).toLocaleDateString() + '&nbsp;' + new Date(reports[i].date).toLocaleTimeString()
-							-each rule, j in statistics[i]
-								-if ((j + 1) <=  4)
+							-if(selected !== null)
+								-each rule, j in selected[i]
 									td= rule.score
+							-else
+								-each rule, j in statistics[i]
+									-if ((j + 1) <=  4)
+										td= rule.score
 		// form for selecting different rules
 		form(method='post', class='rule-options')
 			fieldset(class='date collapsible')
@@ -36,10 +44,10 @@ div#page
 				ul
 					li
 						label(for='http-date-from') From:
-						input(type='text', name='date-from', id='http-date-from', class='has-date-picker date-from', value='03/05/2012')
+						input(type='text', name='date-from', id='http-date-from', class='has-date-picker date-from', value='03/06/2012')
 					li
 						label(for='http-date-to') To:
-						input(type='text', name='date-to', id='http-date-to', class='has-date-picker date-to', value='03/06/2012')
+						input(type='text', name='date-to', id='http-date-to', class='has-date-picker date-to', value='03/07/2012')
 			fieldset.collapsible
 				h3.last Update the rules shown
 					span.arrow

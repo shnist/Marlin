@@ -19,22 +19,22 @@ div#page
 							-each rule, i in selected[0]
 								th= rule.name
 						-else 
-							-var selected = []
+							-var chosen = []
 							-each rule, i in statistics[0]
 								-if ((i + 1) <= 4)
-									-selected.push(rule.name)
+									-chosen.push(rule.name)
 									th= rule.name
 				tbody
 					-for(var i = 0; i < statistics.length; i = i + 1)
 						tr
 							td= new Date(reports[i].date).toLocaleDateString() + '&nbsp;' + new Date(reports[i].date).toLocaleTimeString()
 							-if(selected !== null)
-								-each rule, j in selected[i]
+								-each rule in selected[i]
 									td= rule.score
 							-else
 								-each rule, j in statistics[i]
 									-if ((j + 1) <=  4)
-										td= rule.score
+										td= rule.score	
 		// form for selecting different rules
 		form(method='post', class='rule-options')
 			fieldset(class='date collapsible')
