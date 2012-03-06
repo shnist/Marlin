@@ -6,20 +6,20 @@ div#latest-information
 		ul
 			li
 				em.highlight Last Commit:&nbsp;
-				=statistics[0].revision.commitMessage
+				=reports[0].revision.commitMessage
 			li
 				em.highlight Last Committer:&nbsp;
-				=statistics[0].revision.committer
+				=reports[0].revision.committer
 			li
 				em.highlight Number of Commits:&nbsp;
-				=statistics.length
+				=reports.length
 			li
 				em.highlight Time of Last Commit:&nbsp;
-				=new Date(statistics[0].revision.timeOfCommit).toLocaleDateString() + '&nbsp;' + new Date(statistics[0].revision.timeOfCommit).toLocaleTimeString()
+				=new Date(reports[0].revision.timeOfCommit).toLocaleDateString() + '&nbsp;' + new Date(reports[0].revision.timeOfCommit).toLocaleTimeString()
 	// javascript performance
 	div#javascript-performance.column
 		h2 Latest JavaScript Performance
 		ul
 			li
 				em.highlight Page Load Time:&nbsp;
-				=statistics[0].javascript[0].value + 'ms'
+				=reports[0].javascript[0].value + 'ms'

@@ -66,7 +66,6 @@ exports.projectWorst = function(request, response){
 			
 			rules = statisticsProvider.filterRules(http, request.url);
 			rules = statisticsProvider.filterStatistics(rules, results.statistics);
-			
 			// created selected rules
 			
 			// checks to see which url the request came from
@@ -76,7 +75,7 @@ exports.projectWorst = function(request, response){
 						title: 'Marlin: Statistics for ' + request.param('name'),
 						name: request.param('name'),
 						projects: results.projectNames,
-						statistics: results.statistics
+						general: results.statistics[0]
 					}
 				});
 			} else if (request.url.match('/javascript')){
@@ -85,7 +84,7 @@ exports.projectWorst = function(request, response){
 					javascript.push(results.statistics[j].javascript);
 				}
 				
-				console.log(javascript);
+				
 				response.render('javascript', {
 					locals: {
 						title: 'Marlin: Statistics for ' + request.param('name'),
@@ -99,14 +98,15 @@ exports.projectWorst = function(request, response){
 				
 				
 			} else {
-				//response.render('worst', {
-				//	locals: {
-				//		title: 'Marlin: Statistics for ' + request.param('name'),
-				//		name: request.param('name'),
-				//		projects: results.projectNames,
-				//		statistics: results.statistics
-				//	}
-				//});
+				response.render('worst', {
+					locals: {
+						title: 'Marlin: Statistics for ' + request.param('name'),
+						name: request.param('name'),
+						projects: results.projectNames,
+						statistics: rules,
+						reports: results.statistics
+					}
+				});
 			}
 			
 			//response.render('project', {locals: {
