@@ -10,21 +10,20 @@ div#page
 		include includes/navigation
 		// javascript performance
 		h2 JavaScript Performance
-			a(href='#tabs', class='no-js') Go to navigation
 		div#javascript-chart.graph
 			table
 				caption A table to show JavaScript Performance
 				thead
 					tr
 						th Time of Commit
-						-each measurement in statistics[0].javascript
-							th= measurement.name
+						-each set in statistics[0]
+							th= set.name
 				tbody
-					-each report in statistics
+					-each set, i in statistics
 						tr
-							td= new Date(report.date).toLocaleDateString() + '&nbsp;' + new Date(report.date).toLocaleTimeString()
-							-each javascript in report.javascript
-								td=javascript.value
+							td= new Date(reports[i].date).toLocaleDateString() + '&nbsp;' + new Date(reports[i].date).toLocaleTimeString()
+							-each value in set
+								td=value.value
 		// form for selecting different rules
 		form(method='post', class='rule-options')
 			fieldset(class='date collapsible')
@@ -41,10 +40,10 @@ div#page
 				h3.last Update the rules shown
 					span.arrow
 				ul
-					-each javascript in statistics[0].javascript
+					-each set in statistics[0]
 						li
-							input(type='checkbox', name='rules[]', value=javascript.id, id=javascript.id + 'Js')
-							label(for=javascript.id + 'Js')= javascript.name
+							input(type='checkbox', name='rules[]', value=set.id, id=set.id)
+							label(for=set.id)= set.name
 			input(type="submit", name="javascript-graph", value="Update Graph")
 	//footer
 	include includes/footer

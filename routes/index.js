@@ -80,23 +80,18 @@ exports.projectWorst = function(request, response){
 				});
 			} else if (request.url.match('/javascript')){
 				// filter out the javascript statistics
-				for (j; j < results.statistics.lenght; j = j + 1){
+				for (j; j < results.statistics.length; j = j + 1){
 					javascript.push(results.statistics[j].javascript);
 				}
-				
-				
 				response.render('javascript', {
 					locals: {
 						title: 'Marlin: Statistics for ' + request.param('name'),
 						name: request.param('name'),
 						projects: results.projectNames,
-						statistics: results.statistics
+						statistics: javascript,
+						reports: results.statistics
 					}
 				});
-				
-				
-				
-				
 			} else {
 				response.render('worst', {
 					locals: {
