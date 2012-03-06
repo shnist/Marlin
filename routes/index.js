@@ -61,18 +61,24 @@ exports.projectWorst = function(request, response){
 			var i = 0, j = 0, k = 0,
 				http = results.statistics[0].http.rules,
 				javascript = [],
-				rules = [];
+				rules = [],
+				selectedRules = [];
 			
-			// sort the array in numerical order asc
-			http.sort(function (a,b){return a.score-b.score});
+			rules = statisticsProvider.filterRules(http, request.url);
+			rules = statisticsProvider.filterStatistics(rules, results.statistics);
 			
-			for (i; i < (rules.length / 2); i = i + 1){
-				rules.push(rules[i]);
-			}
+			// created selected rules
 			
 			// checks to see which url the request came from
 			if (request.url.match('/best')){
-				console.log('best');
+				response.render('best', {
+					locals: {
+						title: 'Marlin: Statistics for ' + request.param('name'),
+						name: request.param('name'),
+						projects: results.projectNames,
+						statistics: results.statistics
+					}
+				});
 			} else if (request.url.match('/javascript')){
 				// filter out the javascript statistics
 				for (j; j < results.statistics.lenght; j = j + 1){
@@ -93,7 +99,14 @@ exports.projectWorst = function(request, response){
 				
 				
 			} else {
-				console.log('worst');
+				//response.render('worst', {
+				//	locals: {
+				//		title: 'Marlin: Statistics for ' + request.param('name'),
+				//		name: request.param('name'),
+				//		projects: results.projectNames,
+				//		statistics: results.statistics
+				//	}
+				//});
 			}
 			
 			//response.render('project', {locals: {

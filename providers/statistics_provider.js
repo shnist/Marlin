@@ -90,6 +90,54 @@ StatisticsProvider.prototype.findStatistics = function (parameters, callback) {
 	});
 }
 
+/**
+ * Filter Rules
+ * Returns a subset of the rules to be shown on the page
+ */
+StatisticsProvider.prototype.filterRules = function (http, url) {
+	var rules = [], i = 0;
+	if (url.match('/best')){
+		
+	} else if (url.match('/javascript')){
+		
+	} else {
+		// sort the array in numerical order asc
+		http.sort(function (a,b){return a.score-b.score});
+	}
+	for (i; i < (http.length / 2); i = i + 1){
+		rules.push(http[i].id);
+	}
+	return rules;
+}
+
+/**
+ * Returns a subset of the statistics depending on the page selected
+ */
+StatisticsProvider.prototype.filterStatistics = function (rules, statistics) {
+	// loop through all the documents in the object
+	var i = 0, j = 0, k = 0,
+		results = [],
+		instance = [];
+	// loop through all the documents in the statistics object
+	for (i; i < statistics.length; i = i + 1){
+		// reset the array
+		instance = [];
+		// loop through each rule in the document
+		for (j = 0; j < statistics[i].http.rules.length; j = j + 1){
+			// loop through all the rules
+			for (k = 0; k < rules.length; k = k + 1){
+				// compare - if match, add object to instance				
+				if (statistics[i].http.rules[j].id === rules[k]){
+					instance.push(statistics[i].http.rules[j]);
+				}
+			}
+		}
+		// add instance to results
+		results.push(instance);
+	}
+	return results;
+}
+
 
 // exports the Statistics provider so it can be accessed elsewhere
 exports.StatisticsProvider = StatisticsProvider;
