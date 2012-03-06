@@ -143,6 +143,20 @@ StatisticsProvider.prototype.filterStatistics = function (rules, statistics) {
 	return results;
 }
 
+/**
+ * Filter Time Stamps
+ * Sends back an array of time stamps
+ */
+
+StatisticsProvider.prototype.filterTimeStamps = function (reports) {
+	var i = 0,
+		timeStamps = [];
+	for (i; i < reports.length; i = i + 1){
+		timeStamps.push(reports[i].date);
+	}
+	return timeStamps;
+}
+
 
 // exports the Statistics provider so it can be accessed elsewhere
 exports.StatisticsProvider = StatisticsProvider;

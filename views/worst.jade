@@ -9,7 +9,7 @@ div#page
 		include includes/latest_information
 		include includes/navigation
 		h2 Worst Performing HTTP Rules
-		div#http-chart.graph								
+		div#http-chart-worst.graph								
 			table
 				caption A table to show the worst performing HTTP rules
 				thead
@@ -53,6 +53,8 @@ div#page
 				ul
 					li.hidden
 						input(type='text', name='chart-type', value='worst', readonly='readonly')
+					li.hidden
+						input(type='text', name='project', value=name, readonly='readonly')
 					-each rule in statistics[0]
 						li
 							input(type='checkbox', name='rules[]', value=rule.id, id=rule.id)
@@ -63,9 +65,5 @@ include includes/footer
 //scripts
 include includes/scripts
 script
-	var options = {
-		name : 'HTTP Worst Performance',
-		dimensions : [600, 300]
-	}
 	google.load('visualization', '1.0', {'packages':['corechart']});
-	google.setOnLoadCallback(function(){chart.init(options)});
+	google.setOnLoadCallback(function(){chart.init()});

@@ -1,56 +1,55 @@
 var chart = window.chart || {};
 
 chart = {
-	init : function (options){
+	init : function (){
 		// remove the tables
 		//$('table', '.chart').addClass('hidden');
 		
-		//console.log(options);
-		this.submit(options);
+		this.submit();
 		
-		//chart.drawChart(jsonData, options.name, 'http-chart', options.dimensions);
-		//chart.drawChart(jsData, 'JavaScript Performance', 'javascript-chart', dimensions);
-		//chart.drawChart(bestData, 'HTTP Best Performance', 'best-http-chart', dimensions);
 	},
 	/**
 	 * Submit
 	 * Method that captures form submissions and triggers AJAX request
 	 */
-	submit : function (option) {
+	submit : function () {
 		$('.rule-options').submit(function (event) {
 			event.preventDefault();
-			var searchOptions = $(this).serialize();
-			console.log(searchOptions);
-			
+	
+			var project = $('input[name=project]', this).val(),
+				searchOptions = $(this).serialize();		
 			
 			// send off ajax request
-			chart.retrieveData(searchOptions);
+			chart.retrieveData(project, searchOptions);
 		});
 	},
 	/**
 	 * Retrieve Data
 	 * Sends AJAX request to retrieve data from server
 	 */
-	retrieveData: function (searchOptions) {
+	retrieveData: function (project, searchOptions) {
 		$.ajax({
-			url : '',
-			data: searchOptions,
+			url : project + '/ajax',
+			data : searchOptions,
 			dataType: 'json',
 			type: 'post',
 			success : function (data) {
-				$('.overlay').remove();
-				$('#content.results').removeClass('ajax');
-				// results stored here
-				Boonbox.results = data;
-				Boonbox.filters.dom.resetResults();
-				Boonbox.filters.dom.addResults(data, 1);
+				console.log(data);
+				//chart.drawChart(data, project);
 			},
 			error: function (object, stat, error) {
-				//console.log(stat + ': ' + error);
+				console.log(stat + ': ' + error);
 			}
 		});
 	},
-	drawChart : function (json, title, chartElement, dimensions){
+	drawChart : function (json, project){
+		/**
+		 * Dimensions default:
+		 * [600, 300]
+		 * HTTP Worst Performance
+		 * HTTP Best Performance
+		 * JavaScript Performance
+		 */
 		// new data table
 		var data = new google.visualization.DataTable(),
 			i = 0, j, k = 0, key, keys = [];

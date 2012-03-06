@@ -79,6 +79,7 @@ exports.project = function(request, response){
 				selectedRules = statisticsProvider.filterStatistics(request.body.rules, results.statistics);
 			}
 			
+			
 			// checks to see which url the request came from
 			if (request.url.match('/best')){
 				response.render('best', {
@@ -123,24 +124,30 @@ exports.project = function(request, response){
 };
 
 /**
- * Project Best
+ * Project Ajax
  * Shows the top half of http rules
  * @function allProjectNames = retrieves a list of all projects
  * @function findStatistics = find statistics based on the user's query
  */
-exports.projectBest = function (request, response) {
-	console.log(request);
-	
+exports.ajax = function (request, response) {
+	var search =  {
+			name : request.param('project'),
+			dateTo : request.param('date-to'),
+			dateFrom : request.param('date-from')
+	},
+	filtered = null;
+
+	statisticsProvider.findStatistics(search, function (error, reports) {	  
+		if(!error){
+			timeStamps = statisticsProvider.filterTimeStamps(reports);
+			filtered = statisticsProvider.filterStatistics(request.param('rules'), reports);
+			response.json({timeStamps: timeStamps, results: filtered});
+		} else {
+			response.json({error : error});
+		}
+	});
 }
 
-/**
- * Project JavaScript
- * Show JavaScript performance statistics
- * @function allProjectNames = retrieves a list of projects
- */
-exports.projectJavaScript = function (request, response){
-	console.log(request);
-}
 
 
 
