@@ -4,7 +4,9 @@ chart = {
 	init : function (){
 		// remove the tables
 		//$('table', '.chart').addClass('hidden');
-		
+		//var defaultValues = $('.rule-options').serialize();
+		//console.log(defaultValues);
+		//this.retrieveData($('input[name=project]', '.rule-options').val(), 'worst', defaultValues);
 		this.submit();
 		
 	},
@@ -18,7 +20,7 @@ chart = {
 	
 			var project = $('input[name=project]', this).val(),
 				chartType = $('input[name=chart-type]', this).val(),
-				searchOptions = $(this).serialize();		
+				searchOptions = $(this).serialize();
 			
 			// send off ajax request
 			chart.retrieveData(project, chartType, searchOptions);
@@ -52,10 +54,9 @@ chart = {
 		 * JavaScript Performance
 		 */
 		//
-		//console.log(json);
+		console.log(json);
 		//console.log(project);
 		//console.log(type);
-		//
 		
 		// new data table
 		var data = new google.visualization.DataTable(),

@@ -141,7 +141,7 @@ exports.ajax = function (request, response) {
 		if(!error){
 			timeStamps = statisticsProvider.filterTimeStamps(reports);
 			filtered = statisticsProvider.filterStatistics(request.param('rules'), reports);
-			response.json({timeStamps: timeStamps, results: filtered});
+			response.json({timeStamps: timeStamps, results: filtered}	);
 		} else {
 			response.json({error : error});
 		}
