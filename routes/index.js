@@ -38,9 +38,6 @@ exports.project = function(request, response){
 	
 	// if this is a post then create an array of user chosen stats to show
 	if (request.body.submit !== undefined){
-		console.log(request.body.rules);
-		// create an array of selected rules
-		selectedRules = request.body.rules;
 		search = {
 			name : request.param('name'),
 			dateTo : request.param('date-to'),
@@ -77,6 +74,11 @@ exports.project = function(request, response){
 			rules = statisticsProvider.filterRules(http, request.url);
 			rules = statisticsProvider.filterStatistics(rules, results.statistics);
 			
+			if (request.body.rules !== undefined){
+				// create an array of selected statistics for chosen rules
+				selectedRules = statisticsProvider.filterStatistics(request.body.rules, results.statistics);
+			}
+			
 			// checks to see which url the request came from
 			if (request.url.match('/best')){
 				response.render('best', {
@@ -85,7 +87,8 @@ exports.project = function(request, response){
 						name: request.param('name'),
 						projects: results.projectNames,
 						statistics: rules,
-						reports: results.statistics
+						reports: results.statistics,
+						selected: selectedRules
 					}
 				});
 			} else if (request.url.match('/javascript')){
@@ -99,7 +102,8 @@ exports.project = function(request, response){
 						name: request.param('name'),
 						projects: results.projectNames,
 						statistics: javascript,
-						reports: results.statistics
+						reports: results.statistics,
+						selected: selectedRules
 					}
 				});
 			} else {
@@ -109,7 +113,8 @@ exports.project = function(request, response){
 						name: request.param('name'),
 						projects: results.projectNames,
 						statistics: rules,
-						reports: results.statistics
+						reports: results.statistics,
+						selected: selectedRules
 					}
 				});
 			}
