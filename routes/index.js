@@ -84,7 +84,8 @@ exports.projectWorst = function(request, response){
 					locals: {
 						title: 'Marlin: Statistics for ' + request.param('name'),
 						name: request.param('name'),
-						projects: results.projectNames
+						projects: results.projectNames,
+						statistics: results.statistics
 					}
 				});
 				
