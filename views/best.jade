@@ -1,0 +1,56 @@
+// http best performance graph
+h2 Best Performing HTTP rules
+	a(href='#tabs', class='no-js') Go to navigation
+p The best performing rules:
+ul
+	-each rule in statistics.bestPerforming
+		li= rule.name + ': '
+			em= rule.score
+div#best-http-chart.graph
+	table
+		caption A table to show the best performing HTTP rules
+		thead
+			tr
+				th Time of Commit
+				-var selected = []
+				-each rule, i in statistics.bestPerforming
+					-if ((i + 1) <= 4)
+						-selected.push(rule.name)
+						th= rule.name
+		tbody
+			-each report in statistics
+				tr
+					td= new Date(report.date).toLocaleDateString() + '&nbsp;' + new Date(report.date).toLocaleTimeString()
+					-each rule, i in statistics.bestPerforming
+						-if ((i + 1) <=  4)
+							td= rule.score
+// form for selecting different rules
+form(method='post', class='rule-options')
+	fieldset(class='date collapsible')
+		h3.first Change the data range
+			span.arrow
+		ul
+			li
+				label(for='http-date-from') From:
+				input(type='text', name='http-date-from', id='http-date-from', class='has-date-picker date-from', value='02/01/2012')
+			li
+				label(for='http-date-to') To:
+				input(type='text', name='http-date-to', id='http-date-to', class='has-date-picker date-to', value='02/12/2012')
+	fieldset.collapsible
+		h3.last Update the rules shown
+			span.arrow
+		ul
+			-each rule, i in statistics[0].http.rules
+				-var checkedBest=false
+					-each name in statistics.bestPerforming
+						-if (name.id === rule.id && i <= 4)	
+							-checkedBest=true			
+					li
+						-if (checkedBest === false)
+							input(type='checkbox', name='rules[]', value=rule.id, id=rule.id + 'Best')
+							label(for=rule.id + 'Best')= rule.name
+						-else
+							input(type='checkbox', name='rules[]', value=rule.id, id=rule.id + 'Best', checked='checked')
+							label(for=rule.id + 'Best')= rule.name						
+	input(type="submit", name="best-http", value="Update Best Performing")
+

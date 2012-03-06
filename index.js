@@ -67,11 +67,13 @@ marlin.get('/projects/:name', routes.projectWorst);
  * GET - best, fetches the best performing statistics
  * When the user submits a form on the project page
  */
-marlin.get('/projects/:name/best', routes.projectBest);
+//marlin.get('/projects/:name/best', routes.projectBest);
+marlin.get('/projects/:name/best', routes.projectWorst);
 /**
  * GET - javascript - fetches statistics for javascript performance
  */
-marlin.get('/projects/:name/javascript', routes.projectJavaScript);
+//marlin.get('/projects/:name/javascript', routes.projectJavaScript);
+marlin.get('/projects/:name/javascript', routes.projectWorst);
 
 /**
  * POST - best - fetches statistics on the worst performing page

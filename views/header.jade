@@ -1,0 +1,11 @@
+div#header
+	// logo
+	img(src='../images/logo_white.png', alt='Marlin Logo', id='logo')
+	// form for selecting the different projects
+	form(method='post', id='project-selection')
+		fieldset
+			// the each for the different projects needs to go here
+			select(name='projects')
+				- each project in projects
+					option(value=project)!= project
+		input(type='submit', name='project-type', value='Select Project')

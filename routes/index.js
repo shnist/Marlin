@@ -55,11 +55,45 @@ exports.projectWorst = function(request, response){
 		if (error){
 			response.send(error);
 		} else {
-			console.log(results);
 			/**
 			 * Select the worst half of the http from the latest document
 			 */
+			var i = 0, j = 0, k = 0,
+				http = results.statistics[0].http.rules,
+				javascript = [],
+				rules = [];
 			
+			// sort the array in numerical order asc
+			http.sort(function (a,b){return a.score-b.score});
+			
+			for (i; i < (rules.length / 2); i = i + 1){
+				rules.push(rules[i]);
+			}
+			
+			// checks to see which url the request came from
+			if (request.url.match('/best')){
+				console.log('best');
+			} else if (request.url.match('/javascript')){
+				// filter out the javascript statistics
+				for (j; j < results.statistics.lenght; j = j + 1){
+					javascript.push(results.statistics[j].javascript);
+				}
+				
+				console.log(javascript);
+				response.render('javascript', {
+					locals: {
+						title: 'Marlin: Statistics for ' + request.param('name'),
+						name: request.param('name'),
+						projects: results.projectNames
+					}
+				});
+				
+				
+				
+				
+			} else {
+				console.log('worst');
+			}
 			
 			//response.render('project', {locals: {
 			//	title : 'Marlin: Statistics for ' + results.statistics[0].name,

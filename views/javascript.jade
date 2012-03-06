@@ -1,0 +1,38 @@
+// javascript performance
+h2 JavaScript Performance
+	a(href='#tabs', class='no-js') Go to navigation
+div#javascript-chart.graph
+	table
+		caption A table to show JavaScript Performance
+		thead
+			tr
+				th Time of Commit
+				-each measurement in statistics[0].javascript
+					th= measurement.name
+		tbody
+			-each report in statistics
+				tr
+					td= new Date(report.date).toLocaleDateString() + '&nbsp;' + new Date(report.date).toLocaleTimeString()
+					-each javascript in report.javascript
+						td=javascript.value
+// form for selecting different rules
+form(method='post', class='rule-options')
+	fieldset(class='date collapsible')
+		h3.first Change the data range
+			span.arrow
+		ul
+			li
+				label(for='js-date-from') From:
+				input(type='text', name='js-date-from', id='js-date-from', class='has-date-picker date-from', value='02/01/2012')
+			li
+				label(for='js-date-to') To:
+				input(type='text', name='js-date-to', id='js-date-to', class='has-date-picker date-to', value='02/12/2012')
+	fieldset.collapsible
+		h3.last Update the rules shown
+			span.arrow
+		ul
+			-each javascript in statistics[0].javascript
+				li
+					input(type='checkbox', name='rules[]', value=javascript.id, id=javascript.id + 'Js')
+					label(for=javascript.id + 'Js')= javascript.name
+	input(type="submit", name="javascript-graph", value="Update Graph")
