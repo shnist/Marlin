@@ -36,10 +36,10 @@ div#page
 				ul
 					li
 						label(for='http-date-from') From:
-						input(type='text', name='http-date-from', id='http-date-from', class='has-date-picker date-from', value='02/01/2012')
+						input(type='text', name='date-from', id='http-date-from', class='has-date-picker date-from', value='03/05/2012')
 					li
 						label(for='http-date-to') To:
-						input(type='text', name='http-date-to', id='http-date-to', class='has-date-picker date-to', value='02/12/2012')
+						input(type='text', name='date-to', id='http-date-to', class='has-date-picker date-to', value='03/06/2012')
 			fieldset.collapsible
 				h3.last Update the rules shown
 					span.arrow
@@ -48,7 +48,7 @@ div#page
 						li
 							input(type='checkbox', name='rules[]', value=rule.id, id=rule.id)
 							label(for=rule.id)= rule.name
-			input(type="submit", name="best-http", value="Update Best Performing")
+			input(type="submit", name="submit", value="Update Best Performing")
 	//footer
 	include includes/footer
 

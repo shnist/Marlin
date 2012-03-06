@@ -71,7 +71,9 @@ StatisticsProvider.prototype.findStatistics = function (parameters, callback) {
 		projectName = parameters;
 	} else {
 		// get dates from post data
-		console.log('post request');
+		dateFrom = new Date(parameters.dateFrom).getTime();
+		dateTo = new Date(parameters.dateTo).getTime();
+		projectName = parameters.name;
 	}
 		
 	Report.find({name: projectName})

@@ -32,10 +32,10 @@ div#page
 				ul
 					li
 						label(for='js-date-from') From:
-						input(type='text', name='js-date-from', id='js-date-from', class='has-date-picker date-from', value='02/01/2012')
+						input(type='text', name='date-from', id='js-date-from', class='has-date-picker date-from', value='03/05/2012')
 					li
 						label(for='js-date-to') To:
-						input(type='text', name='js-date-to', id='js-date-to', class='has-date-picker date-to', value='02/12/2012')
+						input(type='text', name='date-to', id='js-date-to', class='has-date-picker date-to', value='03/06/2012')
 			fieldset.collapsible
 				h3.last Update the rules shown
 					span.arrow
@@ -44,6 +44,6 @@ div#page
 						li
 							input(type='checkbox', name='rules[]', value=set.id, id=set.id)
 							label(for=set.id)= set.name
-			input(type="submit", name="javascript-graph", value="Update Graph")
+			input(type="submit", name="submit", value="Update Graph")
 	//footer
 	include includes/footer

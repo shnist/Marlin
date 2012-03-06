@@ -76,21 +76,15 @@ marlin.get('/projects/:name/javascript', routes.project);
 /**
  * POST - best - fetches statistics on the worst performing page
  */
-marlin.post('/projects/:name', function (request, response) {
-	console.log(request.body);
-});
+marlin.post('/projects/:name', routes.project);
 /**
  * POST - best - fetches statistics on the best performing page
  */
-marlin.post('/projects/:name/best', function (request, response) {
-	console.log(request.body);
-});
+marlin.post('/projects/:name/best', routes.project);
 /**
  * POST - javascript - fetches statistics on the javascript page
 */
-marlin.post('/projects/:name/javascript', function (request, response) {
-	console.log(request.body);
-});
+marlin.post('/projects/:name/javascript', routes.project);
 
 
 /**

@@ -33,11 +33,23 @@ exports.index = function(request, response){
 * @function findStatistics - get all statistics for the chosen project
 */
 exports.project = function(request, response){
-	if (request.body.length === undefined){
-		var search = request.param('name');
+	var selectedRules = null,
+		search = null;
+	
+	// if this is a post then create an array of user chosen stats to show
+	if (request.body.submit !== undefined){
+		console.log(request.body.rules);
+		// create an array of selected rules
+		selectedRules = request.body.rules;
+		search = {
+			name : request.param('name'),
+			dateTo : request.param('date-to'),
+			dateFrom : request.param('date-from')
+		};
 	} else {
-		console.log(request.body);
+		search = request.param('name');	
 	}
+	
 	
 	async.parallel({
 		projectNames : function (callback) {
@@ -60,8 +72,7 @@ exports.project = function(request, response){
 			var i = 0, j = 0, k = 0,
 				http = results.statistics,
 				javascript = [],
-				rules = [],
-				selectedRules = [];
+				rules = [];
 			
 			rules = statisticsProvider.filterRules(http, request.url);
 			rules = statisticsProvider.filterStatistics(rules, results.statistics);
