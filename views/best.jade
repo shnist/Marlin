@@ -10,12 +10,6 @@ div#page
 		include includes/navigation
 		// http best performance graph
 		h2 Best Performing HTTP rules
-			a(href='#tabs', class='no-js') Go to navigation
-		p The best performing rules:
-		ul
-			-each rule in statistics.bestPerforming
-				li= rule.name + ': '
-					em= rule.score
 		div#best-http-chart.graph
 			table
 				caption A table to show the best performing HTTP rules
@@ -23,16 +17,16 @@ div#page
 					tr
 						th Time of Commit
 						-var selected = []
-						-each rule, i in statistics.bestPerforming
+						-each rule, i in statistics[0]
 							-if ((i + 1) <= 4)
 								-selected.push(rule.name)
 								th= rule.name
 				tbody
-					-each report in statistics
+					-for(var i = 0; i < statistics.length; i = i + 1)
 						tr
-							td= new Date(report.date).toLocaleDateString() + '&nbsp;' + new Date(report.date).toLocaleTimeString()
-							-each rule, i in statistics.bestPerforming
-								-if ((i + 1) <=  4)
+							td= new Date(reports[i].date).toLocaleDateString() + '&nbsp;' + new Date(reports[i].date).toLocaleTimeString()
+							-each rule, j in statistics[i]
+								-if ((j + 1) <=  4)
 									td= rule.score
 		// form for selecting different rules
 		form(method='post', class='rule-options')
@@ -50,18 +44,10 @@ div#page
 				h3.last Update the rules shown
 					span.arrow
 				ul
-					-each rule, i in stastics
-						-var checkedBest=false
-							-each name in statistics.bestPerforming
-								-if (name.id === rule.id && i <= 4)	
-									-checkedBest=true			
-							li
-								-if (checkedBest === false)
-									input(type='checkbox', name='rules[]', value=rule.id, id=rule.id + 'Best')
-									label(for=rule.id + 'Best')= rule.name
-								-else
-									input(type='checkbox', name='rules[]', value=rule.id, id=rule.id + 'Best', checked='checked')
-									label(for=rule.id + 'Best')= rule.name						
+					-each rule in statistics[0]
+						li
+							input(type='checkbox', name='rules[]', value=rule.id, id=rule.id)
+							label(for=rule.id)= rule.name
 			input(type="submit", name="best-http", value="Update Best Performing")
 	//footer
 	include includes/footer

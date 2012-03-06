@@ -74,7 +74,8 @@ exports.projectWorst = function(request, response){
 						title: 'Marlin: Statistics for ' + request.param('name'),
 						name: request.param('name'),
 						projects: results.projectNames,
-						general: results.statistics[0]
+						statistics: rules,
+						reports: results.statistics
 					}
 				});
 			} else if (request.url.match('/javascript')){

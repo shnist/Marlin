@@ -27,9 +27,6 @@ div#page
 							-each rule, j in statistics[i]
 								-if ((j + 1) <=  4)
 									td= rule.score
-									//-if ((i + 1) <=  4)
-										//td= rule.score
-
 		// form for selecting different rules
 		form(method='post', class='rule-options')
 			fieldset(class='date collapsible')
