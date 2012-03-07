@@ -23,9 +23,26 @@ tabs = {
 		$('li:last-child a', '.tab-navigation').attr('href', '#tab-three');
 		
 		$('#tabs').tabs();
-	},
-	requestPage : function () {
 		
+		this.navEventHandlers();
+	},
+	/**
+	 * Navigation Event Handlers
+	 * Triggers AJAX request to the appropriate page
+	 */
+	navEventHandlers : function () {
+		$('.tab-navigation a').click(function (event) {
+			event.preventDefault();
+			var tab = $(this).attr('href');
+
+			if ($(tab).html().trim() === ''){
+				tabs.requestPage(tab);				
+			}
+		});
+	
+	},
+	requestPage : function (tab) {
+
 		
 	}
 };
