@@ -1,47 +1,16 @@
 var common = window.common || {};
 
-
+/**
+ * Methods that need to be applied on page load
+ */
 common.functions = {
 	init : function () {
-		//this.collapse();
+		common.widgets.init();
 		this.customSelect();
 	},
-
-	/* Function that creates the collapsible options */
-	//collapse: function (){
-	//	$('.collapsible ul').addClass('hidden');
-	//	$('.collapsible h3').click(function () {
-	//		$('ul', $(this).parent('.collapsible')).slideToggle('slow');
-	//		$(this).parent('.collapsible').toggleClass('active');
-	//	});
-	//},
 	/* function that implements the custom select */
 	customSelect : function (){
 		$('#project-selection select').flyweightCustomSelect();
-	},
-	/* method that validates the dates to make sure that the from is always before
-	 * the two
-	 */
-	dateValidation : function (){
-		
-		$('.date input').blur(function (){
-			$parentFieldset = $(this).parents('.date');
-			var timer = setTimeout(function(){validate($parentFieldset)}, 500);
-			function validate ($parentFieldset) {
-				$('p.error', $parentFieldset).remove();
-				$('.date-from', $parentFieldset).removeClass('error');
-				
-				var fromDate = $('.date-from', $parentFieldset).val(),
-					toDate = $('.date-to', $parentFieldset).val(),
-					fromTimeStamp = Date.parse(fromDate);
-					toTimeStamp = Date.parse(toDate);
-					
-				if (fromTimeStamp > toTimeStamp){
-					$('ul', $parentFieldset).prepend('<p class="error">Please select a date that is before the to date</p>');
-					$('.date-from', $parentFieldset).addClass('error');
-				}
-			}
-		});
 	}
 };
 
@@ -91,7 +60,31 @@ common.widgets = {
  * Validation of forms
  */
 common.validation = {
-	
+	/**
+	 * Validates the date range of the form a
+	 * From date cannot be higher than to date
+	 */
+	dateValidation : function (){
+		
+		$('.date input').blur(function (){
+			$parentFieldset = $(this).parents('.date');
+			var timer = setTimeout(function(){validate($parentFieldset)}, 500);
+			function validate ($parentFieldset) {
+				$('p.error', $parentFieldset).remove();
+				$('.date-from', $parentFieldset).removeClass('error');
+				
+				var fromDate = $('.date-from', $parentFieldset).val(),
+					toDate = $('.date-to', $parentFieldset).val(),
+					fromTimeStamp = Date.parse(fromDate);
+					toTimeStamp = Date.parse(toDate);
+					
+				if (fromTimeStamp > toTimeStamp){
+					$('ul', $parentFieldset).prepend('<p class="error">Please select a date that is before the to date</p>');
+					$('.date-from', $parentFieldset).addClass('error');
+				}
+			}
+		});
+	}
 
 };
 
