@@ -2,12 +2,9 @@ var chart = window.chart || {};
 
 chart = {
 	init : function (){
-		// remove the tables
-		//$('table', '.chart').addClass('hidden');
-		//var defaultValues = $('.rule-options').serialize();
-		//console.log(defaultValues);
-		//this.retrieveData($('input[name=project]', '.rule-options').val(), 'worst', defaultValues);
 		this.submit();
+		// auto submission on page load to create graph
+		$('.rule-options').submit();
 		
 	},
 	/**
@@ -32,7 +29,7 @@ chart = {
 	 */
 	retrieveData: function (project, chartType, searchOptions) {
 		$.ajax({
-			url : project + '/ajax',
+			url : '/' + project + '/ajax',
 			data : searchOptions,
 			dataType: 'json',
 			type: 'post',
@@ -53,10 +50,6 @@ chart = {
 		 * HTTP Best Performance
 		 * JavaScript Performance
 		 */
-		//
-		console.log(json);
-		//console.log(project);
-		//console.log(type);
 		
 		// new data table
 		var data = new google.visualization.DataTable(),

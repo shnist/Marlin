@@ -55,7 +55,7 @@ exports.project = function(request, response){
 			});
 		},
 		statistics : function (callback) {
-			statisticsProvider.findStatistics(search, function (error, reports) {	  
+			statisticsProvider.findStatistics(search, function (error, reports) {
 				callback(error, reports)
 			});
 		}
@@ -68,11 +68,9 @@ exports.project = function(request, response){
 			 */
 			var i = 0, j = 0, k = 0,
 				http = results.statistics,
-				javascript = [],
-				rules = [];
-			
-			rules = statisticsProvider.filterRules(http, request.url);
-			rules = statisticsProvider.filterStatistics(rules, results.statistics);
+				rules = [],
+				view = '';
+
 			
 			if (request.body.rules !== undefined){
 				// create an array of selected statistics for chosen rules
@@ -80,45 +78,33 @@ exports.project = function(request, response){
 			}
 			
 			
-			// checks to see which url the request came from
-			if (request.url.match('/best')){
-				response.render('best', {
-					locals: {
-						title: 'Marlin: Statistics for ' + request.param('name'),
-						name: request.param('name'),
-						projects: results.projectNames,
-						statistics: rules,
-						reports: results.statistics,
-						selected: selectedRules
-					}
-				});
-			} else if (request.url.match('/javascript')){
+			if (request.url.match('/javascript')){
+				view = 'javascript';
 				// filter out the javascript statistics
 				for (j; j < results.statistics.length; j = j + 1){
-					javascript.push(results.statistics[j].javascript);
-				}
-				response.render('javascript', {
-					locals: {
-						title: 'Marlin: Statistics for ' + request.param('name'),
-						name: request.param('name'),
-						projects: results.projectNames,
-						statistics: javascript,
-						reports: results.statistics,
-						selected: selectedRules
-					}
-				});
+					rules.push(results.statistics[j].javascript);
+				}				
 			} else {
-				response.render('worst', {
-					locals: {
-						title: 'Marlin: Statistics for ' + request.param('name'),
-						name: request.param('name'),
-						projects: results.projectNames,
-						statistics: rules,
-						reports: results.statistics,
-						selected: selectedRules
-					}
-				});
+				if (request.url.match('/best')){
+					view = 'best';
+				} else{
+					view = 'worst';
+				}
+				rules = statisticsProvider.filterRules(http, request.url);
+				rules = statisticsProvider.filterStatistics(rules, results.statistics);
 			}
+			
+			// render out the page
+			response.render(view, {
+				locals: {
+					title: 'Marlin: Statistics for ' + request.param('name'),
+					name: request.param('name'),
+					projects: results.projectNames,
+					statistics: rules,
+					reports: results.statistics,
+					selected: selectedRules
+				}
+			});
 		}
 	});	
 };
@@ -148,11 +134,11 @@ exports.ajax = function (request, response) {
 	});
 }
 
-
-
-
-
-
+/**
+ * New Report
+ * Generates a new report
+ * @function gatherStatistics = creates and stores new report
+ */
 exports.newReport = function (request, response) {
 	/**
 	* The parameters that are sent through:

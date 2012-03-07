@@ -44,10 +44,23 @@ div#page
 						input(type='text', name='chart-type', value='javascript', readonly='readonly')
 					li.hidden
 						input(type='text', name='project', value=name, readonly='readonly')
-					-each set in statistics[0]
+					-var checked=false
+					-each rule, i in statistics[0]
+						-if (selected !== null)
+							-each name in selected
+									-if (name === rule.id)	
+										-checked=true
+									-else
+										-checked=false
+						-else
+							-checked=true
 						li
-							input(type='checkbox', name='rules[]', value=set.id, id=set.id)
-							label(for=set.id)= set.name
+							-if (checked === false)
+								input(type='checkbox', name='rules[]', value=rule.id, id=rule.id)
+								label(for=rule.id)= rule.name
+							-else
+								input(type='checkbox', name='rules[]', value=rule.id, id=rule.id, checked='checked')
+								label(for=rule.id)= rule.name
 			input(type="submit", name="submit", value="Update Graph")
 //footer
 include includes/footer
