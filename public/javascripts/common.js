@@ -44,8 +44,8 @@ common.widgets = {
 	 */
 	accordion : function($accordion){
 		$accordion.each(function () {
+			$(this).find('ul').addClass('hidden');
 			$(this).find('h3').click(function () {
-				console.log($(this).parent('.collapsible'))
 				$('ul', $(this).parent('.collapsible')).slideToggle('slow').removeClass('hidden');
 				$(this).parent('.collapsible').toggleClass('active');
 			});

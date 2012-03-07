@@ -88,5 +88,9 @@ tabs = {
 		$form = island.find('.rule-options');
 		
 		$(tab).append($title, $results, $form);
+		
+		// apply event handlers to new elements
+		common.widgets.apply($(tab));
+		chart.init();
 	}
 };
