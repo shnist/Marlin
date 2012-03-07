@@ -68,6 +68,9 @@ input[type="submit"] {
   vertical-align: top;
   height: 40px;
 }
+#island {
+  display: none;
+}
 /* Common Classes */
 .highlight {
   font-weight: bold;

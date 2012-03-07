@@ -22,6 +22,8 @@ tabs = {
 		$('li', '.tab-navigation').eq(1).children('a').attr('href', '#tab-two');
 		$('li:last-child a', '.tab-navigation').attr('href', '#tab-three');
 		
+		$('body').append('<div id="island"></div>');
+		
 		$('#tabs').tabs();
 		
 		this.navEventHandlers();
@@ -46,28 +48,49 @@ tabs = {
 	 * Sends an AJAX request to retrieve HTML content for right page
 	 */
 	requestPage : function (tab) {
-		var page = '';
+		var project = $('input[name=project]', '#tab-one .rule-options').val(),
+			page =  project + '/';
 		if (tab !== '#tab-one') {
 			if (tab === '#tab-two'){
-				page = 'best';
+				page = page + 'best';
 			} else {
-				page = 'javascript';
+				page = page + 'javascript';
 			}
 		}
+		
+		console.log(page);
 		
 		$.ajax({
 			url : page,
 			dataType: 'html',
 			type: 'get',
 			success : function (data) {
-				console.log(data);
+				tabs.processHtml(data, tab);
 			},
 			error: function (object, stat, error) {
 				console.log(stat + ': ' + error);
 			}
-		})
+		});
+	},
+	/**
+	 * Process HTML
+	 * Extracts the relevant part of the HTML from the request page
+	 * and injects it onto the page
+	 */
+	processHtml: function (html, tab) {
+		// add the response to the dom.
+		var island = $(html),
+			title = '',
+			results = '',
+			form = '';
 		
-
+		// scrape the information out
+		title = island.find('.rule-title');
+		results = island.find('.graph');
+		form = island.find('.rule-options');
+		
+		$(tab).append(title, results, form);
+		
 		
 	}
 };
