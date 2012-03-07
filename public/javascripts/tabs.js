@@ -58,8 +58,6 @@ tabs = {
 			}
 		}
 		
-		console.log(page);
-		
 		$.ajax({
 			url : page,
 			dataType: 'html',

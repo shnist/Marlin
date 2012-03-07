@@ -1,24 +1,71 @@
 var common = window.common || {};
 
-common = {
+/**
+ * Widgets
+ * Applies common functionality across the site
+ */
+common.widgets = {
 	init : function () {
-		this.datePicker();
-		this.collapse();
-		this.customSelect();
+		common.widgets.apply($('body'));
 	},
-	/* Function that creates datepicker functionality */
-	datePicker : function (){
-		$('.has-date-picker').datepicker();
+	/**
+	 * Returned HTML from ajax can have event handlers applied
+	 * to is selectively using the $context variable
+	 */
+	apply : function ($context) {
+		common.widgets.datePicker($context.find('.has-date-picker'));
+		common.widgets.accordion($context.find('.collapsible'));
+	},
+	/**
+	 * Applies JQuery UI datepicker
+	 */
+	datePicker : function ($datePicker){
+		$datePicker.foreach(function () {
+			$(this).datePicker();	
+		});
 		common.dateValidation();
 	},
-	/* Function that creates the collapsible options */
-	collapse: function (){
-		$('.collapsible ul').addClass('hidden');
-		$('.collapsible h3').click(function () {
-			$('ul', $(this).parent('.collapsible')).slideToggle('slow');
-			$(this).parent('.collapsible').toggleClass('active');
+	/**
+	 * Applies custom accordion to the form
+	 */
+	accordion : function($accordion){
+		$accordion.foreach(function () {
+			$(this).find('ul').addClass('hidden');
+			$(this).find('h3').click(function () {
+				console.log($(this))
+				$('ul', $(this)).slideToggle('slow');
+				$(this).parent('.collapsible').toggleClass('active');
+			});
+		
 		});
+		
+	}
+	
+};
+
+
+/**
+ * Validation of forms
+ */
+common.validation = {
+	
+
+};
+
+common = {
+	init : function () {
+		//this.collapse();
+		this.customSelect();
 	},
+
+	/* Function that creates the collapsible options */
+	//collapse: function (){
+	//	$('.collapsible ul').addClass('hidden');
+	//	$('.collapsible h3').click(function () {
+	//		$('ul', $(this).parent('.collapsible')).slideToggle('slow');
+	//		$(this).parent('.collapsible').toggleClass('active');
+	//	});
+	//},
 	/* function that implements the custom select */
 	customSelect : function (){
 		$('#project-selection select').flyweightCustomSelect();

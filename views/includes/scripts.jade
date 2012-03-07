@@ -8,5 +8,8 @@ script(src='/javascripts/tabs.js')
 script
     $(document).ready(function (){
         common.init();
+        common.widgets.init();
         tabs.init();
     });
+    google.load('visualization', '1.0', {'packages':['corechart']});
+    google.setOnLoadCallback(function(){chart.init()});
