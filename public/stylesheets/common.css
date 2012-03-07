@@ -558,7 +558,12 @@ input[type="submit"] {
   color: #013897;
 }
 .ui-datepicker-calendar td:hover {
-  background: linear-gradient(top, #ff8b17, 0%, #fd6b00, 100%);
+  background-color: #ff8b17;
+  background-image: -webkit-linear-gradient(top, #ff8b17 0%, #fd6b00 100%);
+  background-image: -moz-linear-gradient(top, #ff8b17 0%, #fd6b00 100%);
+  background-image: -ms-linear-gradient(top, #ff8b17 0%, #fd6b00 100%);
+  background-image: -o-linear-gradient(top, #ff8b17 0%, #fd6b00 100%);
+  background-image: linear-gradient(top, #ff8b17 0%, #fd6b00 100%);
 }
 .ui-datepicker-calendar .ui-datepicker-unselectable:hover {
   background: #fff;
