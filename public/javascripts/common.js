@@ -4,7 +4,6 @@ common = {
 	init : function () {
 		this.datePicker();
 		this.collapse();
-		this.tabs();
 		this.customSelect();
 	},
 	/* Function that creates datepicker functionality */
@@ -19,13 +18,6 @@ common = {
 			$('ul', $(this).parent('.collapsible')).slideToggle('slow');
 			$(this).parent('.collapsible').toggleClass('active');
 		});
-	},
-	/* function that implements the tabs */
-	tabs : function () {
-		// hide the links inside the h2
-		$('a', '.tab-page h2').addClass('hidden');
-		//$('input[type=submit]', '.rule-options').addClass('hidden');
-		$('#tabs').tabs();
 	},
 	/* function that implements the custom select */
 	customSelect : function (){
