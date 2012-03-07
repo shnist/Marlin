@@ -61,6 +61,26 @@ div#page
 							li
 								input(type='checkbox', name='rules[]', value=rule.id, id=rule.id)
 								label(for=rule.id)= rule.name
+					-var checked=false
+					-each rule, i in statistics[0]
+						-if (selected !== null)
+							-each name in selected
+									-if (name === rule.id)	
+										-checked=true
+									-else
+										-checked=false
+						-else
+							-if ((i + 1) <= 4)
+								-checked=true
+							-else
+								-checked=false
+						li
+							-if (checked === false)
+								input(type='checkbox', name='rules[]', value=rule.id, id=rule.id)
+								label(for=rule.id)= rule.name
+							-else
+								input(type='checkbox', name='rules[]', value=rule.id, id=rule.id, checked='checked')
+								label(for=rule.id)= rule.name
 			input(type="submit", name="submit", value="Update Worst Performing")
 //footer
 include includes/footer
