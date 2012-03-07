@@ -41,7 +41,32 @@ tabs = {
 		});
 	
 	},
+	/**
+	 * Request Page
+	 * Sends an AJAX request to retrieve HTML content for right page
+	 */
 	requestPage : function (tab) {
+		var page = '';
+		if (tab !== '#tab-one') {
+			if (tab === '#tab-two'){
+				page = 'best';
+			} else {
+				page = 'javascript';
+			}
+		}
+		
+		$.ajax({
+			url : page,
+			dataType: 'html',
+			type: 'get',
+			success : function (data) {
+				console.log(data);
+			},
+			error: function (object, stat, error) {
+				console.log(stat + ': ' + error);
+			}
+		})
+		
 
 		
 	}
