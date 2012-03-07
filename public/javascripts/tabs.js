@@ -80,15 +80,15 @@ tabs = {
 	processHtml: function (html, tab) {
 		// add the response to the dom.
 		var island = $(html),
-			title = '',
-			results = '',
-			form = '';
+			$title = '',
+			$results = '',
+			$form = '';
 		
 		// scrape the information out
-		title = island.find('.rule-title');
-		results = island.find('.graph');
-		form = island.find('.rule-options');
+		$title = island.find('.rule-title');
+		$results = island.find('.graph');
+		$form = island.find('.rule-options');
 		
-		$(tab).append(title, results, form);
+		$(tab).append($title, $results, $form);
 	}
 };
