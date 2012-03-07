@@ -11,7 +11,9 @@ tabs = {
 	 * Creates the markup to inject the tabs
 	 */
 	init : function () {
-		
+		$('#content h2, .graph, .rule-options').css({
+			border: '1px solid'
+		})
 		
 		
 		
