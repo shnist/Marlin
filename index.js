@@ -91,7 +91,7 @@ marlin.post('/projects/:name/javascript', routes.project);
  * AJAX Router
  * Handles ajax requests from the client
  */
-marlin.post('/projects/:name/ajax', routes.ajax);
+marlin.post('/:name/ajax', routes.ajax);
 
 /**
  * New Report Page Router

@@ -29,7 +29,7 @@ chart = {
 	 */
 	retrieveData: function (project, chartType, searchOptions) {
 		$.ajax({
-			url : project + '/ajax',
+			url : '/' + project + '/ajax',
 			data : searchOptions,
 			dataType: 'json',
 			type: 'post',

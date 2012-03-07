@@ -95,6 +95,7 @@ StatisticsProvider.prototype.findStatistics = function (parameters, callback) {
 /**
  * Filter Rules
  * Returns a subset of the rules to be shown on the page
+ * 
  */
 StatisticsProvider.prototype.filterRules = function (stats, url) {
 	var rules = [], i = 0;
