@@ -2,11 +2,8 @@ var chart = window.chart || {};
 
 chart = {
 	init : function (){
-		// remove the tables
-		//$('table', '.chart').addClass('hidden');
-		
 		this.submit();
-		
+		// auto submission on page load to create graph
 		$('.rule-options').submit();
 		
 	},

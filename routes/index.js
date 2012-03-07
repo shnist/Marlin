@@ -55,7 +55,7 @@ exports.project = function(request, response){
 			});
 		},
 		statistics : function (callback) {
-			statisticsProvider.findStatistics(search, function (error, reports) {	  
+			statisticsProvider.findStatistics(search, function (error, reports) {
 				callback(error, reports)
 			});
 		}
@@ -134,11 +134,11 @@ exports.ajax = function (request, response) {
 	});
 }
 
-
-
-
-
-
+/**
+ * New Report
+ * Generates a new report
+ * @function gatherStatistics = creates and stores new report
+ */
 exports.newReport = function (request, response) {
 	/**
 	* The parameters that are sent through:

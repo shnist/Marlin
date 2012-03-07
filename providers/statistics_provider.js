@@ -98,20 +98,22 @@ StatisticsProvider.prototype.findStatistics = function (parameters, callback) {
  */
 StatisticsProvider.prototype.filterRules = function (stats, url) {
 	var rules = [], i = 0;
-	if (url.match('/best')){
-		
-	} else if (url.match('/javascript')){
-		
-	} else {
+	
+	if (url.match('/javascript') !== true){
 		for (var j = 0; j < stats.length; j = j + 1){
-			stats[j].http.rules.sort(function (a,b){return a.score-b.score})
+			if (url.match('/best')){
+				// numerical order descending
+				stats[j].http.rules.sort(function (a,b){return b.score-a.score});
+			} else {
+				// numerical order ascending
+				stats[j].http.rules.sort(function (a,b){return a.score-b.score});
+			}
 		}
-		// sort the array in numerical order asc
-		//http.sort(function (a,b){return a.score-b.score});
+		for (i; i < (stats[0].http.rules.length / 2); i = i + 1){
+			rules.push(stats[0].http.rules[i].id);
+		}
 	}
-	for (i; i < (stats[0].http.rules.length / 2); i = i + 1){
-		rules.push(stats[0].http.rules[i].id);
-	}
+
 	return rules;
 }
 
