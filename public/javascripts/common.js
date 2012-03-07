@@ -1,58 +1,7 @@
 var common = window.common || {};
 
-/**
- * Widgets
- * Applies common functionality across the site
- */
-common.widgets = {
-	init : function () {
-		common.widgets.apply($('body'));
-	},
-	/**
-	 * Returned HTML from ajax can have event handlers applied
-	 * to is selectively using the $context variable
-	 */
-	apply : function ($context) {
-		common.widgets.datePicker($context.find('.has-date-picker'));
-		common.widgets.accordion($context.find('.collapsible'));
-	},
-	/**
-	 * Applies JQuery UI datepicker
-	 */
-	datePicker : function ($datePicker){
-		$datePicker.foreach(function () {
-			$(this).datePicker();	
-		});
-		common.dateValidation();
-	},
-	/**
-	 * Applies custom accordion to the form
-	 */
-	accordion : function($accordion){
-		$accordion.foreach(function () {
-			$(this).find('ul').addClass('hidden');
-			$(this).find('h3').click(function () {
-				console.log($(this))
-				$('ul', $(this)).slideToggle('slow');
-				$(this).parent('.collapsible').toggleClass('active');
-			});
-		
-		});
-		
-	}
-	
-};
 
-
-/**
- * Validation of forms
- */
-common.validation = {
-	
-
-};
-
-common = {
+common.functions = {
 	init : function () {
 		//this.collapse();
 		this.customSelect();
@@ -95,3 +44,54 @@ common = {
 		});
 	}
 };
+
+/**
+ * Widgets
+ * Applies common functionality across the site
+ */
+common.widgets = {
+	init : function () {
+		common.widgets.apply($('body'));
+	},
+	/**
+	 * Returned HTML from ajax can have event handlers applied
+	 * to is selectively using the $context variable
+	 */
+	apply : function ($context) {
+		common.widgets.datePicker($context.find('.has-date-picker'));
+		common.widgets.accordion($context.find('.collapsible'));
+	},
+	/**
+	 * Applies JQuery UI datepicker
+	 */
+	datePicker : function ($datePicker){
+		$datePicker.each(function () {
+			$(this).datepicker();	
+		});
+		//common.dateValidation();
+	},
+	/**
+	 * Applies custom accordion to the form
+	 */
+	accordion : function($accordion){
+		$accordion.each(function () {
+			$(this).find('h3').click(function () {
+				console.log($(this).parent('.collapsible'))
+				$('ul', $(this).parent('.collapsible')).slideToggle('slow').removeClass('hidden');
+				$(this).parent('.collapsible').toggleClass('active');
+			});
+		
+		});
+	}
+	
+};
+
+
+/**
+ * Validation of forms
+ */
+common.validation = {
+	
+
+};
+
