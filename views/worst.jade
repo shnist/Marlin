@@ -56,9 +56,11 @@ div#page
 					li.hidden
 						input(type='text', name='project', value=name, readonly='readonly')
 					-each rule in statistics[0]
-						li
-							input(type='checkbox', name='rules[]', value=rule.id, id=rule.id)
-							label(for=rule.id)= rule.name
+						-if (selected !== null)
+							-each 
+							li
+								input(type='checkbox', name='rules[]', value=rule.id, id=rule.id)
+								label(for=rule.id)= rule.name
 			input(type="submit", name="submit", value="Update Worst Performing")
 //footer
 include includes/footer

@@ -7,6 +7,8 @@ chart = {
 		
 		this.submit();
 		
+		$('.rule-options').submit();
+		
 	},
 	/**
 	 * Submit
