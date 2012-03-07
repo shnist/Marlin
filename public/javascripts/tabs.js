@@ -90,7 +90,5 @@ tabs = {
 		form = island.find('.rule-options');
 		
 		$(tab).append(title, results, form);
-		
-		
 	}
 };
