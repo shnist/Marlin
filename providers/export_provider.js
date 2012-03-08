@@ -3,6 +3,7 @@
  */
 
 var fs = require('fs');
+var path = require('path');
 
 /**
  * 	Export Provider
@@ -30,13 +31,23 @@ ExportProvider.prototype.writeFile = function (data, callback) {
 }
 
 /**
- * Read file
- * Send created csv file to the browser
+ * Create Header Parameters
+ * Create parameters to set appropriate header for exporting file
  */
-ExportProvider.prototype.readFile = function (callback) {
-	var file = 'upload-folder/export.csv',
-	filename = path.basename(file),
-	mimetype = 'text/csv';
+ExportProvider.prototype.createHeaderParameters = function (callback) {
+	var parameters = {
+		file : 'upload-folder/export.csv',
+		mimetype: 'text/csv'
+	};
+	callback(null, parameters);
+}
+
+/**
+ * Read file
+ * Read the file to the browser
+ */
+ExportProvider.prototype.readFile = function (file, callback){
+	var fileName = path.basename(file);
 	
 	
 }

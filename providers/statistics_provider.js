@@ -4,7 +4,6 @@
 
 var mongoose = require('mongoose');
 var Report = require('../models/page_statistics');
-var fs = require('fs');
 
 // database connection parameters
 var host = 'localhost',

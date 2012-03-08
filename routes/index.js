@@ -9,7 +9,6 @@ var StatisticsProvider = require('../providers/statistics_provider').StatisticsP
 	ProjectProvider = require('../providers/project_provider').ProjectProvider;
 	ExportProvider = require('../providers/export_provider').ExportProvider;
 var async = require('async');
-var path = require('path');
 var fs = require('fs');
 
 // make a new instance of the Statistics provider
@@ -175,17 +174,19 @@ exports.exporting = function (request, response) {
 				if(error){
 					console.log(error);
 				} else {
-					exportProvider.readFile(function(error, params){
+					exportProvider.createHeaderParameters(function(error, params){
 						if(error){
 							console.log(error);
 						} else {
-							console.log(params);
+							response.setHeader('Content-disposition', 'attachment; filename=' + params.filename);
+							response.setHeader('Content-type', params.mimetype);
+							
+							
 						}
 					
 					});
 									
-					response.setHeader('Content-disposition', 'attachment; filename=' + filename);
-					response.setHeader('Content-type', mimetype);
+
 					
 					var filestream = fs.createReadStream(file);
 					//filestream.on('data', function(chunk) {
