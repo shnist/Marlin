@@ -176,44 +176,6 @@ StatisticsProvider.prototype.findAllStatistics = function (name, callback) {
 	});
 }
 
-/**
- * Write file
- * Creates the export file with the data it receives
- * params:
- * 	data - json string of reports
- */
-StatisticsProvider.prototype.writeFile = function (data, callback) {
-	var text = JSON.stringify(data);
-	fs.writeFile('message.csv', text, function (err) {
-		if (err) {
-			callback(err, null);
-		} else {
-			callback(null, 'success');
-		}
-	});
-}
-
-/**
- * Read file
- * Sends created file to browser for download
- */
-StatisticsProvider.prototype.sendFile = function (file, callback) {
-	file = __dirname + '/upload-folder/dramaticpenguin.MOV';
-	
-	var filename = path.basename(file);
-	var mimetype = mime.lookup(file);
-	
-	res.setHeader('Content-disposition', 'attachment; filename=' + filename);
-	res.setHeader('Content-type', mimetype);
-	
-	var filestream = fs.createReadStream(file);
-	filestream.on('data', function(chunk) {
-	res.write(chunk);
-	});
-	filestream.on('end', function() {
-	res.end();
-	});
-}
 
 
 // exports the Statistics provider so it can be accessed elsewhere

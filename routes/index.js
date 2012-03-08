@@ -7,12 +7,17 @@
 */
 var StatisticsProvider = require('../providers/statistics_provider').StatisticsProvider,
 	ProjectProvider = require('../providers/project_provider').ProjectProvider;
+	ExportProvider = require('../providers/export_provider').ExportProvider;
 var async = require('async');
+var path = require('path');
+var fs = require('fs');
 
 // make a new instance of the Statistics provider
 var statisticsProvider = new StatisticsProvider(),
 	// make a new instance of the Project Provider
-	projectProvider = new ProjectProvider();
+	projectProvider = new ProjectProvider(),
+	// make a new instance of export provider
+	exportProvider = new ExportProvider();
 
 exports.index = function(request, response){
 	statisticsProvider.allProjectNames(function (error, docs) {
@@ -166,10 +171,31 @@ exports.exporting = function (request, response) {
 		if(error){
 			console.log(error);
 		} else {
-			/**
-			 * Write the data to a file
-			 */
-
+			exportProvider.writeFile(data, function(error, message){
+				if(error){
+					console.log(error);
+				} else {
+					exportProvider.readFile(function(error, params){
+						if(error){
+							console.log(error);
+						} else {
+							console.log(params);
+						}
+					
+					});
+									
+					response.setHeader('Content-disposition', 'attachment; filename=' + filename);
+					response.setHeader('Content-type', mimetype);
+					
+					var filestream = fs.createReadStream(file);
+					//filestream.on('data', function(chunk) {
+					//	response.write(chunk);
+					//});
+					//filestream.on('end', function() {
+					//	response.end();
+					//});
+				}
+			});
 		}
 	});
 	
