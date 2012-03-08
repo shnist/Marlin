@@ -180,21 +180,19 @@ exports.exporting = function (request, response) {
 						} else {
 							response.setHeader('Content-disposition', 'attachment; filename=' + params.filename);
 							response.setHeader('Content-type', params.mimetype);
-							
-							
+							exportProvider.readFile(params.file, function (error, chunk) {
+								if(error){
+									console.log(error);
+								} else {
+									if(chunk){
+										response.write(chunk);
+									} else {
+										response.end();
+									}
+								}
+							});	
 						}
-					
 					});
-									
-
-					
-					var filestream = fs.createReadStream(file);
-					//filestream.on('data', function(chunk) {
-					//	response.write(chunk);
-					//});
-					//filestream.on('end', function() {
-					//	response.end();
-					//});
 				}
 			});
 		}

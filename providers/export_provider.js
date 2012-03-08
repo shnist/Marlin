@@ -37,6 +37,7 @@ ExportProvider.prototype.writeFile = function (data, callback) {
 ExportProvider.prototype.createHeaderParameters = function (callback) {
 	var parameters = {
 		file : 'upload-folder/export.csv',
+		fileName : path.basename(parameters.file),
 		mimetype: 'text/csv'
 	};
 	callback(null, parameters);
@@ -47,7 +48,17 @@ ExportProvider.prototype.createHeaderParameters = function (callback) {
  * Read the file to the browser
  */
 ExportProvider.prototype.readFile = function (file, callback){
-	var fileName = path.basename(file);
-	
-	
+	var filestream = fs.createReadStream(file);
+	filestream.on('data', function(chunk) {
+		callback(null, chunk);
+	});
+	filestream.on('error', function(exception){
+		callback(exception, null);
+	})
+	filestream.on('end', function() {
+		callback(null, null);
+	});
 }
+
+// exports the Statistics provider so it can be accessed elsewhere
+exports.ExportProvider = ExportProvider;
