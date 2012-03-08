@@ -25,14 +25,12 @@ exports.index = function(request, response){
 };
 
 /**
-* Project Worst
-* This is the first page that users come to
-* With JavaScript turned on this is the only page
-* Shows bottom half of http rules
+* Project
 * @function allProjectNames - gets a list of monitored projects
 * @function findStatistics - get all statistics for the chosen project
 */
 exports.project = function(request, response){
+	console.log(request);
 	var selectedRules = null,
 		search = null;
 	

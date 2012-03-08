@@ -76,7 +76,13 @@ marlin.get('/projects/:name/javascript', routes.project);
 /**
  * POST - best - fetches statistics on the worst performing page
  */
-marlin.post('/projects/:name', routes.project);
+marlin.post('/projects/:name', function (request, response) {
+	if (request.body.exporting !== undefined){
+		routes.exporting
+	} else {
+		routes.project	
+	}
+});
 /**
  * POST - best - fetches statistics on the best performing page
  */

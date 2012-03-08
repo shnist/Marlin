@@ -5,7 +5,7 @@ div#page
 		// export data form
 		form(method='post', id='export')
 			fieldset
-				input(type='submit', name='export-project', value='Export all data')
+				input(type='submit', name='exporting', value='Export all data')
 		include includes/latest_information
 		include includes/navigation
 		h2.rule-title Worst Performing HTTP Rules
@@ -86,6 +86,3 @@ div#page
 include includes/footer
 //scripts
 include includes/scripts
-script
-	google.load('visualization', '1.0', {'packages':['corechart']});
-	google.setOnLoadCallback(function(){chart.init()});
