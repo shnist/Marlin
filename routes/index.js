@@ -162,15 +162,26 @@ exports.newReport = function (request, response) {
  * a csv file
  */
 exports.exporting = function (request, response) {
-	console.log('foo');
-	response.attachment();
-	response.sendfile('../public/images/logo_white.png', function(error){
+	statisticsProvider.findAllStatistics(request.params.name, function(error, data){
 		if(error){
 			console.log(error);
 		} else {
-			console.log('hello');
+			/**
+			 * Write the data to a file
+			 */
+
 		}
 	});
+	
+	
+	//response.attachment();
+	//response.sendfile('../public/images/logo_white.png', function(error){
+	//	if(error){
+	//		console.log(error);
+	//	} else {
+	//		console.log('hello');
+	//	}
+	//});
 	//response.download('../public/images/logo_white.png', function (error) {
 	//	if (error){
 	//		console.log(error);
