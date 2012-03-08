@@ -160,6 +160,20 @@ StatisticsProvider.prototype.filterTimeStamps = function (reports) {
 	return timeStamps;
 }
 
+/**
+ * Find All Statistics
+ * Extracts all data from the chosen Statistics
+ * in preparation for export 
+ */
+StatisticsProvider.prototype.findAllStatistics = function (name, callback) {
+	Report.find({name: name}, function(error, reports) {
+		if(error){
+			callback(error, null);
+		} else {
+			callback(null, reports);
+		}
+	});
+}
 
 // exports the Statistics provider so it can be accessed elsewhere
 exports.StatisticsProvider = StatisticsProvider;

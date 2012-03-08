@@ -30,7 +30,6 @@ exports.index = function(request, response){
 * @function findStatistics - get all statistics for the chosen project
 */
 exports.project = function(request, response){
-	console.log(request);
 	var selectedRules = null,
 		search = null;
 	
@@ -155,4 +154,32 @@ exports.newReport = function (request, response) {
 			response.send('There as an error with inserting the report: ' + error);
 		}
 	});
+}
+
+/**
+ * Exporting
+ * Exports all the contents of the project into
+ * a csv file
+ */
+exports.exporting = function (request, response) {
+	console.log('foo');
+	response.attachment();
+	response.sendfile('../public/images/logo_white.png', function(error){
+		if(error){
+			console.log(error);
+		} else {
+			console.log('hello');
+		}
+	});
+	//response.download('../public/images/logo_white.png', function (error) {
+	//	if (error){
+	//		console.log(error);
+	//	} else {
+	//		console.log('something happened');
+	//	}
+	//}, function(error){
+	//	if(error){
+	//		console.log(error);
+	//	}
+	//});
 }

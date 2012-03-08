@@ -78,9 +78,9 @@ marlin.get('/projects/:name/javascript', routes.project);
  */
 marlin.post('/projects/:name', function (request, response) {
 	if (request.body.exporting !== undefined){
-		routes.exporting
+		routes.exporting(request, response);
 	} else {
-		routes.project	
+		routes.project(request, response);
 	}
 });
 /**
