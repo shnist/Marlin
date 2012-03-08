@@ -170,52 +170,32 @@ exports.exporting = function (request, response) {
 		if(error){
 			console.log(error);
 		} else {
-			exportProvider.writeFile(data, function(error, message){
+			exportProvider.writeFile(data, function(error, path){
 				if(error){
 					console.log(error);
 				} else {
-					exportProvider.createHeaderParameters(function(error, params){
+					console.log(path);
+					exportProvider.createHeaderParameters(path, function(error, params){
 						if(error){
 							console.log(error);
 						} else {
 							response.setHeader('Content-disposition', 'attachment; filename=' + params.filename);
 							response.setHeader('Content-type', params.mimetype);
-							exportProvider.readFile(params.file, function (error, chunk) {
-								if(error){
+							response.download(params.file, function (error) {
+								if (error){
 									console.log(error);
 								} else {
-									if(chunk){
-										response.write(chunk);
-									} else {
-										response.end();
-									}
+									console.log('something happened');
 								}
-							});	
+							}, function(error){
+								if(error){
+									console.log(error);
+								}
+							});
 						}
 					});
 				}
 			});
 		}
 	});
-	
-	
-	//response.attachment();
-	//response.sendfile('../public/images/logo_white.png', function(error){
-	//	if(error){
-	//		console.log(error);
-	//	} else {
-	//		console.log('hello');
-	//	}
-	//});
-	//response.download('../public/images/logo_white.png', function (error) {
-	//	if (error){
-	//		console.log(error);
-	//	} else {
-	//		console.log('something happened');
-	//	}
-	//}, function(error){
-	//	if(error){
-	//		console.log(error);
-	//	}
-	//});
 }

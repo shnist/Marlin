@@ -13,6 +13,11 @@ var path = require('path');
 ExportProvider = function () {};
 
 /**
+ * Default path for the exported file
+ */
+ExportProvider.prototype.path = '/exports/export.csv';
+
+/**
  * Write file
  * Creates the export file with the data it receives
  * params:
@@ -20,12 +25,12 @@ ExportProvider = function () {};
  */
 ExportProvider.prototype.writeFile = function (data, callback) {
 	var text = JSON.stringify(data),
-		path = __dirname + 'upload_folder/export.csv';
+		path = __dirname + ExportProvider.prototype.path;
 	fs.writeFile(path, text, function (err) {
 		if (err) {
 			callback(err, null);
 		} else {
-			callback(null, 'success');
+			callback(null, path);
 		}
 	});
 }
@@ -34,30 +39,13 @@ ExportProvider.prototype.writeFile = function (data, callback) {
  * Create Header Parameters
  * Create parameters to set appropriate header for exporting file
  */
-ExportProvider.prototype.createHeaderParameters = function (callback) {
+ExportProvider.prototype.createHeaderParameters = function (filePath, callback) {
 	var parameters = {
-		file : 'upload-folder/export.csv',
-		fileName : path.basename(parameters.file),
+		file : filePath,
+		fileName : path.basename(filePath),
 		mimetype: 'text/csv'
 	};
 	callback(null, parameters);
-}
-
-/**
- * Read file
- * Read the file to the browser
- */
-ExportProvider.prototype.readFile = function (file, callback){
-	var filestream = fs.createReadStream(file);
-	filestream.on('data', function(chunk) {
-		callback(null, chunk);
-	});
-	filestream.on('error', function(exception){
-		callback(exception, null);
-	})
-	filestream.on('end', function() {
-		callback(null, null);
-	});
 }
 
 // exports the Statistics provider so it can be accessed elsewhere
