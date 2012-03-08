@@ -5,6 +5,7 @@ var common = window.common || {};
  */
 common.functions = {
 	init : function () {
+		common.validation.init();
 		common.widgets.init();
 		this.customSelect();
 	},
@@ -37,7 +38,6 @@ common.widgets = {
 		$datePicker.each(function () {
 			$(this).datepicker();	
 		});
-		//common.dateValidation();
 	},
 	/**
 	 * Applies custom accordion to the form
@@ -60,6 +60,9 @@ common.widgets = {
  * Validation of forms
  */
 common.validation = {
+	init : function () {
+		this.dateValidation();
+	},
 	/**
 	 * Validates the date range of the form a
 	 * From date cannot be higher than to date
