@@ -174,25 +174,8 @@ exports.exporting = function (request, response) {
 				if(error){
 					console.log(error);
 				} else {
-					console.log(path);
-					exportProvider.createHeaderParameters(path, function(error, params){
-						if(error){
-							console.log(error);
-						} else {
-							response.setHeader('Content-disposition', 'attachment; filename=' + params.filename);
-							response.setHeader('Content-type', params.mimetype);
-							response.download(params.file, function (error) {
-								if (error){
-									console.log(error);
-								} else {
-									console.log('something happened');
-								}
-							}, function(error){
-								if(error){
-									console.log(error);
-								}
-							});
-						}
+					exportProvider.createCsv(path, function(){
+					
 					});
 				}
 			});

@@ -175,7 +175,5 @@ StatisticsProvider.prototype.findAllStatistics = function (name, callback) {
 	});
 }
 
-
-
 // exports the Statistics provider so it can be accessed elsewhere
 exports.StatisticsProvider = StatisticsProvider;
