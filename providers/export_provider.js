@@ -15,7 +15,7 @@ ExportProvider = function () {};
 /**
  * Default path for the exported file
  */
-ExportProvider.prototype.path = '/exports/export.csv';
+ExportProvider.prototype.path = '/exports/export.json';
 
 /**
  * Write file
@@ -24,6 +24,7 @@ ExportProvider.prototype.path = '/exports/export.csv';
  * 	data - json string of reports
  */
 ExportProvider.prototype.writeFile = function (data, callback) {
+	console.log(data);
 	var text = JSON.stringify(data),
 		path = __dirname + ExportProvider.prototype.path;
 	fs.writeFile(path, text, function (err) {
@@ -43,7 +44,7 @@ ExportProvider.prototype.createHeaderParameters = function (filePath, callback) 
 	var parameters = {
 		file : filePath,
 		fileName : path.basename(filePath),
-		mimetype: 'text/csv'
+		mimetype: 'application/json'
 	};
 	callback(null, parameters);
 }
