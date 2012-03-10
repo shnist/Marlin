@@ -31,8 +31,8 @@ chart = {
 		$.ajax({
 			url : '/' + project + '/ajax',
 			data : searchOptions,
-			dataType: 'json',
-			type: 'post',
+			dataType: 'jsonp',
+			type: 'get',
 			success : function (data) {
 				//console.log(data);
 				chart.drawChart(data, project, chartType);

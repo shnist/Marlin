@@ -117,6 +117,7 @@ exports.project = function(request, response){
  * @function findStatistics = find statistics based on the user's query
  */
 exports.ajax = function (request, response) {
+	console.log(request.params);
 	var search =  {
 			name : request.param('project'),
 			dateTo : request.param('date-to'),
@@ -128,7 +129,7 @@ exports.ajax = function (request, response) {
 		if(!error){
 			timeStamps = statisticsProvider.filterTimeStamps(reports);
 			filtered = statisticsProvider.filterStatistics(request.param('rules'), reports);
-			response.json({timeStamps: timeStamps, results: filtered}	);
+			response.json({timeStamps: timeStamps, results: filtered});
 		} else {
 			response.json({error : error});
 		}
@@ -174,7 +175,6 @@ exports.exporting = function (request, response) {
 				if(error){
 					console.log(error);
 				} else {
-					console.log(path);
 					exportProvider.createHeaderParameters(path, function(error, params){
 						if(error){
 							console.log(error);
@@ -184,8 +184,6 @@ exports.exporting = function (request, response) {
 							response.download(params.file, function (error) {
 								if (error){
 									console.log(error);
-								} else {
-									console.log('something happened');
 								}
 							}, function(error){
 								if(error){

@@ -24,7 +24,6 @@ ExportProvider.prototype.path = '/exports/export.json';
  * 	data - json string of reports
  */
 ExportProvider.prototype.writeFile = function (data, callback) {
-	console.log(data);
 	var text = JSON.stringify(data),
 		path = __dirname + ExportProvider.prototype.path;
 	fs.writeFile(path, text, function (err) {

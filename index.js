@@ -11,6 +11,7 @@ marlin.configure(function () {
 	marlin.set('views', __dirname + '/views');
 	// importing the jade html template engine
 	marlin.set('view engine', 'jade');
+	marlin.set('jsonp callback', true);
 	marlin.use(express.bodyParser());
 	marlin.use(express.methodOverride());
 	// importing the stylus css template engine
@@ -97,7 +98,7 @@ marlin.post('/projects/:name/javascript', routes.project);
  * AJAX Router
  * Handles ajax requests from the client
  */
-marlin.post('/:name/ajax', routes.ajax);
+marlin.get('/:name/ajax', routes.ajax);
 
 /**
  * New Report Page Router
