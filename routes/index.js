@@ -117,7 +117,6 @@ exports.project = function(request, response){
  * @function findStatistics = find statistics based on the user's query
  */
 exports.ajax = function (request, response) {
-	console.log(request.params);
 	var search =  {
 			name : request.param('project'),
 			dateTo : request.param('date-to'),
