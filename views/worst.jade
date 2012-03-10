@@ -43,11 +43,11 @@ div#page
 				ul
 					li
 						label(for='http-date-from-worst') From:
-						-var tomorrow = new Date(new Date().getTime() - (1000*3600*24));
-						input(type='text', name='date-from', id='http-date-from-worst', class='has-date-picker date-from', value=tomorrow.getDate() + '/' + tomorrow.getMonth() + '/' + tomorrow.getFullYear())
+						-var yesterday = new Date(new Date().getTime() - (1000*3600*24)), tomorrow = new Date(new Date().getTime() + (1000*3600*24));
+						input(type='text', name='date-from', id='http-date-from-worst', class='has-date-picker date-from', value=(yesterday.getMonth() + 1) + '/' + yesterday.getDate() + '/' + yesterday.getFullYear())
 					li
 						label(for='http-date-to-worst') To:
-						input(type='text', name='date-to', id='http-date-to-worst', class='has-date-picker date-to', value=new Date().getDate() + '/' + new Date().getMonth() + '/' + new Date().getFullYear())
+						input(type='text', name='date-to', id='http-date-to-worst', class='has-date-picker date-to', value=(tomorrow.getMonth() + 1) + '/' + tomorrow.getDate() + '/' + tomorrow.getFullYear())
 			fieldset.collapsible
 				h3.last Update the rules shown
 					span.arrow

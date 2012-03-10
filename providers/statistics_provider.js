@@ -69,11 +69,12 @@ StatisticsProvider.prototype.findStatistics = function (parameters, callback) {
 		
 		query = Report.find({name: projectName}).limit(4);
 	} else {
+		
 		// get dates from post data
 		dateFrom = new Date(parameters.dateFrom).getTime();
 		dateTo = new Date(parameters.dateTo).getTime();
 		projectName = parameters.name;
-		
+			
 		query = Report.find({name: projectName}).where('date').lte(dateTo).where('date').gt(dateFrom)
 	}
 	
