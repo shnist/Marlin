@@ -57,7 +57,7 @@ tabs = {
 				page = page + 'javascript';
 			}
 		}
-		
+		$(tab).before('<div class="overlay"><img src="../images/loader.gif" alt="Loading new graph" class="loader"></div>');
 		$.ajax({
 			url : page,
 			dataType: 'html',
