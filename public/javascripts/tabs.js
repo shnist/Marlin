@@ -57,13 +57,14 @@ tabs = {
 				page = page + 'javascript';
 			}
 		}
-		$(tab).before('<div class="overlay"><img src="../images/loader.gif" alt="Loading new graph" class="loader"></div>');
+		$(tab).before('<div class="tab-overlay"><img src="../images/loader.gif" alt="Loading new graph" class="loader"></div>');
 		$.ajax({
 			url : page,
 			dataType: 'html',
 			type: 'get',
 			success : function (data) {
 				tabs.processHtml(data, tab);
+				$('.tab-overlay').remove();
 			},
 			error: function (object, stat, error) {
 				console.log(stat + ': ' + error);

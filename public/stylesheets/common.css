@@ -619,14 +619,13 @@ input[type="submit"] {
   margin: 0;
 }
 /* Overlay */
-.overlay {
+.overlay,
+.tab-overlay {
   background: #fff;
   z-index: 100;
   position: absolute;
-  width: 930px;
-  height: 400px;
 }
-.tab-page .overlay {
+.overlay {
   width: 500px;
   height: 300px;
   display: inline-block;
@@ -634,12 +633,19 @@ input[type="submit"] {
   opacity: 0.5;
   z-index: 90;
 }
-.loader {
+.tab-overlay {
+  width: 930px;
+  height: 400px;
+}
+.tab-overlay .loader,
+.overlay .loader {
   position: relative;
+}
+.tab-overlay .loader {
   top: 200px;
   left: 465px;
 }
-.tab-page .overlay .loader {
-  top: 150px;
-  left: 250px;
+.overlay .loader {
+  top: 130px;
+  left: 200px;
 }

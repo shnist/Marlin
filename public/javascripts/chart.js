@@ -39,7 +39,7 @@ chart = {
 			success : function (data) {
 				chart.drawChart(data, project, chartType);
 				// remove the overlay
-				//$('.overlay').remove();
+				$('.overlay').remove();
 			},
 			error: function (object, stat, error) {
 				console.log(stat + ': ' + error);
