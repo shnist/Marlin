@@ -68,7 +68,7 @@ chart = {
 		data.addRows(json.results.length);
 		
 		for (j; j < json.results.length; j = j + 1){
-			data.setValue(j, 0, json.timeStamps[j]);
+			data.setValue(j, 0, new Date(json.timeStamps[j]).toLocaleDateString() + ' ' + new Date(json.timeStamps[j]).toLocaleTimeString());
 			for (k = 1; k < data.B.length; k = k + 1){
 				data.setValue(j, k, json.results[j][k-1].score);
 			}
