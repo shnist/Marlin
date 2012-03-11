@@ -22,9 +22,9 @@ div#page
 								p.error= latestRule.name + ' has dropped by over 10 points!'
 							-else if((latestRule.score - formerRule.score) > 10 && k===0)
 								h2 Alerts
-								p.error= latestRule.name + ' has dropped by over 10 points!'
+								p.success= 'Great! ' + latestRule.name + ' has increased by over 10 points!'
 							else if((latestRule.score - formerRule.score) > 10)
-								p.error= latestRule.name + ' has dropped by over 10 points!'
+								p.success= 'Great! ' + latestRule.name + ' has increased by over 10 points!'
 		-else
 			-if (statistics.length > 1)
 				div.alerts
@@ -39,9 +39,9 @@ div#page
 										p.error= latestRule.name + ' has dropped by over 10 points!'
 									-else if((latestRule.score - formerRule.score) > 10 && k===0)
 										h2 Alerts
-										p.error= latestRule.name + ' has dropped by over 10 points!'
+										p.success= 'Great! ' + latestRule.name + ' has increased by over 10 points!'
 									else if((latestRule.score - formerRule.score) > 10)
-										p.error= latestRule.name + ' has dropped by over 10 points!'
+										p.success= 'Great! ' + latestRule.name + ' has increased by over 10 points!'
 		div#chart-best.graph
 			table
 				caption A table to show the best performing HTTP rules
