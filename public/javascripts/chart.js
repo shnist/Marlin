@@ -42,6 +42,9 @@ chart = {
 				$('.overlay').remove();
 			},
 			error: function (object, stat, error) {
+				if ($('.tab-page .error').length !== 0){
+					$('.tab-page .error').remove();
+				}
 				$('.rule-title').append('<p class="error">' + stat + ': ' + error + '</p>');
 			}
 		});
@@ -95,6 +98,9 @@ chart = {
 			var chart = new google.visualization.LineChart(document.getElementById('chart-' + type));
 			chart.draw(data, {chartArea: {top: 50, left: 30}, legend: {position: 'top'},width: 600, height: 300, title:title, vAxis:{maxValue: 100, minValue: 0}});
 		} else {
+			if ($('.tab-page .error').length !== 0){
+				$('.tab-page .error').remove();
+			}
 			if(json.error.message !== undefined){
 				$('.rule-title').after('<p class="error">' + json.error.message + '</p>');
 			} else {
