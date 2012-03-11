@@ -120,14 +120,18 @@ exports.ajax = function (request, response) {
 	var search =  {
 			name : request.param('project'),
 			dateTo : request.param('date-to'),
-			dateFrom : request.param('date-from')
+			dateFrom : request.param('date-from'),
+			type: request.param('chart-type')
 	},
 	filtered = null;
 
 	statisticsProvider.findStatistics(search, function (error, reports) {	  
-		if(!error){
+		if(!error){			
 			timeStamps = statisticsProvider.filterTimeStamps(reports);
-			filtered = statisticsProvider.filterStatistics(request.param('rules'), reports);
+			filtered = statisticsProvider.filterStatistics(request.param('rules'), reports, search.type);
+			
+			//console.log(filtered);
+			
 			response.json({timeStamps: timeStamps, results: filtered});
 		} else {
 			response.json({error : error});

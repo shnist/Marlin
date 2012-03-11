@@ -121,22 +121,37 @@ StatisticsProvider.prototype.filterRules = function (stats, url) {
 /**
  * Returns a subset of the statistics depending on the page selected
  */
-StatisticsProvider.prototype.filterStatistics = function (rules, statistics) {
+StatisticsProvider.prototype.filterStatistics = function (rules, statistics, type) {
 	// loop through all the documents in the object
 	var i = 0, j = 0, k = 0,
 		results = [],
-		instance = [];
+		instance = [],
+		comparison = '';
+	
 	// loop through all the documents in the statistics object
 	for (i; i < statistics.length; i = i + 1){
 		// reset the array
 		instance = [];
-		// loop through each rule in the document
-		for (j = 0; j < statistics[i].http.rules.length; j = j + 1){
-			// loop through all the rules
-			for (k = 0; k < rules.length; k = k + 1){
-				// compare - if match, add object to instance				
-				if (statistics[i].http.rules[j].id === rules[k]){
-					instance.push(statistics[i].http.rules[j]);
+		if(type === 'javascript'){
+			// loop through each rule in the document
+			for (j = 0; j < statistics[i].javascript.length; j = j + 1){
+				// loop through all the rules
+				for (k = 0; k < rules.length; k = k + 1){
+					// compare - if match, add object to instance				
+					if (statistics[i].javascript[j].id === rules[k]){
+						instance.push(statistics[i].javascript[j]);
+					}
+				}
+			}
+		} else {
+			// loop through each rule in the document
+			for (j = 0; j < statistics[i].http.rules.length; j = j + 1){
+				// loop through all the rules
+				for (k = 0; k < rules.length; k = k + 1){
+					// compare - if match, add object to instance				
+					if (statistics[i].http.rules[j].id === rules[k]){
+						instance.push(statistics[i].http.rules[j]);
+					}
 				}
 			}
 		}
