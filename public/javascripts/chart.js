@@ -14,14 +14,29 @@ chart = {
 	submit : function () {
 		$('.rule-options').submit(function (event) {
 			event.preventDefault();
-	
-			var project = $('input[name=project]', this).val(),
-				chartType = $('input[name=chart-type]', this).val(),
-				searchOptions = $(this).serialize(),
-				$form = $(this);
-							
-			// send off ajax request
-			chart.retrieveData(project, chartType, searchOptions, $form);
+			
+			var $form = $(this),
+				project, chartType, searchOptions;
+			
+			// validate form
+			common.validation.selectedOptions($form, function(error){
+				if (error === null){
+					if ($('.rule-list .error').length !== 0){
+						$('.rule-list .error').remove();
+					}
+					project = $('input[name=project]', $form).val();
+					chartType = $('input[name=chart-type]', $form).val();
+					searchOptions = $form.serialize();
+								
+					// send off ajax request
+					chart.retrieveData(project, chartType, searchOptions, $form);
+				} else {
+					if ($('.rule-list .error').length !== 0){
+						$('.rule-list .error').remove();
+					}
+					$('.rule-list').append('<p class="error">' + error + '</p>');
+				}
+			});
 		});
 	},
 	/**

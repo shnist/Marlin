@@ -87,7 +87,17 @@ common.validation = {
 				}
 			}
 		});
+	},
+	/**
+	 * Ensures that at least one option in the rules part of the
+	 * rule options form is selected
+	 */
+	selectedOptions: function ($context, callback) {
+		if($context.find('input:checked').length !== 0){
+			callback(null);
+		} else {
+			callback('Please select at least one option.');
+		}
 	}
-
 };
 
