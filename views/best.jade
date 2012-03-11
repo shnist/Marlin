@@ -10,6 +10,38 @@ div#page
 		include includes/navigation
 		// http best performance graph
 		h2.rule-title Best Performing HTTP rules
+		-if(selected !== null && selected.length > 1)
+			div.alerts
+				-each latestRule, i in selected[0]
+					-each formerRule, j in selected[1]
+						if (i === j)
+							-if((latestRule.score - formerRule.score) < -10 && k === 0)
+								h2 Alerts
+								p.error= latestRule.name + ' has dropped by over 10 points!'
+							-else if((latestRule.score - formerRule.score) < -10)
+								p.error= latestRule.name + ' has dropped by over 10 points!'
+							-else if((latestRule.score - formerRule.score) > 10 && k===0)
+								h2 Alerts
+								p.error= latestRule.name + ' has dropped by over 10 points!'
+							else if((latestRule.score - formerRule.score) > 10)
+								p.error= latestRule.name + ' has dropped by over 10 points!'
+		-else
+			-if (statistics.length > 1)
+				div.alerts
+					-each latestRule, j in statistics[0]
+						-if ((j + 1) <=  4)
+							-each formerRule, k in statistics[1]
+								-if (k === j)
+									-if((latestRule.score - formerRule.score) < -10 && k === 0)
+										h2 Alerts
+										p.error= latestRule.name + ' has dropped by over 10 points!'
+									-else if((latestRule.score - formerRule.score) < -10)
+										p.error= latestRule.name + ' has dropped by over 10 points!'
+									-else if((latestRule.score - formerRule.score) > 10 && k===0)
+										h2 Alerts
+										p.error= latestRule.name + ' has dropped by over 10 points!'
+									else if((latestRule.score - formerRule.score) > 10)
+										p.error= latestRule.name + ' has dropped by over 10 points!'
 		div#chart-best.graph
 			table
 				caption A table to show the best performing HTTP rules
