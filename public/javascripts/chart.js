@@ -80,9 +80,8 @@ chart = {
 		if (json.error === undefined){
 			// new data table
 			var data = new google.visualization.DataTable(),
-			i = 0, j = 0, k, title = '';
-			
-			console.log(json.results[0]);
+			i = 0, j = 0, k, title = '', options = { area: {}};
+		
 			
 			for (i; i < (json.results[0].length + 1); i = i + 1){
 				// first column is timestamp
@@ -93,16 +92,17 @@ chart = {
 				}
 			}
 			
-			
-			
-			
 			// the number of rows is calculated by the length of the results
 			data.addRows(json.results.length);
 			
 			for (j; j < json.results.length; j = j + 1){
 				data.setValue(j, 0, new Date(json.timeStamps[j]).toLocaleDateString() + ' ' + new Date(json.timeStamps[j]).toLocaleTimeString());
 				for (k = 1; k < data.B.length; k = k + 1){
-					data.setValue(j, k, json.results[j][k-1].score);
+					if (type === 'javascript'){
+						data.setValue(j, k, json.results[j][k-1].value);
+					} else {
+						data.setValue(j, k, json.results[j][k-1].score);
+					}
 				}
 			}
 	
@@ -120,8 +120,25 @@ chart = {
 				$('table', 'chart-' + type).addClass('hidden');
 			}
 			
+			if(type === 'javascript'){
+				options.maxValue = 10000;
+				options.area.left = 50;
+			} else {
+				options.maxValue = 100;
+				options.area.left = 30;
+			}
+		
 			var chart = new google.visualization.LineChart(document.getElementById('chart-' + type));
-			chart.draw(data, {chartArea: {top: 50, left: 30, width: '100%', height: '50%'}, legend: {position: 'top'},width: 500, height: 500, title:title, vAxis:{maxValue: 100, minValue: 0}});
+			chart.draw(data,
+				{
+					chartArea: {top: 50, left: options.area.left, width: '100%', height: '50%'},
+					legend: {position: 'top'},
+					width: 500,
+					height: 500,
+					title:title,
+					vAxis:{maxValue: options.maxValue, minValue: 0}
+				}
+			);
 		} else {
 			if ($('.tab-page .error').length !== 0){
 				$('.tab-page .error').remove();
