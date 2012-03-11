@@ -14,7 +14,7 @@ tabs = {
 	init : function () {
 		var tabs = '<div id="tab-two" class="tab-page"></div>'+
 		'<div id="tab-three" class="tab-page"></div>';
-		$('.rule-title, .graph, .rule-options').wrapAll('<div id="tab-one" class="tab-page"></div>');
+		$('.rule-title, .graph, .rule-options, .alerts').wrapAll('<div id="tab-one" class="tab-page"></div>');
 		$('#content').append(tabs);
 		$('.tab-navigation, .tab-page').wrapAll('<div id="tabs"></div>');
 		
@@ -85,10 +85,11 @@ tabs = {
 		
 		// scrape the information out
 		$title = island.find('.rule-title');
+		$alerts = island.find('.alerts');
 		$results = island.find('.graph');
 		$form = island.find('.rule-options');
 		
-		$(tab).append($title, $results, $form);
+		$(tab).append($title, $alerts, $results, $form);
 		
 		// apply event handlers to new elements
 		common.widgets.apply($(tab));
