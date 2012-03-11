@@ -60,11 +60,9 @@ div#page
 					-var checked=false
 					-each rule, i in statistics[0]
 						-if (selected !== null)
-							-each name in selected
-									-if (name === rule.id)	
-										-checked=true
-									-else
-										-checked=false
+							-each name in selected[0]
+								-if (name.id === rule.id)
+									-checked=true
 						-else
 							-if ((i + 1) <= 4)
 								-checked=true
@@ -77,6 +75,7 @@ div#page
 							-else
 								input(type='checkbox', name='rules[]', value=rule.id, id=rule.id, checked='checked')
 								label(for=rule.id)= rule.name
+								-checked=false
 			input(type="submit", name="submit", value="Update Best Performing")
 //footer
 include includes/footer

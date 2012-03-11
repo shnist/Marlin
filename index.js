@@ -87,11 +87,23 @@ marlin.post('/projects/:name', function (request, response) {
 /**
  * POST - best - fetches statistics on the best performing page
  */
-marlin.post('/projects/:name/best', routes.project);
+marlin.post('/projects/:name/best', function (request, response) {
+	if (request.body.exporting !== undefined){
+		routes.exporting(request, response);
+	} else {
+		routes.project(request, response);
+	}
+});
 /**
  * POST - javascript - fetches statistics on the javascript page
 */
-marlin.post('/projects/:name/javascript', routes.project);
+marlin.post('/projects/:name/javascript', function (request, response) {
+	if (request.body.exporting !== undefined){
+		routes.exporting(request, response);
+	} else {
+		routes.project(request, response);
+	}
+});
 
 
 /**
