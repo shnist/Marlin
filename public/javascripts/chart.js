@@ -5,7 +5,6 @@ chart = {
 		this.submit();
 		// auto submission on page load to create graph
 		$('.rule-options').submit();
-		
 	},
 	/**
 	 * Submit
@@ -111,7 +110,7 @@ chart = {
 			}
 			
 			var chart = new google.visualization.LineChart(document.getElementById('chart-' + type));
-			chart.draw(data, {chartArea: {top: 50, left: 30}, legend: {position: 'top'},width: 600, height: 300, title:title, vAxis:{maxValue: 100, minValue: 0}});
+			chart.draw(data, {chartArea: {top: 50, left: 30, width: '100%', height: '50%'}, legend: {position: 'top'},width: 500, height: 500, title:title, vAxis:{maxValue: 100, minValue: 0}});
 		} else {
 			if ($('.tab-page .error').length !== 0){
 				$('.tab-page .error').remove();

@@ -83,7 +83,7 @@ StatisticsProvider.prototype.findStatistics = function (parameters, callback) {
 			if (docs.length !== 0){				
 				callback(null, docs);	
 			} else {
-				callback('No results returned', null);
+				callback('Sorry, no results returned.', null);
 			}
 		} else {
 			callback(error, null);
