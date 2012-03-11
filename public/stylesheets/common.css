@@ -76,9 +76,15 @@ input[type="submit"] {
   font-weight: bold;
   font-style: normal;
 }
-.error {
+.error,
+.success {
   font-size: 14px;
+}
+.error {
   color: #c42620;
+}
+.success {
+  color: #8aac2a;
 }
 .hidden {
   display: none;
@@ -505,6 +511,11 @@ input[type="submit"] {
   border: 1px solid #ddd;
   padding: 10px 0 10px 10px;
 }
+.tab-page .error {
+  text-align: right;
+  font-size: 20px;
+  margin: 0 100px 0 0;
+}
 /* 9.0 JQuery UI date picker */
 .ui-datepicker {
   border: 1px solid #ddd;
@@ -598,14 +609,6 @@ input[type="submit"] {
 }
 .graph .time {
   font-weight: bold;
-}
-.graph .full-mark {
-  background: #8aac2a;
-  color: #fff;
-}
-.graph .danger-mark {
-  background: #c42620;
-  color: #fff;
 }
 /* Export form */
 #export {

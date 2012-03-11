@@ -42,7 +42,7 @@ chart = {
 				$('.overlay').remove();
 			},
 			error: function (object, stat, error) {
-				console.log(stat + ': ' + error);
+				$('.rule-title').append('<p class="error">' + stat + ': ' + error + '</p>');
 			}
 		});
 	},
@@ -96,9 +96,9 @@ chart = {
 			chart.draw(data, {chartArea: {top: 50, left: 30}, legend: {position: 'top'},width: 600, height: 300, title:title, vAxis:{maxValue: 100, minValue: 0}});
 		} else {
 			if(json.error.message !== undefined){
-				console.log(json.error.message);
+				$('.rule-title').after('<p class="error">' + json.error.message + '</p>');
 			} else {
-				console.log(json.error);
+				$('.rule-title').after('<p class="error">' + json.error + '</p>');
 			}
 		}
 	}
