@@ -1,10 +1,16 @@
 var chart = window.chart || {};
 
 chart = {
-	init : function (){
+	init : function ($context){
 		this.submit();
-		// auto submission on page load to create graph
-		$('.rule-options').submit();
+		
+		if($context !== undefined){
+			// auto submission on page load to create graph
+			$('.rule-options', $context).submit();
+		} else {
+			// auto submission on page load to create graph
+			$('.rule-options').submit();
+		}
 	},
 	/**
 	 * Submit
@@ -76,6 +82,8 @@ chart = {
 			var data = new google.visualization.DataTable(),
 			i = 0, j = 0, k, title = '';
 			
+			console.log(json.results[0]);
+			
 			for (i; i < (json.results[0].length + 1); i = i + 1){
 				// first column is timestamp
 				if(i === 0){
@@ -84,6 +92,9 @@ chart = {
 					data.addColumn('number', json.results[0][i-1].name);
 				}
 			}
+			
+			
+			
 			
 			// the number of rows is calculated by the length of the results
 			data.addRows(json.results.length);

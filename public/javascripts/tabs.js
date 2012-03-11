@@ -93,6 +93,6 @@ tabs = {
 		
 		// apply event handlers to new elements
 		common.widgets.apply($(tab));
-		chart.init();
+		chart.init($(tab));
 	}
 };
