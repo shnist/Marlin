@@ -33,10 +33,10 @@ div#page
 					li
 						label(for='js-date-from') From:
 						-var yesterday = new Date(new Date().getTime() - (1000*3600*24)), tomorrow = new Date(new Date().getTime() + (1000*3600*24));
-						input(type='text', name='date-from', id='js-date-from', class='has-date-picker date-from', value=yesterday.getMonth() + '/' + yesterday.getDate() + '/' + yesterday.getFullYear())
+						input(type='text', name='date-from', id='js-date-from', class='has-date-picker date-from', value=(yesterday.getMonth() + 1) + '/' + yesterday.getDate() + '/' + yesterday.getFullYear())
 					li
 						label(for='js-date-to') To:
-						input(type='text', name='date-to', id='js-date-to', class='has-date-picker date-to', value=tomorrow.getMonth() + '/' + tomorrow.getDate() + '/' + tomorrow.getFullYear())
+						input(type='text', name='date-to', id='js-date-to', class='has-date-picker date-to', value=(tomorrow.getMonth() + 1) + '/' + tomorrow.getDate() + '/' + tomorrow.getFullYear())
 			fieldset.collapsible
 				h3.last Update the rules shown
 					span.arrow
@@ -48,13 +48,14 @@ div#page
 					-var checked=false
 					-each rule, i in statistics[0]
 						-if (selected !== null)
-							-each name in selected
-									-if (name === rule.id)	
-										-checked=true
-									-else
-										-checked=false
+							-each name in selected[0]
+								-if (name.id === rule.id)
+									-checked=true
 						-else
-							-checked=true
+							-if ((i + 1) <= 4)
+								-checked=true
+							-else
+								-checked=false
 						li
 							-if (checked === false)
 								input(type='checkbox', name='rules[]', value=rule.id, id=rule.id)
@@ -62,6 +63,7 @@ div#page
 							-else
 								input(type='checkbox', name='rules[]', value=rule.id, id=rule.id, checked='checked')
 								label(for=rule.id)= rule.name
+								-checked=false
 			input(type="submit", name="submit", value="Update Graph")
 //footer
 include includes/footer

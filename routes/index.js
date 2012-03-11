@@ -150,7 +150,6 @@ exports.newReport = function (request, response) {
 	* repository: name of repository
 	*/
 	// request.query gets the values of the query string
-	console.log(request.query);
 	var parameters = request.query;
 	projectProvider.gatherStatistics(parameters, function (error, docs){
 		response.setHeader('Content-type', 'text/html');
