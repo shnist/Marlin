@@ -130,8 +130,6 @@ exports.ajax = function (request, response) {
 			timeStamps = statisticsProvider.filterTimeStamps(reports);
 			filtered = statisticsProvider.filterStatistics(request.param('rules'), reports, search.type);
 			
-			//console.log(filtered);
-			
 			response.json({timeStamps: timeStamps, results: filtered});
 		} else {
 			response.json({error : error});

@@ -67,7 +67,7 @@ StatisticsProvider.prototype.findStatistics = function (parameters, callback) {
 		// find is not filtered
 		projectName = parameters;
 		
-		query = Report.find({name: projectName}).limit(4);
+		query = Report.find({name: projectName}).limit(4).desc('date');
 	} else {
 		
 		// get dates from post data
