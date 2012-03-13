@@ -13,14 +13,14 @@ var host = 'localhost',
 	port = 27017;
 	
 // creating a connection
-mongoose.connect(host,'reports',port);
+mongoose.connect(host, 'reports', port);
 
 /**
- * 	Project Provider
- * 	Responsible for generating and storing new reports
+ * Project Provider
+ * Responsible for generating and storing new reports
  */
 
-ProjectProvider = function () {};
+var ProjectProvider = function () {};
 
 /**
  * Gather Statistics
@@ -29,24 +29,23 @@ ProjectProvider = function () {};
 
 ProjectProvider.prototype.gatherStatistics = function (parameters, callback) {
 	// parameters for querying the apis
-	var revisionParams = {'user': parameters['gitUser'], 'password': parameters['gitPass'], 'repository': parameters['repository']},
-		pageSpeedParams = {'url': parameters['url']},
-		phantomParams = {'url': parameters['url']};
-	
+	var revisionParams = {'user': parameters.gitUser, 'password': parameters.gitPass, 'repository': parameters.repository},
+		pageSpeedParams = {'url': parameters.url},
+		phantomParams = {'url': parameters.url},
 	// objects for the report
-	var commitInformation = {},
+		commitInformation = {},
 		httpInformation = {},
 		javaScriptInfo = {},
 		report = {};
 		
 	async.parallel({
 		revision : function (callback) {
-			ProjectProvider.prototype.git(revisionParams, function(error, revisionReport) {
+			ProjectProvider.prototype.git(revisionParams, function (error, revisionReport) {
 				callback(error, revisionReport);
 			});
 		},
 		http : function (callback) {
-			ProjectProvider.prototype.pageSpeed(pageSpeedParams, function(error, httpReport){
+			ProjectProvider.prototype.pageSpeed(pageSpeedParams, function (error, httpReport) {
 				callback(error, httpReport);
 			});
 
@@ -57,11 +56,11 @@ ProjectProvider.prototype.gatherStatistics = function (parameters, callback) {
 			});
 		}
 	}, function (error, results) {
-		if (error){
+		if (error) {
 			callback(error, null);
 		} else {
 			// add the name of the project to the results
-			results.name = parameters['project'];
+			results.name = parameters.project;
 			
 			/**
 			 * New report generated here
@@ -71,12 +70,12 @@ ProjectProvider.prototype.gatherStatistics = function (parameters, callback) {
 				 * Report inserted here
 				 */
 			
-				if (error){
+				if (error) {
 					callback(error, null);
 				} else {
 					// if insertion successful, callback is fired with success message
 					ProjectProvider.prototype.insertReport(document, function (error, response) {
-						if (!error){
+						if (!error) {
 							callback(null, response);
 						} else {
 							callback(error, null);
@@ -86,7 +85,7 @@ ProjectProvider.prototype.gatherStatistics = function (parameters, callback) {
 			});
 		}
 	});	
-}
+};
 
 /**
  * Each API query to gather data is split into modules
@@ -102,26 +101,14 @@ ProjectProvider.prototype.git = function (params, callback) {
 		repository = params.repository,
 		// authentication url
 		url = 'https://' + user + ':' + password + '@api.github.com';
-	
-	// first request is to extract the sha (unique id of the last commit)
-	request({
-		method : 'GET',
-		uri: url + '/repos/' + user + '/' + repository + '/commits'
-	}, function (error, res, body) {
-		if (res.statusCode === 200){
-			var report = JSON.parse(body),
-				sha = report[0].sha;
-			getCommitData(sha);
-		}
-	});
 
 	// using the sha - data about the last commit can be obtained
-	function getCommitData (sha) {
+	function getCommitData(sha) {
 		request({
 			method : 'GET',
 			uri: url + '/repos/' + user + '/' + repository + '/commits/' + sha
 		}, function (error, res, body) {
-			if (res.statusCode === 200){
+			if (res.statusCode === 200) {
 				var commitContent = JSON.parse(body);
 				callback(null, commitContent.commit);
 			} else {
@@ -129,7 +116,19 @@ ProjectProvider.prototype.git = function (params, callback) {
 			}
 		});
 	}
-}
+	
+	// first request is to extract the sha (unique id of the last commit)
+	request({
+		method : 'GET',
+		uri: url + '/repos/' + user + '/' + repository + '/commits'
+	}, function (error, res, body) {
+		if (res.statusCode === 200) {
+			var report = JSON.parse(body),
+				sha = report[0].sha;
+			getCommitData(sha);
+		}
+	});
+};
 
 /**
  * Page Speed API
@@ -142,15 +141,15 @@ ProjectProvider.prototype.pageSpeed = function (params, callback) {
 	request({
 		method : 'GET',
 		uri : 'https://www.googleapis.com/pagespeedonline/v1/runPagespeed?url=' + url + '&key=' + key
-	}, function (error, res, body){
-		if (res.statusCode === 200){
+	}, function (error, res, body) {
+		if (res.statusCode === 200) {
 			var report = JSON.parse(body);
 			callback(null, report);
 		} else {
 			callback(error, null);
 		}
 	});
-}
+};
 
 /**
  * Phantomjs API
@@ -159,17 +158,17 @@ ProjectProvider.prototype.phantom = function (params, callback) {
 	var timeBeforePageRequest = Date.now(),
 		url = params.url;
 	
-	phantom.create(function(ph) {
-		return ph.createPage(function(page) {
-			return page.open(url, function(status) {
-				if (status === 'success'){
+	phantom.create(function (ph) {
+		return ph.createPage(function (page) {
+			return page.open(url, function (status) {
+				if (status === 'success') {
 					// page loading time
-					var pageLoadingTime = {'pageLoadingTime' :
-												{
-													'value': Date.now() - timeBeforePageRequest,
-													'name' : 'Page Loading Time'
-												}
-											};
+					var pageLoadingTime = {
+						'pageLoadingTime' : {
+							'value': Date.now() - timeBeforePageRequest,
+							'name' : 'Page Loading Time'
+						}
+					};
 					
 					callback(null, pageLoadingTime);
 					
@@ -189,7 +188,7 @@ ProjectProvider.prototype.phantom = function (params, callback) {
 			});
 		});
 	});
-}
+};
 
 /**
  * Generate New Report Object
@@ -213,12 +212,12 @@ ProjectProvider.prototype.generateNewReport = function (object, callback) {
 	
 	async.parallel({
 		generateRevision : function (callback) {
-			ProjectProvider.prototype.generateRevision(document, object, function(error, revisionReport) {
+			ProjectProvider.prototype.generateRevision(document, object, function (error, revisionReport) {
 				callback(error, revisionReport);
 			});
 		},
 		generateHttp : function (callback) {
-			ProjectProvider.prototype.generateHttp(document, object, function(error, httpReport){
+			ProjectProvider.prototype.generateHttp(document, object, function (error, httpReport) {
 				callback(error, httpReport);
 			});
 		},
@@ -228,7 +227,7 @@ ProjectProvider.prototype.generateNewReport = function (object, callback) {
 			});
 		}
 	}, function (error, results) {
-		if (error){
+		if (error) {
 			callback(error, null);
 		} else {
 			document.http = results.generateHttp;
@@ -239,7 +238,7 @@ ProjectProvider.prototype.generateNewReport = function (object, callback) {
 			callback(null, document);
 		}
 	});	
-}
+};
 
 /**
  * Generate report modules
@@ -257,30 +256,36 @@ ProjectProvider.prototype.generateHttp = function (document, object, callback) {
 	document.http.score = object.http.score;
 	
 	// loops through all the rules
-	var ruleResults = object.http.formattedResults.ruleResults;
-	for (rule in ruleResults){
-		// adding a new rule to the results document.http
-		var ruleData = {};
-		for (property in ruleResults[rule]){
-			switch (property){
-				case 'localizedRuleName' :
-					ruleData.name = ruleResults[rule][property];
-					break;
-				case 'ruleScore' :
-					ruleData.score = ruleResults[rule][property];
-					break;
-				case 'ruleImpact' :
-					ruleData.impact = ruleResults[rule][property];
-					break;
+	var ruleResults = object.http.formattedResults.ruleResults,
+		rule, property, stat;
+	for (rule in ruleResults) {
+		if (ruleResults.hasOwnProperty(rule)) {
+			// adding a new rule to the results document.http
+			var ruleData = {};
+			for (property in ruleResults[rule]) {
+				if (ruleResults[rule].hasOwnProperty(property)) {
+					switch (property) {
+					case 'localizedRuleName' :
+						ruleData.name = ruleResults[rule][property];
+						break;
+					case 'ruleScore' :
+						ruleData.score = ruleResults[rule][property];
+						break;
+					case 'ruleImpact' :
+						ruleData.impact = ruleResults[rule][property];
+						break;
+					}
+					ruleData.id = rule;
+				}
 			}
-			ruleData.id = rule;
+			document.http.rules.push(ruleData);
 		}
-		document.http.rules.push(ruleData);
 	}
 	
 	// loop through the page statistics - filtering out unwanted values
-	for (stat in object.http.pageStats){
-		switch (stat) {
+	for (stat in object.http.pageStats) {
+		if (object.http.pageStats.hasOwnProperty(stat)) {
+			switch (stat) {
 			case 'numberResources':
 				document.http.general[stat] = object.http.pageStats[stat];
 				break;
@@ -302,11 +307,11 @@ ProjectProvider.prototype.generateHttp = function (document, object, callback) {
 			case 'numberCssResources':
 				document.http.general[stat] = object.http.pageStats[stat];
 				break;
+			}
 		}
 	}
-	
 	callback(null, document.http);
-}
+};
 
 /**
  * Revision
@@ -319,7 +324,7 @@ ProjectProvider.prototype.generateRevision = function (document, object, callbac
 	document.revision.timeOfCommit = object.revision.committer.date;
 	
 	callback(null, document.revision);
-}
+};
 
 /**
  * JavaScript
@@ -327,17 +332,20 @@ ProjectProvider.prototype.generateRevision = function (document, object, callbac
  */
 
 ProjectProvider.prototype.generateJavascript = function (document, object, callback) {
-	var javaScriptMeasurementsArray = [];
+	var javaScriptMeasurementsArray = [],
+		property;
 	
-	for (property in object.javascript){
-		javaScriptMeasurementsArray.push({'name': object.javascript[property].name,
-										 'value': object.javascript[property].value,
-										 'id': property
-										 });	
+	for (property in object.javascript) {
+		if (object.javascript.hasOwnProperty(property)) {
+			javaScriptMeasurementsArray.push({'name': object.javascript[property].name,
+											 'value': object.javascript[property].value,
+											 'id': property
+											 });
+		}
 	}
 	document.javascript = javaScriptMeasurementsArray;
 	callback(null, document.javascript);
-}
+};
 	
 
 /**
@@ -356,7 +364,7 @@ ProjectProvider.prototype.insertReport = function (report, callback) {
 			callback(error, null);
 		}
 	});
-}
+};
 
 // exports the Project provider so it can be accessed elsewhere
 exports.ProjectProvider = ProjectProvider;
