@@ -190,6 +190,20 @@ StatisticsProvider.prototype.findAllStatistics = function (name, callback) {
 	});
 }
 
+/**
+ * Count Reports
+ * Counts the number of reports returned based on the condition
+ */
+StatisticsProvider.prototype.countReports = function (name, callback){
+	Report.count({name:name}, function(error, count){
+		if(error){
+			callback(error, null);
+		} else {
+			callback(null, count);
+		}
+	});
+}
+
 
 
 // exports the Statistics provider so it can be accessed elsewhere

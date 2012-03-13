@@ -3,7 +3,6 @@ div#latest-information
 	// revision information
 	div#commit-context.column
 		h2 Commit Information
-
 		ul
 			li
 				em.highlight Last Commit:&nbsp;
@@ -13,7 +12,7 @@ div#latest-information
 				=reports[0].revision.committer
 			li
 				em.highlight Number of Commits:&nbsp;
-				=reports.length
+				=reportNo
 			li
 				em.highlight Time of Last Commit:&nbsp;
 				=new Date(reports[0].revision.timeOfCommit).toLocaleDateString() + '&nbsp;' + new Date(reports[0].revision.timeOfCommit).toLocaleTimeString()

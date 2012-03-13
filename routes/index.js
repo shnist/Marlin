@@ -59,6 +59,11 @@ exports.project = function(request, response){
 			statisticsProvider.findStatistics(search, function (error, reports) {
 				callback(error, reports)
 			});
+		},
+		countReports : function (callback){
+			statisticsProvider.countReports(search, function(error, noOfReports){
+				callback(error, noOfReports);
+			});
 		}
 	}, function (error, results) {
 		if (error){
@@ -94,6 +99,7 @@ exports.project = function(request, response){
 				rules = statisticsProvider.filterRules(http, request.url);
 				rules = statisticsProvider.filterStatistics(rules, results.statistics);
 			}
+
 			
 			// render out the page
 			response.render(view, {
@@ -103,7 +109,8 @@ exports.project = function(request, response){
 					projects: results.projectNames,
 					statistics: rules,
 					reports: results.statistics,
-					selected: selectedRules
+					selected: selectedRules,
+					reportNo: results.countReports
 				}
 			});
 		}
