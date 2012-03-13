@@ -81,6 +81,7 @@ tabs = {
 		var island = $(html),
 			$title = '',
 			$results = '',
+			$alerts = '',
 			$form = '';
 		
 		// scrape the information out

@@ -8,39 +8,61 @@ div#page
 				input(type='submit', name='exporting', value='Export all data')
 		include includes/latest_information
 		include includes/navigation
+		-if (selected === null)
+			-var chosen = []
+			-each rule, i in statistics[0]
+				-if ((i + 1) <= 4)
+					-chosen.push(rule)
+			
 		h2.rule-title Worst Performing HTTP Rules
 		-if(selected !== null && selected.length > 1)
+			-var isFirst = true
 			div.alerts
 				-each latestRule, i in selected[0]
 					-each formerRule, j in selected[1]
 						if (i === j)
-							-if((latestRule.score - formerRule.score) < -10 && k === 0)
-								h2 Alerts
-								p.error= latestRule.name + ' has dropped by over 10 points!'
-							-else if((latestRule.score - formerRule.score) < -10)
-								p.error= latestRule.name + ' has dropped by over 10 points!'
-							-else if((latestRule.score - formerRule.score) > 10 && k===0)
-								h2 Alerts
-								p.success= 'Great! ' + latestRule.name + ' has increased by over 10 points!'
-							else if((latestRule.score - formerRule.score) > 10)
-								p.success= 'Great! ' + latestRule.name + ' has increased by over 10 points!'
+							-if((latestRule.score - formerRule.score) <= -10)
+								-if (isFirst === true)
+									h2 Alerts
+									p.error
+										em= latestRule.name
+										= ' has dropped by over 10 points!'
+									-isFirst = false
+								-else
+									p.error
+										em= latestRule.name
+										= ' has dropped by over 10 points!'
+							else if((latestRule.score - formerRule.score) >= 10)
+								-if (isFirst === true)
+									h2 Alerts
+									p.success= 'Great! '
+										em= latestRule.name
+										= ' has increased by over 10 points!'
+									-isFirst = false
+								-else
+									p.success= 'Great! '
+										em= latestRule.name
+										= ' has increased by over 10 points!'
 		-else
 			-if (statistics.length > 1)
+				-var isFirst = true;
 				div.alerts
-					-each latestRule, j in statistics[0]
-						-if ((j + 1) <=  4)
-							-each formerRule, k in statistics[1]
-								-if (k === j)
-									-if((latestRule.score - formerRule.score) < -10 && k === 0)
+					-each latestRule, j in chosen
+						-each formerRule, k in statistics[1]
+							if(latestRule.id === formerRule.id)
+								-if((latestRule.score - formerRule.score) <= -10)
+									-if (isFirst === true)
 										h2 Alerts
-										p.error= latestRule.name + ' has dropped by over 10 points!'
-									-else if((latestRule.score - formerRule.score) < -10)
-										p.error= latestRule.name + ' has dropped by over 10 points!'
-									-else if((latestRule.score - formerRule.score) > 10 && k===0)
-										h2 Alerts
-										p.success= 'Great! ' + latestRule.name + ' has increased by over 10 points!'
-									else if((latestRule.score - formerRule.score) > 10)
-										p.success= 'Great! ' + latestRule.name + ' has increased by over 10 points!'
+										p.error
+											em= latestRule.name
+											= ' has dropped by over 10 points!'
+										-isTrue = false
+								else if((latestRule.score - formerRule.score) >= 10)
+									-if (isFirst === true)
+										p.success= 'Great!'
+											em= latestRule.name
+											= ' has increased by over 10 points!'
+										-isTrue = false
 		div#chart-worst.graph
 			table
 				caption A table to show the worst performing HTTP rules
@@ -51,22 +73,21 @@ div#page
 							-each rule, i in selected[0]
 								th= rule.name
 						-else 
-							-var chosen = []
-							-each rule, i in statistics[0]
-								-if ((i + 1) <= 4)
-									-chosen.push(rule)
-									th= rule.name
+							-each rule, i in chosen
+								th= rule.name
 				tbody
 					-for(var i = 0; i < statistics.length; i = i + 1)
 						tr
 							td= new Date(reports[i].date).toLocaleDateString() + '&nbsp;' + new Date(reports[i].date).toLocaleTimeString()
 							-if(selected !== null)
 								-each rule in selected[i]
+									td= rule.name
 									td= rule.score
 							-else
-								-each rule, j in statistics[i]
-									-if ((j + 1) <=  4)
-										td= rule.score	
+								-for (var a = 0; a < chosen.length; a = a + 1)
+									-each rule, j in statistics[i]
+										if(rule.id === chosen[a].id)
+											td=rule.score
 		// form for selecting different rules
 		form(method='post', class='rule-options')
 			fieldset(class='date collapsible')
