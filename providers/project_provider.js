@@ -163,10 +163,10 @@ ProjectProvider.prototype.phantom = function (params, callback) {
 			return page.open(url, function (status) {
 				if (status === 'success') {
 					// page loading time
-					var pageLoadingTime = {
-						'pageLoadingTime' : {
+					var domReadyTime = {
+						'domReadyTime' : {
 							'value': Date.now() - timeBeforePageRequest,
-							'name' : 'Page Loading Time'
+							'name' : 'DOM Ready Time'
 						}
 					};
 					
