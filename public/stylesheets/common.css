@@ -603,28 +603,31 @@ input[type="submit"] {
 /*
 * Styles to do with js fallback tables
 */
-.graph table {
+.statistics {
   border-collapse: collapse;
   width: 500px;
   font-size: 12px;
+  margin: 0 auto;
+}
+.graph .stastics {
   margin: 45px 0 0 0;
 }
-.graph caption {
+.statistics caption {
   padding: 5px;
 }
-.graph td,
-.graph th {
+.statistics td,
+.statistics th {
   border: 1px solid #ccc;
   padding: 2px;
 }
-.graph th {
+.statistics th {
   background: #3574b2;
   color: #fff;
 }
-.graph td {
+.statistics td {
   text-align: center;
 }
-.graph .time {
+.statistics .time {
   font-weight: bold;
 }
 /* Export form */
