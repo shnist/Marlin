@@ -115,10 +115,7 @@ chart = {
 				title = 'JavaScript Performance';
 			}
 	
-			// remove tables
-			if ($('table', 'chart-' + type).hasClass('hidden') !== true){
-				$('table', 'chart-' + type).addClass('hidden');
-			}
+
 			
 			if(type === 'javascript'){
 				options.maxValue = 10000;
@@ -130,8 +127,11 @@ chart = {
 				options.vAxis.title = 'Score out of 100'
 			}
 		
-			var chart = new google.visualization.LineChart(document.getElementById('chart-' + type));
-			chart.draw(data,
+			// move the table
+			chart.moveTable(type);
+		
+			var newChart = new google.visualization.LineChart(document.getElementById('chart-' + type));
+			newChart.draw(data,
 				{
 					chartArea: {top: 50, left: options.area.left, width: '100%', height: '50%'},
 					legend: {position: 'top'},
@@ -151,5 +151,11 @@ chart = {
 				$('.rule-title').after('<p class="error">' + json.error + '</p>');
 			}
 		}
+	},
+	/**
+	 * Method that moves the table to a different part of the page
+	 */
+	moveTable : function (type) {	
+		$('#chart-' + type).siblings('form').after($('table', '#chart-' + type));
 	}
 };
