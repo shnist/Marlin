@@ -170,7 +170,7 @@ ProjectProvider.prototype.phantom = function (params, callback) {
 						}
 					};
 					
-					callback(null, pageLoadingTime);
+					callback(null, domReadyTime);
 					
 					// values for page evaluate are returned in a callback
 					//return page.evaluate((function() {
