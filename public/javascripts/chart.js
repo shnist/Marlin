@@ -80,7 +80,7 @@ chart = {
 		if (json.error === undefined){
 			// new data table
 			var data = new google.visualization.DataTable(),
-			i = 0, j = 0, k, title = '', options = { area: {}};
+			i = 0, j = 0, k, title = '', options = { area: {}, vAxis: {}};
 		
 			
 			for (i; i < (json.results[0].length + 1); i = i + 1){
@@ -122,10 +122,12 @@ chart = {
 			
 			if(type === 'javascript'){
 				options.maxValue = 10000;
-				options.area.left = 50;
+				options.area.left = 80;
+				options.vAxis.title = 'Time (ms)'
 			} else {
 				options.maxValue = 100;
-				options.area.left = 30;
+				options.area.left = 50;
+				options.vAxis.title = 'Score out of 100'
 			}
 		
 			var chart = new google.visualization.LineChart(document.getElementById('chart-' + type));
@@ -136,7 +138,7 @@ chart = {
 					width: 500,
 					height: 500,
 					title:title,
-					vAxis:{maxValue: options.maxValue, minValue: 0}
+					vAxis:{maxValue: options.maxValue, minValue: 0, title: options.vAxis.title}
 				}
 			);
 		} else {
