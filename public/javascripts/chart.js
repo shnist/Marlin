@@ -128,15 +128,15 @@ chart = {
 			}
 		
 			// move the table
-			chart.moveTable(type);
+			//chart.moveTable(type);
 		
 			var newChart = new google.visualization.LineChart(document.getElementById('chart-' + type));
 			newChart.draw(data,
 				{
-					chartArea: {top: 50, left: options.area.left, width: '100%', height: '50%'},
+					chartArea: {top: 50, left: options.area.left, width: '100%', height: '70%'},
 					legend: {position: 'top'},
 					width: 500,
-					height: 500,
+					height: 300,
 					title:title,
 					vAxis:{maxValue: options.maxValue, minValue: 0, title: options.vAxis.title}
 				}
@@ -155,7 +155,43 @@ chart = {
 	/**
 	 * Method that moves the table to a different part of the page
 	 */
-	moveTable : function (type) {	
-		$('#chart-' + type).siblings('form').after($('table', '#chart-' + type));
+	moveTable : function (type) {
+		var project = $('input[name=project]', '#tab-one .rule-options').val(),
+			page =  project + '/';
+			
+		if (type !== 'worst') {
+			if (tab === 'best'){
+				page = page + 'best';
+			} else {
+				page = page + 'javascript';
+			}
+			$.ajax({
+				url : page,
+				dataType: 'html',
+				type: 'get',
+				success : function (data) {
+					var island = $(data),
+					$table = island.find('.statistics');
+					
+					$('table', '#chart-' + type).remove();
+					$('#chart-' + type).siblings('form').after($table);
+					
+				},
+				error: function (object, stat, error) {
+					console.log(stat + ': ' + error);
+				}
+			});
+			
+			
+		} else {
+			
+			$('#chart-' + type).siblings('form').after($('table', '#chart-' + type));
+		}
+		
+		
+		
+		
+		
+		
 	}
 };

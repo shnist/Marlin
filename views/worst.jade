@@ -56,13 +56,22 @@ div#page
 										p.error
 											em= latestRule.name
 											= ' has dropped by over 10 points!'
-										-isTrue = false
+										-isFirst = false
+									-else
+										p.error
+											em= latestRule.name
+											= ' has dropped by over 10 points!'
 								else if((latestRule.score - formerRule.score) >= 10)
 									-if (isFirst === true)
-										p.success= 'Great!'
+										h2 Alerts
+										p.success= 'Great! '
 											em= latestRule.name
 											= ' has increased by over 10 points!'
-										-isTrue = false
+										-isFirst = false
+									-else
+										p.success= 'Great! '
+											em= latestRule.name
+											= ' has increased by over 10 points!'
 		div#chart-worst.graph
 			table.statistics
 				caption A table to show the worst performing HTTP rules
