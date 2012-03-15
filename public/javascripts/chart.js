@@ -97,7 +97,7 @@ chart = {
 			
 			for (j; j < json.results.length; j = j + 1){
 				data.setValue(j, 0, new Date(json.timeStamps[j]).toLocaleDateString() + ' ' + new Date(json.timeStamps[j]).toLocaleTimeString());
-				for (k = 1; k < data.B.length; k = k + 1){
+				for (k = 1; k < data.A.length; k = k + 1){
 					if (type === 'javascript'){
 						data.setValue(j, k, json.results[j][k-1].value);
 					} else {
