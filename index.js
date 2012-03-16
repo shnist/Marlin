@@ -118,6 +118,18 @@ marlin.get('/:name/ajax', routes.ajax);
  */
 marlin.get('/newreport', routes.newReport);
 
+/**
+ * Generate Build Management Form
+ * GET
+ */
+marlin.get('/build', routes.build);
+
+/**
+ * Generate Build Management Fil
+ * POST - handles the creation of the build management file
+ */
+marlin.post('/build', routes.build);
+
 
 // listen on port 3000
 marlin.listen(3000);

@@ -206,3 +206,26 @@ exports.exporting = function (request, response) {
 		}
 	});
 }
+
+
+/**
+ * Build
+ * Generates a form that the user can input details and create
+ * a build management file
+ */
+exports.build = function (request, response){
+	response.render('build', { locals: {
+			title : 'Marlin: Create a Build Management File'
+		}
+	});
+}
+
+/**
+ * Create Build
+ * Generates the build management file
+ */
+exports.createBuild = function(request, response){
+	console.log(request);
+	
+	
+}

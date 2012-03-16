@@ -1,0 +1,33 @@
+div#page
+	div#content
+		h1 Create a Build File
+		p Fill out the form below to create the appropriate build file.
+		form(method='post')
+			fieldset
+				ul
+					li
+						label(for='project') Name of your project:
+						input(type='text', name='project', id='project')
+					li
+						label(for='user-name') User name for revision software:
+						input(type='text', name='user-name', id='user-name')
+					li
+						label(for='password') Password for revision software:
+						input(type='text', name='user-password', id='password')
+					li
+						label(for='repo') Name of the repository:
+						input(type='text', name='repository', id='repo')
+					li
+						label(for='site') URL of the site you want to test:
+						input(type='text', name='site', id='site')
+					li
+						label(for='marlin') URL of the Marlin server:
+						input(type='text', name='marlin', id='marlin')
+			fieldset
+				label(for='manager') Please select which management software you are building for:
+				select(name='manager', id='manager')
+					option(value='select') Please Select
+					option(value='ant') Apache Ant
+			input(type='submit', value='Download Build File', name='build-file')
+//footer
+include includes/footer
