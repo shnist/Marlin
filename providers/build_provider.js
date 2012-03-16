@@ -30,25 +30,29 @@ BuildProvider.prototype.buildFileElements = function(request, data, callback){
  * Validate
  * Method that co-ordinates the error checking of the form
  */
-BuildProvider.prototype.validate = function (params, callback) {	
+BuildProvider.prototype.validate = function (params, callback) {
+	var defaultMessage = 'Sorry, we tried to check this forms for errors, but something went wrong. Please try again';
+	
 	async.parallel({
 		emptyValues : function (callback) {
-			BuildProvider.prototype.emptyValues(params, function (error) {
-				callback(error);
+			BuildProvider.prototype.emptyValues(params, function (error, messages) {
+				callback(error, messages);
 			});
 		},
 		urlForm : function (callback) {
-			BuildProvider.prototype.urlForm(params, function (error) {
-				callback(error);
+			BuildProvider.prototype.urlForm(params, function (error, messages) {
+				callback(error, messages);
 			});
 		}
-	}, function (error) {
-		console.log('error: ' + error);
-		
+	}, function (error, messages) {
 		if (error) {
-			callback(error);
+			callback(error, null);
 		} else {
-			callback(null);
+			if(messages !== null){
+				callback(null, messages);	
+			} else {
+				callback(defaultMessage, null)
+			}
 		}
 	});		
 }
@@ -75,10 +79,10 @@ BuildProvider.prototype.emptyValues = function (params, callback) {
 	}	
 	if(empty.length !== 0){
 		BuildProvider.prototype.createErrorMessage(empty, function(message){
-			callback(message);
+			callback(null, message);
 		});
 	} else {
-		callback(null);
+		callback(null, null);
 	}
 }
 
@@ -87,12 +91,33 @@ BuildProvider.prototype.emptyValues = function (params, callback) {
  * Checks that the urls are well formed
  */
 
-BuildProvider.prototype.urlForm = function (data, callback) {
-	var urlRegex = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/;
+BuildProvider.prototype.urlForm = function (params, callback) {
+	var urlRegex = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/,
+		urls = [],
+		i = 0,
+		prop;
 	
-	callback(null);
-	
-	
+	if (params.site === '' && params.marlin === ''){
+		callback(null);
+	} else {
+		if (params.site !== ''){
+			if (urlRegex.test(params.site) !== true){
+				prop = {};
+				prop['site-empty'] = '';
+				urls.push(prop);
+			}		
+		}
+		if (params.marlin !== ''){
+			if (urlRegex.test(params.marlin) !== true){
+				prop = {};
+				prop['marlin-empty'] = '';
+				urls.push(prop);
+			}		
+		}
+		BuildProvider.prototype.createErrorMessage(urls, function(message){
+			callback(null, message);
+		});
+	}
 }
 
 
@@ -126,6 +151,12 @@ BuildProvider.prototype.createErrorMessage = function (error, callback) {
 						break;
 					case 'marlin':
 						messages.push('Please fill in the URL address of the Marlin server.');
+						break;
+					case 'site-empty':
+						messages.push('Please fill in a valid URL for the site you want to test.');
+						break;
+					case 'marlin-empty':
+						messages.push('Please fill in a valid URL for your Marlin server.');
 						break;
 					default:
 						messages.push('Some of your inputs are empty. Please could you fill them in!');

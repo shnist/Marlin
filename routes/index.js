@@ -218,7 +218,8 @@ exports.exporting = function (request, response) {
  */
 exports.build = function (request, response){
 	response.render('build', { locals: {
-			title : 'Marlin: Create a Build Management File'
+			title : 'Marlin: Create a Build Management File',
+			messages : null
 		}
 	});
 }
@@ -229,11 +230,15 @@ exports.build = function (request, response){
  */
 exports.createBuild = function(request, response){
 	
-	buildProvider.validate(request.body, function(error){
+	buildProvider.validate(request.body, function(error, messages){
 		if(error){
+			console.log(error);
+		} else if (messages !== null){
+			
+			console.log(messages);
 			response.render('build',{ locals: {
 				title : 'Marlin: Create a Build Management File',
-				messages : error
+				messages : messages
 			}});
 		} else {
 			buildProvider.processForm(request, function(error, data){
