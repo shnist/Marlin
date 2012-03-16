@@ -228,8 +228,51 @@ exports.build = function (request, response){
  * Generates the build management file
  */
 exports.createBuild = function(request, response){
-	console.log(request);
+	console.log(request.body);
 	
+	var property = '',
+		empty = [];
+	// error checking
+	for (property in request.body){
+		if(request.body.hasOwnProperty(property)){
+		
+			if(request.body[property] === ''){
+				empty.push(request.body.property);
+			}
+		}
+	}
 	
+	if(empty.length !== 0){
 	
+		response.render('build',{ locals: {
+			title : 'Marlin: Create a Build Management File',
+			emptyElements : empty
+		}});
+	}	
+	
+	buildProvider.processForm(request, function(error, data){
+		if (error){
+			response.send(error);
+		} else {
+			buildProvider.buildFileElements(request, data, function(error, params){
+				if(error){
+					response.send(error);
+				} else {
+					console.log('end journey');
+					
+					//response.setHeader('Content-disposition', 'attachment; filename=' + params.fileName);
+					//response.setHeader('Content-type', 'application/xml');
+					//response.download(params.file, function (error) {
+					//	if (error){
+					//		console.log(error);
+					//	}
+					//}, function(error){
+					//	if(error){
+					//		console.log(error);
+					//	}
+					//});
+				}
+			});	
+		}
+	});
 }
