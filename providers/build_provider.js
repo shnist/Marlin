@@ -19,6 +19,24 @@ BuildProvider.prototype.buildFileElements = function(request, data, callback){
 	
 }
 
+BuildProvider.prototype.validate = function (data, callback) {
+	var property = '',
+		empty = [];
+	// error checking
+	for (property in request.body){
+		if(request.body.hasOwnProperty(property)){
+			if(request.body[property] === ''){
+				empty.push(request.body.property);
+			}
+		}
+	}
+	if(empty.length !== 0){
+		callback(empty);
+
+	}	
+	
+}
+
 
 
 
