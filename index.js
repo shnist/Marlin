@@ -128,7 +128,7 @@ marlin.get('/build', routes.build);
  * Generate Build Management Fil
  * POST - handles the creation of the build management file
  */
-marlin.post('/build', routes.build);
+marlin.post('/build', routes.createBuild);
 
 
 // listen on port 3000

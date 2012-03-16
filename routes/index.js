@@ -8,6 +8,7 @@
 var StatisticsProvider = require('../providers/statistics_provider').StatisticsProvider,
 	ProjectProvider = require('../providers/project_provider').ProjectProvider;
 	ExportProvider = require('../providers/export_provider').ExportProvider;
+	BuildProvider = require('../providers/build_provider').BuildProvider;
 var async = require('async');
 var fs = require('fs');
 
@@ -16,7 +17,9 @@ var statisticsProvider = new StatisticsProvider(),
 	// make a new instance of the Project Provider
 	projectProvider = new ProjectProvider(),
 	// make a new instance of export provider
-	exportProvider = new ExportProvider();
+	exportProvider = new ExportProvider(),
+	// make a new instance of build provider
+	buildProvider = new BuildProvider();
 
 exports.index = function(request, response){
 	statisticsProvider.allProjectNames(function (error, docs) {
@@ -226,6 +229,7 @@ exports.build = function (request, response){
  */
 exports.createBuild = function(request, response){
 	console.log(request);
+	
 	
 	
 }
