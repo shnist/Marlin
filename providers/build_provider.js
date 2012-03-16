@@ -43,6 +43,11 @@ BuildProvider.prototype.validate = function (params, callback) {
 			BuildProvider.prototype.urlForm(params, function (error, messages) {
 				callback(error, messages);
 			});
+		},
+		manager : function(callback){
+			BuildProvider.prototype.manager(params.manager, function(error, messages){
+				callback(error, messages);
+			});
 		}
 	}, function (error, messages) {
 		if (error) {
@@ -120,6 +125,27 @@ BuildProvider.prototype.urlForm = function (params, callback) {
 	}
 }
 
+/**
+ * Manager
+ * Checks that build management selection option is not on select
+ */
+BuildProvider.prototype.manager = function (manager, callback){
+	var buildManagers = [],
+		prop;
+	if(manager === 'select'){
+		prop={};
+		prop['manager-select'] = '';
+		buildManagers.push(prop);
+		
+		BuildProvider.prototype.createErrorMessage(buildManagers, function(message){
+			callback(null, message);
+		});
+	} else {
+		callback(null, null);
+	}
+	
+}
+
 
 /**
  * Create error message
@@ -157,6 +183,9 @@ BuildProvider.prototype.createErrorMessage = function (error, callback) {
 						break;
 					case 'marlin-empty':
 						messages.push('Please fill in a valid URL for your Marlin server.');
+						break;
+					case 'manager-select':
+						messages.push('Please select the Build Management Software you want to build the file for.');
 						break;
 					default:
 						messages.push('Some of your inputs are empty. Please could you fill them in!');
