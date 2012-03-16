@@ -233,7 +233,7 @@ exports.createBuild = function(request, response){
 		if(error){
 			response.render('build',{ locals: {
 				title : 'Marlin: Create a Build Management File',
-				emptyElements : empty
+				messages : error
 			}});
 		} else {
 			buildProvider.processForm(request, function(error, data){
