@@ -233,39 +233,32 @@ exports.createBuild = function(request, response){
 	buildProvider.validate(request.body, function(error, messages){
 		if(error){
 			console.log(error);
-		} else if (messages !== null){
-			
-			console.log(messages);
+		} else if (messages.emptyValues !== null && messages.urlForm !== null && messages.manager !== null){
 			response.render('build',{ locals: {
 				title : 'Marlin: Create a Build Management File',
 				messages : messages
 			}});
 		} else {
-			buildProvider.processForm(request, function(error, data){
-				if (error){
+			buildProvider.buildFileElements(request.body, function(error, params){
+				if(error){
 					response.send(error);
 				} else {
-					buildProvider.buildFileElements(request, data, function(error, params){
-						if(error){
-							response.send(error);
-						} else {
-							console.log('end journey');
-							
-							//response.setHeader('Content-disposition', 'attachment; filename=' + params.fileName);
-							//response.setHeader('Content-type', 'application/xml');
-							//response.download(params.file, function (error) {
-							//	if (error){
-							//		console.log(error);
-							//	}
-							//}, function(error){
-							//	if(error){
-							//		console.log(error);
-							//	}
-							//});
-						}
-					});	
+					console.log('end journey');
+					
+					//response.setHeader('Content-disposition', 'attachment; filename=' + params.fileName);
+					//response.setHeader('Content-type', 'application/xml');
+					//response.download(params.file, function (error) {
+					//	if (error){
+					//		console.log(error);
+					//	}
+					//}, function(error){
+					//	if(error){
+					//		console.log(error);
+					//	}
+					//});
 				}
-			});
+			});	
 		}
+
 	});
 }

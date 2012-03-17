@@ -3,6 +3,7 @@
  */
 
 var async = require('async');
+var builder = require('xmlbuilder');
 
 
 /**
@@ -12,17 +13,39 @@ var async = require('async');
 
 var BuildProvider = function () {};
 
+
+/**
+ * Process Form
+ *
+ */
+
 BuildProvider.prototype.processForm = function(data, callback){
-	
+	console.log(data);
 	callback(null, 'test');
 	
 }
 
+/**
+ * Build Properties a
+ * Builds the xml properties of the file depending on the build manager
+ * selected
+ */
+BuildProvider.prototype.buildProperties = function(data, callback){
+	var doc = builder.create();
+	console.log(data);
+	var property;
+	if (data.manager === 'ant'){
+		for (property in data){
+			if(data.hasOwnProperty(property)){
+				
+				
+			}
+		}
+	}
 
-BuildProvider.prototype.buildFileElements = function(request, data, callback){
+
 	
-	
-	callback(null, 'test');
+	callback(null, doc);
 	
 }
 
@@ -130,8 +153,9 @@ BuildProvider.prototype.urlForm = function (params, callback) {
  * Checks that build management selection option is not on select
  */
 BuildProvider.prototype.manager = function (manager, callback){
-	var buildManagers = [],
+	var buildManagers = [],	
 		prop;
+
 	if(manager === 'select'){
 		prop={};
 		prop['manager-select'] = '';
