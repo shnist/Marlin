@@ -80,6 +80,9 @@ marlin.get('/projects/:name/javascript', routes.project);
 marlin.post('/projects/:name', function (request, response) {
 	if (request.body.exporting !== undefined){
 		routes.exporting(request, response);
+	} else if (request.body.projects !== undefined) {
+		var project = request.body.projects;
+		response.redirect('/projects/' + project);
 	} else {
 		routes.project(request, response);
 	}
@@ -90,6 +93,9 @@ marlin.post('/projects/:name', function (request, response) {
 marlin.post('/projects/:name/best', function (request, response) {
 	if (request.body.exporting !== undefined){
 		routes.exporting(request, response);
+	} else if (request.body.projects !== undefined) {
+		var project = request.body.projects;
+		response.redirect('/projects/' + project);
 	} else {
 		routes.project(request, response);
 	}
@@ -100,6 +106,9 @@ marlin.post('/projects/:name/best', function (request, response) {
 marlin.post('/projects/:name/javascript', function (request, response) {
 	if (request.body.exporting !== undefined){
 		routes.exporting(request, response);
+	} else if (request.body.projects !== undefined) {
+		var project = request.body.projects;
+		response.redirect('/projects/' + project);
 	} else {
 		routes.project(request, response);
 	}

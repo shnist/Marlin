@@ -36,7 +36,7 @@ exports.index = function(request, response){
 * @function allProjectNames - gets a list of monitored projects
 * @function findStatistics - get all statistics for the chosen project
 */
-exports.project = function(request, response){
+exports.project = function(request, response){	
 	var selectedRules = null,
 		search = null;
 	
