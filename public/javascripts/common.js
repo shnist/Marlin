@@ -112,11 +112,11 @@ common.validation = {
 					if($('.error').length){
 						$('.error').remove();
 					}
-					
-					var message, urlTest;
-					event.preventDefault();
+		
+					var message, urlTest;			
 					$('li input[type=text]').each(function(){
 						if($(this).val() === ''){
+							event.preventDefault();
 							// testing for empty values
 							message = common.validation.buildValidation.createMessage($(this).prop('name'));
 							$(this).after('<label for="' + $(this).prop('id') + '" class="error">' + message + '</label>');
@@ -124,6 +124,7 @@ common.validation = {
 							// testing for valid urls 
 							urlTest = common.validation.buildValidation.validURL($(this).val());
 							if(urlTest === false){
+								event.preventDefault();
 								if ($(this).prop('id') === 'site'){
 									message = common.validation.buildValidation.createMessage('site-empty');
 								} else {
@@ -135,10 +136,12 @@ common.validation = {
 					});
 					// testing the value of the select option
 					if($('select').val() === 'select'){
+						event.preventDefault();
 						message = common.validation.buildValidation.createMessage('manager-select');
 						$('select').after('<label for="' + $('select').prop('id') + '" class="error">' + message + '</label>')
 					}
 				});
+				
 			}
 		},
 		/**
