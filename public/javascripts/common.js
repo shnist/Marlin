@@ -11,7 +11,7 @@ common.functions = {
 	},
 	/* function that implements the custom select */
 	customSelect : function (){
-		$('#project-selection select').flyweightCustomSelect();
+		$('#project-selection select, #manager').flyweightCustomSelect();
 	}
 };
 
@@ -119,7 +119,7 @@ common.validation = {
 							event.preventDefault();
 							// testing for empty values
 							message = common.validation.buildValidation.createMessage($(this).prop('name'));
-							$(this).after('<label for="' + $(this).prop('id') + '" class="error">' + message + '</label>');
+							$(this).parents('li').append('<label for="' + $(this).prop('id') + '" class="error">' + message + '</label>');
 						} else if ($(this).prop('id') === 'site' || $(this).prop('id') === 'marlin'){
 							// testing for valid urls 
 							urlTest = common.validation.buildValidation.validURL($(this).val());
@@ -130,7 +130,7 @@ common.validation = {
 								} else {
 									message = common.validation.buildValidation.createMessage('marlin-empty');					
 								}
-								$(this).after('<label for="' + $(this).prop('id') + '" class="error">' + message + '</label>');
+								$(this).parents('li').append('<label for="' + $(this).prop('id') + '" class="error">' + message + '</label>');
 							}
 						}
 					});
@@ -138,7 +138,7 @@ common.validation = {
 					if($('select').val() === 'select'){
 						event.preventDefault();
 						message = common.validation.buildValidation.createMessage('manager-select');
-						$('select').after('<label for="' + $('select').prop('id') + '" class="error">' + message + '</label>')
+						$('select', $context).parents('fieldset').append('<label for="' + $('select').prop('id') + '" class="error">' + message + '</label>')
 					}
 				});
 				
