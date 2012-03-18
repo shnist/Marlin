@@ -6,7 +6,8 @@ div#page
 			-var property, i;
 			-for (property in messages)
 				- if(messages.hasOwnProperty(property))
-					- if(messages[property] !== undefined)
+					p=property
+					- if(messages[property].length !== undefined)
 						-for(i = 0; i < messages[property].length; i = i + 1)
 							p.error= messages[property][i]
 		form#build-form(method='post')

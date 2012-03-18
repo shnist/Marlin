@@ -13,31 +13,18 @@ var builder = require('xmlbuilder');
 
 var BuildProvider = function () {};
 
-
 /**
- * Process Form
- *
- */
-
-BuildProvider.prototype.processForm = function(data, callback){
-	console.log(data);
-	callback(null, 'test');
-	
-}
-
-/**
- * Build Properties a
+ * Build Properties
  * Builds the xml properties of the file depending on the build manager
  * selected
  */
 BuildProvider.prototype.buildProperties = function(data, callback){
-	var doc = builder.create();
-	console.log(data);
-	var property;
+	var doc = builder.create(),
+		property;
 	if (data.manager === 'ant'){
 		for (property in data){
 			if(data.hasOwnProperty(property)){
-				
+				console.log(property);
 				
 			}
 		}
@@ -54,7 +41,7 @@ BuildProvider.prototype.buildProperties = function(data, callback){
  * Method that co-ordinates the error checking of the form
  */
 BuildProvider.prototype.validate = function (params, callback) {
-	var defaultMessage = 'Sorry, we tried to check this forms for errors, but something went wrong. Please try again';
+	var defaultMessage = 'Sorry, we tried to check this forms for errors, but something went wrong. Please try again!';
 	
 	async.parallel({
 		emptyValues : function (callback) {
@@ -165,7 +152,7 @@ BuildProvider.prototype.manager = function (manager, callback){
 			callback(null, message);
 		});
 	} else {
-		callback(null, null);
+		callback(null, undefined);
 	}
 	
 }

@@ -63,7 +63,6 @@ StatisticsProvider.prototype.findStatistics = function (parameters, callback) {
 		query = null;
 		
 	if (typeof(parameters) !== 'object'){
-		// build default dates here,
 		// find is not filtered
 		projectName = parameters;
 		

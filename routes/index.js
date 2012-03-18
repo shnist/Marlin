@@ -233,18 +233,29 @@ exports.createBuild = function(request, response){
 	buildProvider.validate(request.body, function(error, messages){
 		if(error){
 			console.log(error);
-		} else if (messages.emptyValues !== null && messages.urlForm !== null && messages.manager !== null){
+		} else if (messages.emptyValues !== null || messages.urlForm !== null || messages.manager !== null){
+			console.log(messages)
 			response.render('build',{ locals: {
 				title : 'Marlin: Create a Build Management File',
 				messages : messages
 			}});
 		} else {
-			buildProvider.buildFileElements(request.body, function(error, params){
-				if(error){
-					response.send(error);
-				} else {
-					console.log('end journey');
+			// build both the properties and the xml file in parallel
+			async.parralel({
+				buildProperties : function (callback) {
+					buildProvider.buildProperties()
+				
+				},
+				createBuildFile : function(callback){
 					
+				}
+			}, function () {
+			
+			
+			});
+		}
+
+
 					//response.setHeader('Content-disposition', 'attachment; filename=' + params.fileName);
 					//response.setHeader('Content-type', 'application/xml');
 					//response.download(params.file, function (error) {
@@ -256,9 +267,6 @@ exports.createBuild = function(request, response){
 					//		console.log(error);
 					//	}
 					//});
-				}
-			});	
-		}
 
 	});
 }

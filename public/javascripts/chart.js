@@ -17,6 +17,7 @@ chart = {
 	 * Method that captures form submissions and triggers AJAX request
 	 */
 	submit : function () {
+		var firstRun = true;
 		$('.rule-options').submit(function (event) {
 			event.preventDefault();
 			
