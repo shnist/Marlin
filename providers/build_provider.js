@@ -80,7 +80,7 @@ BuildProvider.prototype.createAnt = function (data, callback){
 		.e('property', {'file': 'build.properties'})
 		.up()
 		.e('target', {'name': 'marlin'})
-			.e('get', {'src': '${marlin}/newreport?project=${project}&amp;gitUser=${user}&amp;gitPass=${password}&amp;repository=${repository}&amp;url=${url}',
+			.e('get', {'src': '${marlin}/newreport?project=${project}&gitUser=${user}&gitPass=${password}&repository=${repository}&url=${url}',
 			'maxtime': '10', 'dest': 'logs/log.html'});
 			
 	xmlString = doc.toString({'pretty': true, 'newline': '\n'});
