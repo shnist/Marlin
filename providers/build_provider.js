@@ -15,17 +15,6 @@ var BuildProvider = function () {};
 
 
 /**
- * Process Form
- *
- */
-
-BuildProvider.prototype.processForm = function(data, callback){
-	console.log(data);
-	callback(null, 'test');
-	
-}
-
-/**
  * Build Properties a
  * Builds the xml properties of the file depending on the build manager
  * selected
@@ -165,7 +154,7 @@ BuildProvider.prototype.manager = function (manager, callback){
 			callback(null, message);
 		});
 	} else {
-		callback(null, null);
+		callback(null, undefined);
 	}
 	
 }
