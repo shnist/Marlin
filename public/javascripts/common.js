@@ -107,42 +107,96 @@ common.validation = {
 		 */
 		init : function ($context) {
 			if ($context.length > 0) {
-				$context.submit(function(event){
-					// remove error messages if they already exist
-					if($('.error').length){
-						$('.error').remove();
-					}
-		
-					var message, urlTest;			
-					$('li input[type=text]').each(function(){
-						if($(this).val() === ''){
-							event.preventDefault();
-							// testing for empty values
-							message = common.validation.buildValidation.createMessage($(this).prop('name'));
-							$(this).parents('li').append('<label for="' + $(this).prop('id') + '" class="error">' + message + '</label>');
-						} else if ($(this).prop('id') === 'site' || $(this).prop('id') === 'marlin'){
-							// testing for valid urls 
-							urlTest = common.validation.buildValidation.validURL($(this).val());
-							if(urlTest === false){
-								event.preventDefault();
-								if ($(this).prop('id') === 'site'){
-									message = common.validation.buildValidation.createMessage('site-empty');
-								} else {
-									message = common.validation.buildValidation.createMessage('marlin-empty');					
-								}
-								$(this).parents('li').append('<label for="' + $(this).prop('id') + '" class="error">' + message + '</label>');
-							}
-						}
-					});
-					// testing the value of the select option
-					if($('select').val() === 'select'){
+				this.submitValidate($context);
+				this.blurValidate($context);
+			}
+		},
+		/**
+		 * Handles validation at form submission
+		 */
+		submitValidate : function ($context) {
+			$context.submit(function(event){
+				// remove error messages if they already exist
+				if($('label.error').length){
+					$('label.error').remove();
+					$('.error').removeClass('error');
+				}
+	
+				var message, urlTest;			
+				$('li input[type=text]').each(function(){
+					if($(this).val() === ''){
 						event.preventDefault();
-						message = common.validation.buildValidation.createMessage('manager-select');
-						$('select', $context).parents('fieldset').append('<label for="' + $('select').prop('id') + '" class="error">' + message + '</label>')
+						// testing for empty values
+						message = common.validation.buildValidation.createMessage($(this).prop('name'));
+						$(this).addClass('error');
+						$(this).parents('li').append('<label for="' + $(this).prop('id') + '" class="error">' + message + '</label>');
+					} else if ($(this).prop('id') === 'site' || $(this).prop('id') === 'marlin'){
+						// testing for valid urls 
+						urlTest = common.validation.buildValidation.validURL($(this).val());
+						if(urlTest === false){
+							event.preventDefault();
+							if ($(this).prop('id') === 'site'){
+								message = common.validation.buildValidation.createMessage('site-empty');
+							} else {
+								message = common.validation.buildValidation.createMessage('marlin-empty');					
+							}
+							$(this).addClass('error');
+							$(this).parents('li').append('<label for="' + $(this).prop('id') + '" class="error">' + message + '</label>');
+						}
 					}
 				});
-				
-			}
+				// testing the value of the select option
+				if($('select').val() === 'select'){
+					event.preventDefault();
+					message = common.validation.buildValidation.createMessage('manager-select');
+					$('#manager-button').addClass('error');
+					$('select', $context).parents('fieldset').append('<label for="' + $('select').prop('id') + '" class="error">' + message + '</label>')
+				}
+			});	
+		},
+		/**
+		 * Validation on input blurs
+		 */
+		blurValidate : function ($context) {
+			var message, urlTest;
+			$('input', $context).blur(function (event) {
+				if($(this).val() === ''){
+					if ($(this).hasClass('error') !== true){
+						message = common.validation.buildValidation.createMessage($(this).prop('name'));
+						$(this).addClass('error');
+						$(this).parents('li').append('<label for="' + $(this).prop('id') + '" class="error">' + message + '</label>');
+					}
+				} else {
+					if ($(this).prop('id') === 'site' || $(this).prop('id') === 'marlin'){
+						// testing for valid urls 
+						urlTest = common.validation.buildValidation.validURL($(this).val());
+						if(urlTest === false && $(this).hasClass('error') !== true){
+							if ($(this).prop('id') === 'site'){
+								message = common.validation.buildValidation.createMessage('site-empty');
+							} else {
+								message = common.validation.buildValidation.createMessage('marlin-empty');					
+							}
+							$(this).addClass('error');
+							$(this).parents('li').append('<label for="' + $(this).prop('id') + '" class="error">' + message + '</label>');
+						} else {
+							common.validation.buildValidation.removeError($(this));
+						}
+					} else if ($(this).hasClass('error') === true) {
+						// removing the errors if errors no longer exist
+						common.validation.buildValidation.removeError($(this));
+					}
+				}
+			});
+			
+		},
+		/**
+		 * Remove Erros
+		 */
+		removeError : function ($context) {
+			$context.removeClass('error');
+			$context.siblings('label.error').fadeOut(function (){
+				$(this).remove();
+			});
 		},
 		/**
 		 * Test valid URLs
