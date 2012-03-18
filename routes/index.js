@@ -239,25 +239,42 @@ exports.createBuild = function(request, response){
 				messages : messages
 			}});
 		} else {
-			buildProvider.buildFileElements(request.body, function(error, params){
-				if(error){
-					response.send(error);
-				} else {
-					console.log('end journey');
-					
-					//response.setHeader('Content-disposition', 'attachment; filename=' + params.fileName);
-					//response.setHeader('Content-type', 'application/xml');
-					//response.download(params.file, function (error) {
-					//	if (error){
-					//		console.log(error);
-					//	}
-					//}, function(error){
-					//	if(error){
-					//		console.log(error);
-					//	}
-					//});
+			async.parallel({
+				properties : function (callback) {
+					buildProvider.createProperties(request.body, function(error, file){
+						callback(error, file);
+					});
+				},
+				buildFile: function(callback){
+					buildProvider.createBuildFile(request.body, function(error, file){
+						callback(error, file)
+					});
 				}
-			});	
+			}, function(error, files){
+				if(error){
+					console.log(error);
+				} else {
+					buildProvider.createZip(files, function(error, zip){
+						if(error){
+							console.log(error);
+						} else {
+							console.log(zip);
+							//response.setHeader('Content-disposition', 'attachment; filename=' + params.fileName);
+							//response.setHeader('Content-type', 'application/xml');
+							//response.download(params.file, function (error) {
+							//	if (error){
+							//		console.log(error);
+							//	}
+							//}, function(error){
+							//	if(error){
+							//		console.log(error);
+							//	}
+							//});
+						}
+					
+					});
+				}	
+			});
 		}
 
 	});

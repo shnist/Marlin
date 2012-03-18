@@ -15,13 +15,25 @@ var BuildProvider = function () {};
 
 
 /**
- * Build Properties a
- * Builds the xml properties of the file depending on the build manager
+ * Build Properties 
+ * Builds the properties file depending on the build manager
  * selected
  */
-BuildProvider.prototype.buildProperties = function(data, callback){
-	var doc = builder.create();
+BuildProvider.prototype.createProperties = function(data, callback){
 	console.log(data);
+	
+	callback('foo', null);
+
+}
+
+
+/**
+ * Create Build File
+ * Creates the XML build file depending on the type of
+ * build manager selected
+ */
+BuildProvider.prototype.createBuildFile = function (data, callback){
+	var doc = builder.create();
 	var property;
 	if (data.manager === 'ant'){
 		for (property in data){
@@ -31,10 +43,17 @@ BuildProvider.prototype.buildProperties = function(data, callback){
 			}
 		}
 	}
-
-
-	
 	callback(null, doc);
+}
+
+/**
+ * Create Zip
+ * Creates a zip file of the properties and build file to be sent to
+ * client
+ */
+BuildProvider.prototype.createZip = function(files, callback){
+	callback('foo', null);
+	
 	
 }
 
