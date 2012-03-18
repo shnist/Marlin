@@ -127,9 +127,6 @@ chart = {
 				options.vAxis.title = 'Score out of 100'
 			}
 		
-			// move the table
-			//chart.moveTable(type);
-		
 			var newChart = new google.visualization.LineChart(document.getElementById('chart-' + type));
 			newChart.draw(data,
 				{
@@ -151,47 +148,5 @@ chart = {
 				$('.rule-title').after('<p class="error">' + json.error + '</p>');
 			}
 		}
-	},
-	/**
-	 * Method that moves the table to a different part of the page
-	 */
-	moveTable : function (type) {
-		var project = $('input[name=project]', '#tab-one .rule-options').val(),
-			page =  project + '/';
-			
-		if (type !== 'worst') {
-			if (tab === 'best'){
-				page = page + 'best';
-			} else {
-				page = page + 'javascript';
-			}
-			$.ajax({
-				url : page,
-				dataType: 'html',
-				type: 'get',
-				success : function (data) {
-					var island = $(data),
-					$table = island.find('.statistics');
-					
-					$('table', '#chart-' + type).remove();
-					$('#chart-' + type).siblings('form').after($table);
-					
-				},
-				error: function (object, stat, error) {
-					console.log(stat + ': ' + error);
-				}
-			});
-			
-			
-		} else {
-			
-			$('#chart-' + type).siblings('form').after($('table', '#chart-' + type));
-		}
-		
-		
-		
-		
-		
-		
 	}
 };
