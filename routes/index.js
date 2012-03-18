@@ -255,25 +255,23 @@ exports.createBuild = function(request, response){
 				if(error){
 					console.log(error);
 				} else {
-					console.log(files);
-					buildProvider.createZip(files, function(error, zip){
-						if(error){
-							console.log(error);
-						} else {
-							console.log(zip);
-							//response.setHeader('Content-disposition', 'attachment; filename=' + params.fileName);
-							//response.setHeader('Content-type', 'application/xml');
-							//response.download(params.file, function (error) {
-							//	if (error){
-							//		console.log(error);
-							//	}
-							//}, function(error){
-							//	if(error){
-							//		console.log(error);
-							//	}
-							//});
-						}
-					
+					buildProvider.createZip(response, function(zip){
+						// send the zip file to the client
+						response.setHeader('Content-type', 'zip');
+						
+						zip.stdout.on('data', function (data) {
+							response.write(data);
+						});
+						
+						zip.on('exit', function (code) {
+							if(code !== 0) {
+								// internal server error
+								response.statusCode = 500;
+								response.end();
+							} else {
+								response.end();
+							}
+						});
 					});
 				}	
 			});

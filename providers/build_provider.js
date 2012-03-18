@@ -5,6 +5,7 @@
 var async = require('async');
 var builder = require('xmlbuilder');
 var fs = require('fs');
+var spawn = require('child_process').spawn;
 
 
 /**
@@ -14,8 +15,9 @@ var fs = require('fs');
 
 var BuildProvider = function () {};
 
-BuildProvider.prototype.propertiesPath = '/exports/build.properties';
-BuildProvider.prototype.buildAnt = '/exports/build.xml';
+BuildProvider.prototype.propertiesPath = '/exports/build/build.properties';
+BuildProvider.prototype.buildAnt = '/exports/build/build.xml';
+BuildProvider.prototype.buildDir = '/exports/build';
 
 /**
  * Build Properties 
@@ -109,13 +111,15 @@ BuildProvider.prototype.writeFile = function (path, writeData, callback) {
 
 /**
  * Create Zip
- * Creates a zip file of the properties and build file to be sent to
+ * Creates a zip file of the properties and build files to be sent to
  * client
  */
-BuildProvider.prototype.createZip = function(files, callback){
-	callback('foo', null);
-	
-	
+BuildProvider.prototype.createZip = function(response, callback){
+	var path = __dirname + BuildProvider.prototype.buildDir,
+		// uses child process to execute zip command line function
+		// -r recursive -j ignore directory info - redirect to stdout
+		zip = spawn('zip', ['-rj', '-', path]);
+		callback(zip);
 }
 
 /**
