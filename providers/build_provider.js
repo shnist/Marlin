@@ -4,6 +4,7 @@
 
 var async = require('async');
 var builder = require('xmlbuilder');
+var fs = require('fs');
 
 
 /**
@@ -13,6 +14,7 @@ var builder = require('xmlbuilder');
 
 var BuildProvider = function () {};
 
+BuildProvider.prototype.propertiesPath = '/exports/build.properties';
 
 /**
  * Build Properties 
@@ -20,9 +22,24 @@ var BuildProvider = function () {};
  * selected
  */
 BuildProvider.prototype.createProperties = function(data, callback){
-	console.log(data);
+	var propertyString = '',
+		path = __dirname + BuildProvider.prototype.propertiesPath;
 	
-	callback('foo', null);
+	propertyString = '#Build Properties for Marlin \n' +
+	'project=' + data.project + '\n' +
+	'user=' + data['user-name'] + '\n' +
+	'password=' + data['user-password'] + '\n' +
+	'repository=' + data.repository + '\n' +
+	'url=' + data.site + '\n' +
+	'marlin=' + data.marlin + '\n';
+		
+	fs.writeFile(path, propertyString, function (err) {
+		if (err) {
+			callback(err, null);
+		} else {
+			callback(null, path);
+		}
+	});
 
 }
 
@@ -173,7 +190,7 @@ BuildProvider.prototype.manager = function (manager, callback){
 			callback(null, message);
 		});
 	} else {
-		callback(null, undefined);
+		callback(null, null);
 	}
 	
 }

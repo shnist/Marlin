@@ -234,6 +234,7 @@ exports.createBuild = function(request, response){
 		if(error){
 			console.log(error);
 		} else if (messages.emptyValues !== null || messages.urlForm !== null || messages.manager !== null){
+			console.log(messages);
 			response.render('build',{ locals: {
 				title : 'Marlin: Create a Build Management File',
 				messages : messages
