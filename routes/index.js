@@ -255,6 +255,7 @@ exports.createBuild = function(request, response){
 				if(error){
 					console.log(error);
 				} else {
+					console.log(files);
 					buildProvider.createZip(files, function(error, zip){
 						if(error){
 							console.log(error);

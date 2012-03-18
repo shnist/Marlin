@@ -33,7 +33,14 @@ BuildProvider.prototype.createProperties = function(data, callback){
 	'repository=' + data.repository + '\n' +
 	'url=' + data.site + '\n' +
 	'marlin=' + data.marlin + '\n';
-		
+	
+	BuildProvider.prototype.writeFile(path, propertyString, function(error, file){
+		if (error){
+			callback(error, null);
+		} else{
+			callback(null, file);
+		}
+	});
 
 }
 
@@ -59,7 +66,8 @@ BuildProvider.prototype.createBuildFile = function (data, callback){
  */
 BuildProvider.prototype.createAnt = function (data, callback){
 	var doc = builder.create(),
-		property, xmlString = '';
+		property, xmlString = '',
+		path = __dirname + BuildProvider.prototype.buildAnt;
 	
 	var root = doc.begin('project', {'version' : '1.0', 'encoding' : 'UTF-8'})
 	.att('name', 'Marlin')
@@ -75,7 +83,13 @@ BuildProvider.prototype.createAnt = function (data, callback){
 			
 	xmlString = doc.toString({'pretty': true, 'newline': '\n'});
 	
-	console.log(xmlString);	
+	BuildProvider.prototype.writeFile(path, xmlString, function(error, file){
+		if (error){
+			callback(error, null);
+		} else{
+			callback(null, file);
+		}
+	});
 }
 
 /**
@@ -83,8 +97,8 @@ BuildProvider.prototype.createAnt = function (data, callback){
  * Generic method to write file to the server
  */
 
-BuildProvider.prototype.writeFile = function (data, callback) {
-	fs.writeFile(data, propertyString, function (err) {
+BuildProvider.prototype.writeFile = function (path, writeData, callback) {
+	fs.writeFile(path, writeData, function (err) {
 		if (err) {
 			callback(err, null);
 		} else {
