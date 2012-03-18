@@ -15,6 +15,7 @@ var fs = require('fs');
 var BuildProvider = function () {};
 
 BuildProvider.prototype.propertiesPath = '/exports/build.properties';
+BuildProvider.prototype.buildAnt = '/exports/build.xml';
 
 /**
  * Build Properties 
@@ -33,13 +34,6 @@ BuildProvider.prototype.createProperties = function(data, callback){
 	'url=' + data.site + '\n' +
 	'marlin=' + data.marlin + '\n';
 		
-	fs.writeFile(path, propertyString, function (err) {
-		if (err) {
-			callback(err, null);
-		} else {
-			callback(null, path);
-		}
-	});
 
 }
 
@@ -50,17 +44,53 @@ BuildProvider.prototype.createProperties = function(data, callback){
  * build manager selected
  */
 BuildProvider.prototype.createBuildFile = function (data, callback){
-	var doc = builder.create();
-	var property;
 	if (data.manager === 'ant'){
-		for (property in data){
-			if(data.hasOwnProperty(property)){
-				
-				
-			}
-		}
+		BuildProvider.prototype.createAnt(data, function (error, file) { 
+			callback(error, file);
+		});
+	} else {
+		// apache maven
 	}
-	callback(null, doc);
+}
+
+/**
+ * Build Apache Ant
+ * Creates an Apache build.xml document
+ */
+BuildProvider.prototype.createAnt = function (data, callback){
+	var doc = builder.create(),
+		property, xmlString = '';
+	
+	var root = doc.begin('project', {'version' : '1.0', 'encoding' : 'UTF-8'})
+	.att('name', 'Marlin')
+	.att('default', 'marlin')
+	.att('basedir', '.')
+		.e('description', 'Build file to trigger GET request for Marlin service')
+		.up()
+		.e('property', {'file': 'build.properties'})
+		.up()
+		.e('target', {'name': 'marlin'})
+			.e('get', {'src': '${marlin}/newreport?project=${project}&amp;gitUser=${user}&amp;gitPass=${password}&amp;repository=${repository}&amp;url=${url}',
+			'maxtime': '10', 'dest': 'logs/log.html'});
+			
+	xmlString = doc.toString({'pretty': true, 'newline': '\n'});
+	
+	console.log(xmlString);	
+}
+
+/**
+ * Write File
+ * Generic method to write file to the server
+ */
+
+BuildProvider.prototype.writeFile = function (data, callback) {
+	fs.writeFile(data, propertyString, function (err) {
+		if (err) {
+			callback(err, null);
+		} else {
+			callback(null, path);
+		}
+	});
 }
 
 /**
