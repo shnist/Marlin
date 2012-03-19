@@ -59,6 +59,8 @@ chart = {
 			type: 'get',
 			success : function (data) {
 				chart.drawChart(data, project, chartType);
+				// move the table
+				chart.moveTable(chartType, searchOptions);
 				// remove the overlay
 				$('.overlay').remove();
 			},
@@ -128,9 +130,6 @@ chart = {
 				options.vAxis.title = 'Score out of 100'
 			}
 		
-			// move the table
-			//chart.moveTable(type);
-		
 			var newChart = new google.visualization.LineChart(document.getElementById('chart-' + type));
 			newChart.draw(data,
 				{
@@ -156,40 +155,46 @@ chart = {
 	/**
 	 * Method that moves the table to a different part of the page
 	 */
-	moveTable : function (type) {
+	moveTable : function (type, options) {
 		var project = $('input[name=project]', '#tab-one .rule-options').val(),
 			page =  project + '/';
 			
 		if (type !== 'worst') {
-			if (tab === 'best'){
+			if (type === 'best'){
 				page = page + 'best';
 			} else {
 				page = page + 'javascript';
 			}
-			$.ajax({
-				url : page,
-				dataType: 'html',
-				type: 'get',
-				success : function (data) {
-					var island = $(data),
-					$table = island.find('.statistics');
-					
-					$('table', '#chart-' + type).remove();
-					$('#chart-' + type).siblings('form').after($table);
-					
-				},
-				error: function (object, stat, error) {
-					console.log(stat + ': ' + error);
+		} 
+		
+		$.ajax({
+			url : page,
+			dataType: 'html',
+			data : options,
+			type: 'post',
+			success : function (data) {
+				
+				var island = $(data),
+				$table = island.find('.statistics'),
+				$alerts = island.find('.alerts');
+				
+				console.log($alerts);
+				
+				$('table', '#chart-' + type).remove();
+				if ($('#chart-' + type).siblings('table').length > 0){
+					$('#chart-' + type).remove('table');
 				}
-			});
-			
-			
-		} else {
-			
-			$('#chart-' + type).siblings('form').after($('table', '#chart-' + type));
-		}
-		
-		
+				if ($('#chart-' + type).siblings('.alerts').length > 0) {
+					$('#chart-' + type).siblings('.alerts').remove();
+				}
+				$('#chart-' + type).append($table);
+				$('#chart-' + type).before($alerts);
+				
+			},
+			error: function (object, stat, error) {
+				console.log(stat + ': ' + error);
+			}
+		});
 		
 		
 		

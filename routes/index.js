@@ -39,6 +39,8 @@ exports.index = function(request, response){
 exports.project = function(request, response){
 	var selectedRules = null,
 		search = null;
+		
+		console.log(request.body)
 	
 	// if this is a post then create an array of user chosen stats to show
 	if (request.body.submit !== undefined){
