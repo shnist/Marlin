@@ -90,7 +90,6 @@ div#page
 							td= new Date(reports[i].date).toLocaleDateString() + '&nbsp;' + new Date(reports[i].date).toLocaleTimeString()
 							-if(selected !== null)
 								-each rule in selected[i]
-									td= rule.name
 									td= rule.score
 							-else
 								-for (var a = 0; a < chosen.length; a = a + 1)
