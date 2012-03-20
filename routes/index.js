@@ -265,6 +265,7 @@ exports.createBuild = function(request, response){
 						
 						zip.on('exit', function (code) {
 							if(code !== 0) {
+								console.log('the code is:' + code);
 								// internal server error
 								response.statusCode = 500;
 								response.end();
