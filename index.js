@@ -140,6 +140,7 @@ marlin.get('/build', routes.build);
 marlin.post('/build', routes.createBuild);
 
 
+
 // listen on port 3000
 marlin.listen(3000);
-console.log("Express server listening on port %d in %s mode", marlin.address().port, marlin.settings.env);
+//console.log("Express server listening on port %d in %s mode", marlin.address().port, marlin.settings.env);

@@ -14,6 +14,7 @@ body,
 html {
   margin: 0;
   padding: 0;
+  height: 100%;
 }
 body {
   background: #eee;
@@ -103,6 +104,7 @@ input[type="submit"]:hover {
   -moz-box-shadow: 0 0 5px #888;
   -webkit-box-shadow: 0 0 5px #888;
   position: relative;
+  min-height: 100%;
 }
 #content {
   padding: 15px;
@@ -118,7 +120,8 @@ input[type="submit"]:hover {
   -webkit-box-shadow: 0 0 30px #999;
 }
 #header.home {
-  margin: 300px 0 0 0;
+  position: relative;
+  top: 300px;
 }
 #header p {
   color: #fff;
