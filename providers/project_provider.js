@@ -159,6 +159,7 @@ ProjectProvider.prototype.phantom = function (params, callback) {
 		url = params.url;
 	
 	phantom.create(function (ph) {
+		
 		return ph.createPage(function (page) {
 			return page.open(url, function (status) {
 				if (status === 'success') {
