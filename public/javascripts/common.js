@@ -83,7 +83,7 @@ common.validation = {
 					toTimeStamp = Date.parse(toDate);
 					
 				if (fromTimeStamp > toTimeStamp){
-					$('ul', $parentFieldset).prepend('<p class="error">The date you\'ve picked is after the "to" date. Please select a from date that is before the to date.</p>');
+					$('ul', $parentFieldset).prepend('<p class="error">The date you\'ve picked is after the "to" date. Please select a "from" date that is before the "to" date.</p>');
 					$('.date-from', $parentFieldset).addClass('error');
 				}
 			}
