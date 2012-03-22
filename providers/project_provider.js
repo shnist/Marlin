@@ -9,7 +9,7 @@ var phantom = require('phantom');
 var async = require('async');
 
 // database connection parameters
-var host = 'localhost',
+var host = '127.0.0.1',
 	port = 27017;
 	
 // creating a connection
