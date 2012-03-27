@@ -1,0 +1,84 @@
+/**
+ * Marlin IE 7 Stylesheet
+ */
+
+/* Rule List Form */
+
+.rule-options ul{
+	display: inline;
+	height: 1%;
+}
+.rule-options li{
+	display: inline;
+	height: 1%;
+}
+.rule-options{
+	display: inline;
+	height: 1%;
+}
+.date label{
+	display: inline;
+	height: 1%;
+}
+.rule-options .collapsible h3 span{
+	float: none;
+	display: inline;
+	zoom: 1;
+	margin: -15px 0 0 15px;
+}
+
+/* Header */
+
+#project-selection{
+	display: inline;
+	height: 1%;
+}
+#project-selection fieldset{
+	display: inline;
+	height: 1%;
+}
+
+/* Context and Latest JavaScript performance */
+
+#latest-information .column{
+	display: inline;
+	zoom: 1;
+}
+.graph{
+	display: inline;
+	height: 1%;
+}
+
+/* 7 Tabs */
+
+.tab-navigation li{
+	display: inline;
+	height: 1%;
+}
+
+/* custom select */
+
+.fwselect {
+	display:inline;
+	zoom:1;
+}
+.fwselect-text {
+	display:inline;
+	height: 1%;
+}
+.fwselect-arrow {
+	float: none;
+	display: inline;
+	zoom: 1;
+	margin: -20px 0 0 15px;
+}
+
+/* JQuery UI date picker */
+
+.ui-datepicker-next span, .ui-datepicker-prev span {
+	display: block;
+}
+.ui-datepicker-header{
+	width: 280px;
+}
+

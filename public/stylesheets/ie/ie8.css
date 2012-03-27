@@ -1,0 +1,10 @@
+/**
+ * Marlin IE 8 Stylesheet
+ */
+
+/* JQuery UI date picker */
+
+.ui-datepicker-next span,
+.ui-datepicker-prev span{
+	position: relative;
+}
